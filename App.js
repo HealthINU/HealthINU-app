@@ -2,14 +2,21 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { StatusBar } from "expo-status-bar";
+//  상단바 관련 라이브러리
+//  import { StatusBar } from "expo-status-bar";
+
+//  사용되는 페이지들 import
 import SigninScreen from "./Screens/SigninScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import KameraScreen from "./Screens/KameraScreen";
 import MainScreen from "./Screens/MainScreen";
 import PredictScreen from "./Screens/PredictScreen";
+
+//  Stack Navigator 생성
 const Stack = createStackNavigator();
 
+//  로그인 관련 Stack Navigator
+//  로그인, 회원가입 페이지로 구성됨
 const LoginStack = () => {
   return (
     <Stack.Navigator>
@@ -27,6 +34,8 @@ const LoginStack = () => {
   );
 };
 
+//  메인 관련 Stack Navigator
+//  메인, 카메라, 기구 예측 페이지로 구성됨
 const MainStack = () => {
   return (
     <Stack.Navigator>
@@ -43,12 +52,14 @@ const MainStack = () => {
       <Stack.Screen
         name="Predict"
         component={PredictScreen}
-        options={{ headerShown: false, unmountOnBlur: true }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 };
 
+//  navigation을 모아서 렌더링
+//  로그인 Stack과 메인 Stack으로 구성됨
 export default function App() {
   return (
     <NavigationContainer>
