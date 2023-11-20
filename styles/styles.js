@@ -42,7 +42,9 @@ export default styles = StyleSheet.create({
     color: "#ffffff",
   },
   title: {
-    ...styles.text,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ffffff",
     width: "50%",
     textAlign: "center",
     alignSelf: "center",
@@ -51,7 +53,9 @@ export default styles = StyleSheet.create({
     marginTop: 96
   },
   subtitle: {
-    ...styles.text,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ffffff",
     marginBottom: 32,
     width: "50%",
     textAlign: "center",
