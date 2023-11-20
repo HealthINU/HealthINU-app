@@ -17,7 +17,7 @@ export default function MainScreen({ navigation }) {
         누르면 카메라 권한 요청
       */}
       <TouchableOpacity
-        style={styles.button}
+        style={styles.cameraButton}
         onPress={async () => {
           await Camera.requestCameraPermissionsAsync();
           navigation.navigate("Kamera");

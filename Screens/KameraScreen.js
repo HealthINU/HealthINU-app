@@ -83,7 +83,7 @@ export default function KameraScreen({ navigation }) {
 
     //  서버에 전송
     //  주소는 node.js 서버 주소로 바꿔줘야 함
-    fetch("http://192.168.219.107:8080/upload", {
+    fetch("http://192.168.0.104:8080/upload", {
       method: "POST",
       body: formData,
       headers: {
@@ -202,4 +202,5 @@ export default function KameraScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   camera: {},
+
 });

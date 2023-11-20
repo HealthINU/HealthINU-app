@@ -40,15 +40,7 @@ export default function SignupScreen({ navigation }) {
         />
         {/* HealthINU 텍스트 */}
         <Text
-          style={{
-            ...styles.text,
-            width: "50%",
-            textAlign: "center",
-            alignSelf: "center",
-            fontSize: 32,
-            position: "absolute",
-            marginTop: 96,
-          }}
+          style={styles.title}
         >
           HealthINU
         </Text>
@@ -56,24 +48,13 @@ export default function SignupScreen({ navigation }) {
 
       {/* Sign up 텍스트 */}
       <Text
-        style={{
-          ...styles.text,
-          marginBottom: 32,
-          width: "50%",
-          textAlign: "center",
-          alignSelf: "center",
-        }}
+        style={styles.subtitle}
       >
         Sign up
       </Text>
       {/* 아이디, 비밀번호 입력창 */}
       <View
-        style={{
-          width: "100%",
-          borderTopWidth: 1,
-          borderColor: "#888888",
-          marginBottom: 4,
-        }}
+        style={styles.inputStart}
       >
         {/* 아이디 입력창 */}
         <TextInput
@@ -93,29 +74,17 @@ export default function SignupScreen({ navigation }) {
       {/* 회원가입 버튼 */}
       {/* 기능 구현 아직 안 함*/}
       <Button
-        title="SING UP"
-        buttonStyle={{
-          backgroundColor: "#007aff",
-          borderRadius: 39,
-          height: 40,
-        }}
-        titleStyle={{ fontWeight: "bold", fontSize: 16 }}
-        containerStyle={{
-          width: "100%",
-          marginBottom: 16,
-        }}
+        title="SIGN UP"
+        buttonStyle={styles.signButton}
+        titleStyle={styles.signFont}
+        containerStyle={styles.signContainer}
         onPress={() => {
           navigation.navigate("Signup");
         }}
       />
 
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          marginBottom: 32,
-          paddingHorizontal: 64,
-        }}
+        style={styles.choiceContainer}
       >
         {/* 아래 두 개는 SIGN IN, SIGN UP 텍스트들 */}
         <Text
