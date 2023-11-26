@@ -13,6 +13,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 
 //  page를 벗어날 때의 로직을 위한 import
 import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
 
 export default function KameraScreen({ navigation }) {
   //  폰 가로 길이
@@ -67,7 +68,7 @@ export default function KameraScreen({ navigation }) {
   }, []);
 
   //  찍은 사진을 서버에 전송하는 함수
-  const req_image = (image) => {
+  const req_image = async (image) => {
     //  formData를 만들어서
     //  필요한 정보들 넣어줌
     const formData = new FormData();
@@ -82,8 +83,9 @@ export default function KameraScreen({ navigation }) {
     });
 
     //  서버에 전송
-    //  주소는 node.js 서버 주소로 바꿔줘야 함
-    fetch("http://192.168.0.104:8080/upload", {
+    //  서버로부터 이미지 경로 받아옴
+    //  url 본인의 로컬 ip로 바꿔야 함
+    const response = await fetch("http://192.168.219.106:8080/upload", {
       method: "POST",
       body: formData,
       headers: {
@@ -91,6 +93,21 @@ export default function KameraScreen({ navigation }) {
         "Content-Type": "multipart/form-data",
       },
     });
+
+    //  json으로 변환
+    const data = await response.json();
+    console.log(data);
+
+    //  서버에 요청
+    //  이미지 경로를 보내고
+    //  그 이미지 분류 결과를 받아옴
+    //  url 본인의 로컬 ip로 바꿔야 함
+    const result = await axios.post("http://192.168.219.106:8080/process", {
+      imagePath: data.imagePath,
+    });
+
+    //  분류 결과를 return
+    return result.data;
   };
 
   //  사진 찍는 함수
@@ -190,8 +207,9 @@ export default function KameraScreen({ navigation }) {
           <Button
             title="Upload"
             onPress={async () => {
-              await req_image(image);
-              navigation.navigate("Predict");
+              const data = await req_image(image);
+              console.log(data);
+              navigation.navigate("Predict", { data: data.result });
             }}
           />
         </View>
@@ -202,5 +220,4 @@ export default function KameraScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   camera: {},
-
 });
