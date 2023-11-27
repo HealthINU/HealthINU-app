@@ -14,6 +14,11 @@ import * as ImageManipulator from "expo-image-manipulator";
 //  page를 벗어날 때의 로직을 위한 import
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
+//http://192.168.219.106:8080
+//http://192.168.0.104:8080
+const url = "http://192.168.219.106:8080";
+const u_url = url + "/upload";
+const p_url = url + "/process";
 
 export default function KameraScreen({ navigation }) {
   //  폰 가로 길이
@@ -85,7 +90,7 @@ export default function KameraScreen({ navigation }) {
     //  서버에 전송
     //  서버로부터 이미지 경로 받아옴
     //  url 본인의 로컬 ip로 바꿔야 함
-    const response = await fetch("http://192.168.219.106:8080/upload", {
+    const response = await fetch(u_url, {
       method: "POST",
       body: formData,
       headers: {
@@ -102,7 +107,7 @@ export default function KameraScreen({ navigation }) {
     //  이미지 경로를 보내고
     //  그 이미지 분류 결과를 받아옴
     //  url 본인의 로컬 ip로 바꿔야 함
-    const result = await axios.post("http://192.168.219.106:8080/process", {
+    const result = await axios.post(p_url, {
       imagePath: data.imagePath,
     });
 
@@ -179,7 +184,7 @@ export default function KameraScreen({ navigation }) {
           ></Camera>
 
           {/* 사진 찍는 버튼과 갤러리 버튼 */}
-          <Button title="Take a picture" onPress={takePictureHandler} />
+          <Button title="Take a Picture" onPress={takePictureHandler} />
           <Button title="Gallery" onPress={pickImage} />
         </View>
       )}
