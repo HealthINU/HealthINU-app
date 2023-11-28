@@ -16,7 +16,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 //http://192.168.219.106:8080
 //http://192.168.0.104:8080
-const url = "http://192.168.219.106:8080";
+const url = "http://138.2.59.246:8080";
 const u_url = url + "/upload";
 const p_url = url + "/process";
 
