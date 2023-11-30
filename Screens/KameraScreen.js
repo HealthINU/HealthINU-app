@@ -103,16 +103,7 @@ export default function KameraScreen({ navigation }) {
     const data = await response.json();
     console.log(data);
 
-    //  서버에 요청
-    //  이미지 경로를 보내고
-    //  그 이미지 분류 결과를 받아옴
-    //  url 본인의 로컬 ip로 바꿔야 함
-    const result = await axios.post(p_url, {
-      imagePath: data.imagePath,
-    });
-
-    //  분류 결과를 return
-    return result.data;
+    return data;
   };
 
   //  사진 찍는 함수
