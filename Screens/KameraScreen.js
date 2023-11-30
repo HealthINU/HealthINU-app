@@ -1,7 +1,7 @@
 //  카메라 모듈 라이브러리
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 //  기기 크기 가져오기 위한 라이브러리
 import { Dimensions } from "react-native";
 //  외부 라이브러리 : 스타일 좋은 컴포넌트 제공하는 라이브러리
@@ -19,6 +19,8 @@ import axios from "axios";
 const url = "http://138.2.59.246:8080";
 const u_url = url + "/upload";
 const p_url = url + "/process";
+
+import styles from "../styles/styles";
 
 export default function KameraScreen({ navigation }) {
   //  폰 가로 길이
@@ -175,8 +177,40 @@ export default function KameraScreen({ navigation }) {
           ></Camera>
 
           {/* 사진 찍는 버튼과 갤러리 버튼 */}
-          <Button title="Take a Picture" onPress={takePictureHandler} />
-          <Button title="Gallery" onPress={pickImage} />
+          <View
+            style={{
+              width: windowWidth,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: (windowHeight - windowWidth) / 4,
+            }}
+          >
+            {/* 갤러리에서 사진 가져오는 버튼 */}
+            <TouchableOpacity onPress={pickImage}>
+              <Image
+                source={require("../assets/gallery.png")}
+                style={{
+                  width: 48,
+                  height: 48,
+                  tintColor: "#ffffff",
+                  marginLeft: 24,
+                }}
+              />
+            </TouchableOpacity>
+            {/* 사진 찍는 버튼 */}
+            <TouchableOpacity onPress={takePictureHandler}>
+              <Image
+                source={require("../assets/shutter.png")}
+                style={{
+                  width: 48,
+                  height: 48,
+                  tintColor: "#ffffff",
+                  marginRight: windowWidth / 2 - 24,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       )}
 
@@ -192,28 +226,41 @@ export default function KameraScreen({ navigation }) {
               marginTop: (windowHeight - windowWidth) / 2,
             }}
           />
+          <View
+            style={{
+              width: windowWidth,
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+              marginTop: (windowHeight - windowWidth) / 4,
+            }}
+          >
+            {/* 사진 다시 찍는 버튼 */}
+            <Button
+              buttonStyle={styles.generalButton}
+              titleStyle={styles.generalFont}
+              title="Retake?"
+              onPress={() => setImage(null)}
+            />
 
-          {/* 사진 다시 찍는 버튼 */}
-          <Button title="Retake" onPress={() => setImage(null)} />
-          {/* 
+            {/* 
             업로드 버튼
             사진을 서버에 전송하고
             Predict 페이지로 이동
           */}
-          <Button
-            title="Upload"
-            onPress={async () => {
-              const data = await req_image(image);
-              console.log(data);
-              navigation.navigate("Predict", { data: data.result });
-            }}
-          />
+            <Button
+              title="Upload"
+              buttonStyle={styles.generalButton}
+              titleStyle={styles.generalFont}
+              onPress={async () => {
+                const data = await req_image(image);
+                console.log(data);
+                navigation.navigate("Predict", { data: data.result });
+              }}
+            />
+          </View>
         </View>
       ) : null}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  camera: {},
-});

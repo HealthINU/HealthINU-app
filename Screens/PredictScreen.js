@@ -46,7 +46,13 @@ export default function PredictScreen({ navigation, route }) {
         style={{ width: 300, height: 300 }}
       />
       {/* 카메라 페이지로 이동하는 버튼*/}
-      <Button onPress={() => navigation.navigate("Kamera")}>Retake?</Button>
+      <Button
+        buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
+        titleStyle={styles.generalFont}
+        onPress={() => navigation.navigate("Kamera")}
+      >
+        Retake?
+      </Button>
     </View>
   );
 }

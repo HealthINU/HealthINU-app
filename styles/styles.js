@@ -37,7 +37,7 @@ export default styles = StyleSheet.create({
     color: "#ffffff",
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#ffffff",
   },
@@ -50,7 +50,7 @@ export default styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 32,
     position: "absolute",
-    marginTop: 96
+    marginTop: 96,
   },
   subtitle: {
     fontSize: 20,
@@ -67,11 +67,12 @@ export default styles = StyleSheet.create({
     height: 40,
   },
   signFont: {
-    fontWeight: "bold", fontSize: 16
+    fontWeight: "bold",
+    fontSize: 16,
   },
   signContainer: {
     width: "100%",
-    marginBottom: 16
+    marginBottom: 16,
   },
   choiceContainer: {
     flexDirection: "row",
@@ -80,14 +81,21 @@ export default styles = StyleSheet.create({
     paddingHorizontal: 64,
   },
   cameraButton: {
-    alignItems: "center",
-    backgroundColor: "#007aff",
-    padding: 10,
-    width: 300,
-    marginTop: 10,
+    width: 48,
+    height: 48,
+    margin: 16,
   },
   background: {
     width: "100%",
     height: "100%",
+  },
+  generalButton: {
+    backgroundColor: "#1F1F1F",
+    borderRadius: 16,
+    marginHorizontal: 8,
+  },
+  generalFont: {
+    fontSize: 14,
+    color: "#ffffff",
   },
 });
