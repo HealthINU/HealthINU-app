@@ -76,7 +76,7 @@ export default function SignupScreen({ navigation }) {
       <Button
         title="SIGN UP"
         buttonStyle={styles.signButton}
-        titleStyle={styles.signFont}
+        titleStyle={styles.generalFont}
         containerStyle={styles.signContainer}
         onPress={() => {
           navigation.navigate("Signup");

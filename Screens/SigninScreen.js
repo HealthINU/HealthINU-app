@@ -75,7 +75,7 @@ export default function SigninScreen({ navigation }) {
       <Button
         title="SIGN IN"
         buttonStyle={styles.signButton}
-        titleStyle={styles.signFont}
+        titleStyle={styles.generalFont}
         containerStyle={styles.signContainer}
         onPress={() => {
           navigation.navigate("Signup");

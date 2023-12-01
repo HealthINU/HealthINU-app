@@ -9,11 +9,13 @@ import { StyleSheet } from "react-native";
 //  title : 제목 스타일
 //  subtitle : 부제목 스타일
 //  signButton : SIGN IN, SIGN UP 버튼 스타일
-//  signFont : SIGN IN, SIGN UP 버튼 font
 //  signContainer : SIGN IN, SIGN UP 버튼 container
 //  choiceContainer : SIGN IN, SIGN UP 화면 고르는 container
 //  cameraButton : Button, TouchableOpacity 등의 스타일
 //  background : 배경 스타일
+
+//  필요한 font color, font size
+//  #색깔 : 
 
 export default styles = StyleSheet.create({
   container: {
@@ -66,10 +68,6 @@ export default styles = StyleSheet.create({
     borderRadius: 39,
     height: 40,
   },
-  signFont: {
-    fontWeight: "bold",
-    fontSize: 16,
-  },
   signContainer: {
     width: "100%",
     marginBottom: 16,
@@ -80,22 +78,14 @@ export default styles = StyleSheet.create({
     marginBottom: 32,
     paddingHorizontal: 64,
   },
-  cameraButton: {
-    width: 48,
-    height: 48,
-    margin: 16,
-  },
-  background: {
-    width: "100%",
-    height: "100%",
-  },
   generalButton: {
     backgroundColor: "#1F1F1F",
     borderRadius: 16,
     marginHorizontal: 8,
   },
   generalFont: {
-    fontSize: 14,
+    fontWeight: "bold",
+    fontSize: 16,
     color: "#ffffff",
   },
 });
