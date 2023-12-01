@@ -10,14 +10,17 @@ import styles from "../styles/styles";
 //  assets/exercise_picture 폴더에 있는 사진들 경로와 운동 이름
 const exercise_list = {
   bench_press_machine: {
+    key: "bench_press",
     name: "벤치 프레스",
     jpg: require("../assets/exercise_picture/bench_press_machine.jpg"),
   },
   leg_extension_machine: {
+    key: "leg_extension",
     name: "레그 익스텐션",
     jpg: require("../assets/exercise_picture/leg_extension_machine.jpg"),
   },
   lat_pull_down_machine: {
+    key: "lat_pull_down",
     name: "랫 풀 다운",
     jpg: require("../assets/exercise_picture/lat_pull_down_machine.jpg"),
   },
@@ -38,30 +41,45 @@ export default function PredictScreen({ navigation, route }) {
   console.log();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>이건가요?</Text>
-      <Text style={styles.text}>{exercise_list[top_exercise]["name"]}</Text>
+    <View style={{ ...styles.container, justifyContent: "center" }}>
+      <Text style={styles.titletext}>이거라고 치자</Text>
+      <Text style={styles.titletext}>
+        {exercise_list[top_exercise]["name"]}
+      </Text>
+
       <Image
         source={exercise_list[top_exercise]["jpg"]}
-        style={{ width: 300, height: 300 }}
+        style={{ width: windowWidth, height: windowWidth }}
       />
-      {/* 카메라 페이지로 이동하는 버튼*/}
-      <Button
-        buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
-        titleStyle={styles.generalFont}
-        onPress={() => navigation.navigate("Kamera")}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          width: "100%",
+        }}
       >
-        Retake?
-      </Button>
-      {/*해당 운동이 맞을 시*/}
-      <Button
-        buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
-        titleStyle={styles.generalFont}
-        onPress={() => navigation.navigate("BenchDetail")}
-        title={top_exercise}
-      >
-        Yes
-      </Button>
+        {/* 카메라 페이지로 이동하는 버튼*/}
+        <Button
+          buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
+          titleStyle={styles.generalFont}
+          onPress={() => navigation.navigate("Kamera")}
+        >
+          Retake?
+        </Button>
+        {/*해당 운동이 맞을 시*/}
+        <Button
+          buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
+          titleStyle={styles.generalFont}
+          title={top_exercise}
+          onPress={() =>
+            navigation.navigate("ExerciseList", {
+              top_exercise: exercise_list[top_exercise]["key"],
+            })
+          }
+        >
+          Yes
+        </Button>
+      </View>
     </View>
   );
 }

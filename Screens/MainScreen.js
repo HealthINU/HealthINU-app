@@ -147,7 +147,7 @@ export default function MainScreen({ navigation }) {
         누르면 카메라 권한 요청
       */}
       <TouchableOpacity
-        style={styles.cameraButton}
+        style={{ marginTop: 40 }}
         onPress={async () => {
           await Camera.requestCameraPermissionsAsync();
           navigation.navigate("Kamera");
@@ -159,15 +159,6 @@ export default function MainScreen({ navigation }) {
           style={{ width: 48, height: 48, tintColor: "#ffffff" }}
         />
       </TouchableOpacity>
-
-      {/* 화면 확인용 이동 버튼 -> 수정해야함 */}
-      <View style={{ height: 10 }} />
-      <Button
-        title="ExerciseList Detail"
-        onPress={() => {
-          navigation.navigate("ExerciseList");
-        }}
-      />
 
       {/* 상단바 밝게 */}
       <StatusBar style="light" />

@@ -14,15 +14,68 @@ import { StyleSheet } from "react-native";
 //  cameraButton : Button, TouchableOpacity 등의 스타일
 //  background : 배경 스타일
 
-//  필요한 font color, font size
-//  #색깔 : 
+// -----------------------------------------------
+//	필요한 컴포넌트
+
+//  고정
+//  backgroundColor : 배경 색상 (검은색)
+//	color : 폰트 색상 (흰색)
+//	borderColor -> 테두리 색상
+//	border...Width -> 테두리 너비
+//	borderRadius -> 테두리 둥글게 (16)
+//	이미지 (너비, 높이) -> 나중에 고정 수치로 설정
+//	textAlign -> 텍스트 정렬 (가로축?)
+//	alignSelf -> 텍스트 정렬 (세로축?)
+//	flexDirection -> 자식들 배치 방향?
+//	justifyContent -> 자식들끼리 배치 방식
+
+//  변동
+//	width -> 너비
+//	height -> 높이
+//	fontWeight -> 폰트 굵기 (bold)
+//  fontSize -> 폰트 크기 (14)
+//	justifyContent -> 세로 축 기준 정렬? (center)
+//	alignItems ->  축 기준 정렬? (center)
+//	margin -> 마진(밀어내기) (10)
+//	padding -> 패딩(공간줄이면서 밀어내기)
+//  padding top (20)
+
+//	텍스트
+//		제목
+//      fontSize(40)
+
+//		일반 텍스트
+//      fontSize(20)
+
+//	입력창
+//    width: "80%" ( 기본 )
+//		아이디, 비밀번호 입력창
+//      height: 40 ( 기본 )
+//		일반 입력창 ( 검색창 등 )
+//      height: ""
+//
+//	버튼
+//		width :
+
+//	전체 view
+//     flex: 1,
+//     backgroundColor: "#000000",
+//     alignItems: "center",
+//     paddingTop: 20,
+
+//  동영상 썸네일 컴포넌트
+//    width: "70%"
+//    height: width의 16:9 비율
+//	카드?
+
+// -----------------------------------------------
 
 export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 20,
   },
   inputStart: {
     width: "100%",
@@ -43,14 +96,18 @@ export default styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
+  titletext: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
   title: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: "bold",
     color: "#ffffff",
     width: "50%",
     textAlign: "center",
     alignSelf: "center",
-    fontSize: 32,
     position: "absolute",
     marginTop: 96,
   },
@@ -65,7 +122,7 @@ export default styles = StyleSheet.create({
   },
   signButton: {
     backgroundColor: "#007aff",
-    borderRadius: 39,
+    borderRadius: 16,
     height: 40,
   },
   signContainer: {

@@ -38,23 +38,13 @@ export default function SigninScreen({ navigation }) {
           style={{ width: "100%", height: "100%" }}
         />
         {/* HealthINU 텍스트 */}
-        <Text
-          style={styles.title}
-        >
-          HealthINU
-        </Text>
+        <Text style={styles.title}>HealthINU</Text>
       </ImageBackground>
 
       {/* Sign in 텍스트 */}
-      <Text
-        style={styles.subtitle}
-      >
-        Sign in
-      </Text>
+      <Text style={styles.subtitle}>Sign in</Text>
       {/* 아이디, 비밀번호 입력창 */}
-      <View
-        style={styles.inputStart}
-      >
+      <View style={styles.inputStart}>
         {/* 아이디 입력창 */}
         <TextInput
           style={styles.input}
@@ -82,9 +72,7 @@ export default function SigninScreen({ navigation }) {
         }}
       />
 
-      <View
-        style={styles.choiceContainer}
-      >
+      <View style={styles.choiceContainer}>
         {/* 아래 두 개는 SIGN IN, SIGN UP 텍스트들 */}
         <Text
           style={{
