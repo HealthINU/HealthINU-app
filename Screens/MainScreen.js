@@ -163,9 +163,9 @@ export default function MainScreen({ navigation }) {
       {/* 화면 확인용 이동 버튼 -> 수정해야함 */}
       <View style={{ height: 10 }} />
       <Button
-        title="Bench Detail"
+        title="ExerciseList Detail"
         onPress={() => {
-          navigation.navigate("BenchDetail");
+          navigation.navigate("ExerciseList");
         }}
       />
 

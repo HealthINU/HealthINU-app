@@ -53,6 +53,15 @@ export default function PredictScreen({ navigation, route }) {
       >
         Retake?
       </Button>
+      {/*해당 운동이 맞을 시*/}
+      <Button
+        buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
+        titleStyle={styles.generalFont}
+        onPress={() => navigation.navigate("BenchDetail")}
+        title={top_exercise}
+      >
+        Yes
+      </Button>
     </View>
   );
 }

@@ -11,7 +11,8 @@ import SignupScreen from "./Screens/SignupScreen";
 import KameraScreen from "./Screens/KameraScreen";
 import MainScreen from "./Screens/MainScreen";
 import PredictScreen from "./Screens/PredictScreen";
-import BenchDetailScreen from "./Screens/BenchDetailScreen";
+import ExerciseListScreen from "./Screens/ExerciseListScreen";
+import DetailScreen from "./Screens/DetailScreen";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -57,8 +58,14 @@ const MainStack = () => {
       />
       {/* 화면 확인용 이동 navigate -> 수정해야함 */}
       <Stack.Screen
-        name="BenchDetail"
-        component={BenchDetailScreen}
+        name="ExerciseList"
+        component={ExerciseListScreen}
+        options={{ headerShown: false }}
+      />
+      {/* 화면 확인용 이동 navigate -> 수정해야함 */}
+      <Stack.Screen
+        name="Detail"
+        component={DetailScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
