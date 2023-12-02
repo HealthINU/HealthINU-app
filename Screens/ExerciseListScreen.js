@@ -93,12 +93,22 @@ export default function ExerciseListScreen({ navigation, route }) {
     return text;
   };
 
-  const imgWidth = windowWidth * 0.9;
+  const imgWidth = windowWidth * 0.75;
 
   const imgHeight = (imgWidth / 16) * 9;
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          marginTop: 30,
+          color: "#ffffff",
+          fontSize: 40,
+          fontWeight: "bold",
+        }}
+      >
+        이런 운동 어떠세요?
+      </Text>
       <Text style={styles1.subtitle}>
         {truncateText(top_exercise_url["url1"].name, 25)}
       </Text>

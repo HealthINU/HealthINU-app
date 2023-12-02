@@ -42,8 +42,8 @@ export default function PredictScreen({ navigation, route }) {
 
   return (
     <View style={{ ...styles.container, justifyContent: "center" }}>
-      <Text style={styles.titletext}>이거라고 치자</Text>
-      <Text style={styles.titletext}>
+      <Text style={styles.titletext}>이게 맞나요?</Text>
+      <Text style={{ ...styles.titletext, color: "#00ff00" }}>
         {exercise_list[top_exercise]["name"]}
       </Text>
 
