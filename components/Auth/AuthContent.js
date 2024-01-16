@@ -91,22 +91,13 @@ export default function SigninScreen({ isLogin }) {
 
       {/* 로그인 버튼 */}
       {/* 기능 구현 아직 안 함*/}
-      {isLogin && (
-        <Button
-          title="SIGN IN"
-          buttonStyle={styles.signButton}
-          titleStyle={styles.generalFont}
-          containerStyle={styles.signContainer}
-        />
-      )}
-      {!isLogin && (
-        <Button
-          title="SIGN UP"
-          buttonStyle={styles.signButton}
-          titleStyle={styles.generalFont}
-          containerStyle={styles.signContainer}
-        />
-      )}
+
+      <Button
+        title={isLogin ? "SIGN IN" : "SIGN UP"}
+        buttonStyle={styles.signButton}
+        titleStyle={styles.generalFont}
+        containerStyle={styles.signContainer}
+      />
 
       <View style={styles.choiceContainer}>
         {/* 아래 두 개는 SIGN IN, SIGN UP 텍스트들 */}
