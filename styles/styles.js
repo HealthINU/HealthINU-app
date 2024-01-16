@@ -124,6 +124,7 @@ export default styles = StyleSheet.create({
     backgroundColor: "#007aff",
     borderRadius: 16,
     height: 40,
+    marginTop: 16,
   },
   signContainer: {
     width: "100%",
@@ -132,7 +133,7 @@ export default styles = StyleSheet.create({
   choiceContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 32,
+    marginBottom: 16,
     paddingHorizontal: 64,
   },
   generalButton: {
