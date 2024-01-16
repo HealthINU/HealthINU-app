@@ -105,7 +105,7 @@ export default styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     color: "#ffffff",
-    width: "50%",
+    width: "100%",
     textAlign: "center",
     alignSelf: "center",
     position: "absolute",
