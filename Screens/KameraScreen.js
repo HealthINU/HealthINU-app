@@ -13,7 +13,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 
 //  page를 벗어날 때의 로직을 위한 import
 import { useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
+
 //http://192.168.219.106:8080
 //http://192.168.0.104:8080
 const url = "http://138.2.59.246:8080";

@@ -1,16 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Button } from "@rneui/themed";
 import styles from "../styles/styles";
-import axios from "axios";
 import { Camera } from "expo-camera";
 
 export default function MainScreen({ navigation }) {

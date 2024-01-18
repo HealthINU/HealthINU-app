@@ -1,27 +1,51 @@
 import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-
+import { Alert, ScrollView, Text, ImageBackground } from "react-native";
 //  그라데이션 배경을 위한 라이브러리
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View, TextInput, ImageBackground } from "react-native";
-import { ScrollView } from "react-native";
-import { Button } from "@rneui/themed";
-//  styles/styles.js에서 정의한 스타일을 불러옴
-import styles from "../../styles/styles";
-import { useNavigation } from "@react-navigation/native";
+import AuthForm from "./AuthForm";
 
-export default function SigninScreen({ isLogin }) {
-  const navigation = useNavigation();
+function AuthContent({ isLogin, onAuthenticate }) {
+  const [credentialsInvalid, setCredentialsInvalid] = useState({
+    email: false,
+    id: false,
+    password: false,
+    confirmPassword: false,
+    name: false,
+  });
 
-  const [id, setId] = useState(null);
-  const [pw, setPw] = useState(null);
+  // 입력 오류 없는지 확인
+  function submitHandler(credentials) {
+    let { email, id, password, confirmPassword, name } = credentials;
 
-  function switchAuthModeHandler() {
-    if (isLogin) {
-      navigation.navigate("Signup");
-    } else {
-      navigation.navigate("Signin");
+    email = email.trim();
+    id = id.trim();
+    password = password.trim();
+    name = name.trim();
+
+    const emailIsValid = email.includes("@");
+    const idIsValid = id.length > 8;
+    const passwordIsValid = password.length > 6;
+    const passwordsAreEqual = password === confirmPassword;
+    const nameIsValid = name.length > 6;
+
+    if (
+      !emailIsValid ||
+      !idIsValid ||
+      !passwordIsValid ||
+      !nameIsValid ||
+      (!isLogin && !passwordsAreEqual)
+    ) {
+      Alert.alert("Invalid input", "Please check your entered credentials.");
+      setCredentialsInvalid({
+        email: !emailIsValid,
+        id: !idIsValid,
+        password: !passwordIsValid,
+        confirmPassword: !passwordIsValid || !passwordsAreEqual,
+        name: !nameIsValid,
+      });
+      return;
     }
+    onAuthenticate({ email, password, id, name });
   }
 
   return (
@@ -48,94 +72,13 @@ export default function SigninScreen({ isLogin }) {
       {/* Sign in,up 텍스트 */}
       {isLogin && <Text style={styles.subtitle}>Sign in</Text>}
       {!isLogin && <Text style={styles.subtitle}>Sign up</Text>}
-
-      <View style={styles.inputStart}>
-        {/* 아이디 입력창 */}
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor="#888888"
-          onChangeText={(e) => setId(e)}
-        />
-        {/*Email 입력창*/}
-        {!isLogin && (
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="#888888"
-          />
-        )}
-        {/* 비밀번호 입력창 */}
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#888888"
-          onChangeText={(e) => setPw(e)}
-        />
-        {/*비밀번호 확인, 이름, 성별 */}
-        {!isLogin && (
-          <>
-            <TextInput
-              style={styles.input}
-              placeholder="Password Confirm"
-              placeholderTextColor="#888888"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              placeholderTextColor="#888888"
-            />
-          </>
-        )}
-      </View>
-
-      {/* 로그인 버튼 */}
-      {/* 기능 구현 아직 안 함*/}
-
-      <Button
-        title={isLogin ? "SIGN IN" : "SIGN UP"}
-        buttonStyle={styles.signButton}
-        titleStyle={styles.generalFont}
-        containerStyle={styles.signContainer}
+      <AuthForm
+        isLogin={isLogin}
+        onSubmit={submitHandler}
+        credentialsInvalid={credentialsInvalid}
       />
-
-      <View style={styles.choiceContainer}>
-        {/* 아래 두 개는 SIGN IN, SIGN UP 텍스트들 */}
-        <Text
-          style={{
-            ...styles.text,
-            borderColor: "#007aff",
-            borderBottomWidth: isLogin ? 2 : undefined,
-            fontSize: 14,
-          }}
-          onPress={switchAuthModeHandler}
-        >
-          SIGN IN
-        </Text>
-        <Text
-          style={{
-            ...styles.text,
-            borderColor: "#007aff",
-            borderBottomWidth: !isLogin ? 2 : undefined,
-            fontSize: 14,
-          }}
-          onPress={switchAuthModeHandler}
-        >
-          SIGN UP
-        </Text>
-      </View>
-      {/* 메인 화면으로 이동하는 버튼 */}
-      <Button
-        title="Main"
-        onPress={() =>
-          navigation.navigate("MainStack", {
-            screen: "Main",
-            initial: false,
-          })
-        }
-      />
-      {/* 배경이 검정이므로 상단바 스타일 밝게 */}
-      <StatusBar style="light" />
     </ScrollView>
   );
 }
+
+export default AuthContent;

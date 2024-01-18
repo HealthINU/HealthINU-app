@@ -1,6 +1,7 @@
 //  스타일만 모아둔 파일
 
 import { StyleSheet } from "react-native";
+import { Colors } from "../constant/Color";
 
 //  container : 최상위 View의 스타일
 //  inputStart : Textinput 시작
@@ -96,6 +97,12 @@ export default styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
+  choiceText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#ffffff",
+    borderColor: "#007aff",
+  },
   titletext: {
     fontSize: 50,
     fontWeight: "bold",
@@ -121,7 +128,7 @@ export default styles = StyleSheet.create({
     alignSelf: "center",
   },
   signButton: {
-    backgroundColor: "#007aff",
+    backgroundColor: Colors.blue1,
     borderRadius: 16,
     height: 40,
     marginTop: 16,
