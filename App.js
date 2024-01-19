@@ -1,9 +1,9 @@
+//  상단바 관련 라이브러리
+import { StatusBar } from "expo-status-bar";
+import { useContext } from "react";
 //  navigation을 import
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
-//  상단바 관련 라이브러리
-//  import { StatusBar } from "expo-status-bar";
 
 //  사용되는 페이지들 import
 import SigninScreen from "./Screens/SigninScreen";
@@ -13,6 +13,10 @@ import MainScreen from "./Screens/MainScreen";
 import PredictScreen from "./Screens/PredictScreen";
 import ExerciseListScreen from "./Screens/ExerciseListScreen";
 import DetailScreen from "./Screens/DetailScreen";
+
+// Context 전용 import
+import AuthContextProvider from "./util/auth-context";
+import { AuthContext } from "./util/auth-context";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -72,23 +76,31 @@ const MainStack = () => {
   );
 };
 
+function Navigation() {
+  const authCtx = useContext(AuthContext);
+
+  return (
+    <NavigationContainer>
+      {/*인증되지 않았을시 LoginStack렌더링(로그인, 회원가입)*/}
+      {!authCtx.isAuthenticated && <LoginStack />}
+      {/*인증됬을 시 MainStack렌더링(메인)*/}
+      {authCtx.isAuthenticated && <MainStack />}
+    </NavigationContainer>
+  );
+}
+
 //  navigation을 모아서 렌더링
 //  로그인 Stack과 메인 Stack으로 구성됨
 export default function App() {
+  {
+    /*Context 생성 후 사용할 Navigation Container에 해당 함수를 감싸주기*/
+  }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="LoginStack"
-          component={LoginStack}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MainStack"
-          component={MainStack}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar style="light" />
+      <AuthContextProvider>
+        <Navigation />
+      </AuthContextProvider>
+    </>
   );
 }

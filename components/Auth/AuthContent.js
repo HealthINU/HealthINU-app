@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Alert, ScrollView, Text, ImageBackground } from "react-native";
+import { Alert, ScrollView, View, Text, ImageBackground } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 //  그라데이션 배경을 위한 라이브러리
 import { LinearGradient } from "expo-linear-gradient";
-import AuthForm from "./AuthForm";
 
+import AuthForm from "./AuthForm";
+import Button from "../ui/Button";
 function AuthContent({ isLogin, onAuthenticate }) {
+  //네비게이션 사용 변수
+  const navigation = useNavigation();
+
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     id: false,
@@ -13,6 +18,8 @@ function AuthContent({ isLogin, onAuthenticate }) {
     name: false,
   });
 
+  //전송받은 값 확인
+  console.log(credentialsInvalid);
   // 입력 오류 없는지 확인
   function submitHandler(credentials) {
     let { email, id, password, confirmPassword, name } = credentials;
@@ -23,16 +30,16 @@ function AuthContent({ isLogin, onAuthenticate }) {
     name = name.trim();
 
     const emailIsValid = email.includes("@");
-    const idIsValid = id.length > 8;
+    //const idIsValid = id.length > 8; // id확인용, 보류
     const passwordIsValid = password.length > 6;
     const passwordsAreEqual = password === confirmPassword;
-    const nameIsValid = name.length > 6;
+    //const nameIsValid = name.length > 6; //유저명 확인용, 보류
 
     if (
+      //!idIsValid ||
+      //!nameIsValid ||
       !emailIsValid ||
-      !idIsValid ||
       !passwordIsValid ||
-      !nameIsValid ||
       (!isLogin && !passwordsAreEqual)
     ) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
@@ -48,6 +55,14 @@ function AuthContent({ isLogin, onAuthenticate }) {
     onAuthenticate({ email, password, id, name });
   }
 
+  // 회원가입 , 로그인 화면 변환 함수
+  function switchAuthModeHandler() {
+    if (isLogin) {
+      navigation.navigate("Signup");
+    } else {
+      navigation.navigate("Signin");
+    }
+  }
   return (
     <ScrollView
       contentContainerStyle={{
@@ -77,6 +92,28 @@ function AuthContent({ isLogin, onAuthenticate }) {
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
+
+      <View style={styles.choiceContainer}>
+        {/* 아래 두 개는 SIGN IN, SIGN UP 텍스트들 */}
+        <Text
+          style={{
+            ...styles.choiceText,
+            borderBottomWidth: isLogin ? 2 : undefined,
+          }}
+          onPress={switchAuthModeHandler}
+        >
+          SIGN IN
+        </Text>
+        <Text
+          style={{
+            ...styles.choiceText,
+            borderBottomWidth: !isLogin ? 2 : undefined,
+          }}
+          onPress={switchAuthModeHandler}
+        >
+          SIGN UP
+        </Text>
+      </View>
     </ScrollView>
   );
 }

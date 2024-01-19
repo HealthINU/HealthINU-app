@@ -3,8 +3,14 @@ import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Button } from "@rneui/themed";
 import styles from "../styles/styles";
 import { Camera } from "expo-camera";
+import ImageButton from "../components/ui/ImageButton";
+
+//Context import
+import { useContext } from "react";
+import { AuthContext } from "../util/auth-context";
 
 export default function MainScreen({ navigation }) {
+  const authCtx = useContext(AuthContext);
   return (
     <View style={{ ...styles.container }}>
       {/* HealthINU 텍스트와 이미지 들어가는 View */}
@@ -19,10 +25,7 @@ export default function MainScreen({ navigation }) {
       >
         {/* HealthINU 텍스트 */}
         <Text style={styles.text}>HealthINU</Text>
-        <Image
-          source={require("../assets/madong.png")}
-          style={{ width: 32, height: 32, borderRadius: 10 }}
-        />
+        <ImageButton onPress={authCtx.logout} />
       </View>
 
       {/* 프로필 사진, 이름, 레벨, 키, 몸무게, BMI */}
