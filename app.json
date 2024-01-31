@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "healthinu",
     "name": "AppPage",
     "slug": "AppPage",
     "version": "1.0.0",
