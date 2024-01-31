@@ -1,12 +1,14 @@
 // import { Button, StyleSheet, Text, View } from "react-native";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Linking, TouchableOpacity, Image } from "react-native";
 import * as expo_Linking from "expo-linking";
 import queryString from "query-string";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../util/auth-context";
 
 export default function GoogleButton() {
   const navigation = useNavigation();
+  const authCtx = useContext(AuthContext);
 
   const handleOpenURL = ({ url }) => {
     const query = url.split("?")[1];
@@ -14,7 +16,7 @@ export default function GoogleButton() {
 
     console.log(query_string.login);
     if (query_string.login === "true") {
-      navigation.navigate("Signin");
+      authCtx.authenticate(query_string.token);
     } else {
       navigation.navigate("Signup");
     }
