@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Alert, ScrollView, View, Text, ImageBackground } from "react-native";
+import {
+  Alert,
+  ScrollView,
+  View,
+  Text,
+  ImageBackground,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 //  그라데이션 배경을 위한 라이브러리
 import { LinearGradient } from "expo-linear-gradient";
 
 import AuthForm from "./AuthForm";
 import Button from "../ui/Button";
+import GoogleButton from "./GoogleButton";
+
 function AuthContent({ isLogin, onAuthenticate }) {
   //네비게이션 사용 변수
   const navigation = useNavigation();
@@ -114,6 +123,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
           SIGN UP
         </Text>
       </View>
+      <GoogleButton />
     </ScrollView>
   );
 }
