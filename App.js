@@ -8,15 +8,18 @@ import { createStackNavigator } from "@react-navigation/stack";
 //  사용되는 페이지들 import
 import SigninScreen from "./Screens/SigninScreen";
 import SignupScreen from "./Screens/SignupScreen";
-import KameraScreen from "./Screens/KameraScreen";
+import KameraScreen from "./components/Camera/KameraScreen";
 import MainScreen from "./Screens/MainScreen";
-import PredictScreen from "./Screens/PredictScreen";
-import ExerciseListScreen from "./Screens/ExerciseListScreen";
-import DetailScreen from "./Screens/DetailScreen";
+import PredictScreen from "./components/Camera/PredictScreen";
+import ExerciseListScreen from "./components/Camera/ExerciseListScreen";
+import DetailScreen from "./components/Camera/DetailScreen";
 
 // Context 전용 import
 import AuthContextProvider from "./util/auth-context";
 import { AuthContext } from "./util/auth-context";
+import ExerciseSearch from "./components/ExerciseDetail/ExerciseSearch";
+import Profile from "./Screens/Profile";
+import ChangeProfile from "./Screens/ChangeProfile";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -51,8 +54,23 @@ const MainStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChangeProfile"
+        component={ChangeProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Kamera"
         component={KameraScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ExerciseSearch"
+        component={ExerciseSearch}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -9,7 +9,7 @@ import {
   Linking,
   Button,
 } from "react-native";
-import styles from "../styles/styles";
+import styles from "../../styles/styles";
 //onPress={() => openURL(bench_press["url1"].link)}
 
 export default function DetailScreen({ navigation }) {
@@ -21,7 +21,7 @@ export default function DetailScreen({ navigation }) {
       <Text style={styles1.title}>운동이름</Text>
       <TouchableOpacity style={{ margin: 10 }}>
         <Image
-          source={require("../assets/exercise_picture/bench_press_machine.jpg")}
+          source={require("../../assets/exercise_picture/bench_press_machine.jpg")}
           style={{ width: 298, height: 235 }}
         />
       </TouchableOpacity>

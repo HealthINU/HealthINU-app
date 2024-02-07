@@ -1,31 +1,36 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
-import { Button } from "@rneui/themed";
+import { Text, View, Image } from "react-native";
 import styles from "../styles/styles";
 import { Camera } from "expo-camera";
-import ImageButton from "../components/ui/ImageButton";
 
-//Context import
-import { useContext } from "react";
-import { AuthContext } from "../util/auth-context";
+import IconButton from "../components/ui/IconButton";
+import { Colors } from "../constant/Color";
 
 export default function MainScreen({ navigation }) {
-  const authCtx = useContext(AuthContext);
+  function moveProfile() {
+    navigation.navigate("Profile");
+  }
+  function moveExerciseList() {
+    navigation.navigate("ExerciseSearch");
+  }
+  async function moveCamera() {
+    await Camera.requestCameraPermissionsAsync();
+    navigation.navigate("Kamera");
+  }
+
   return (
     <View style={{ ...styles.container }}>
       {/* HealthINU 텍스트와 이미지 들어가는 View */}
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 16,
-        }}
-      >
+      <View style={styles.barContainer}>
         {/* HealthINU 텍스트 */}
         <Text style={styles.text}>HealthINU</Text>
-        <ImageButton onPress={authCtx.logout} />
+        {/* 프로필 화면 이동 */}
+        <IconButton
+          icon={"person-circle-outline"}
+          color={Colors.white1}
+          size={30}
+          onPress={moveProfile}
+        />
       </View>
 
       {/* 프로필 사진, 이름, 레벨, 키, 몸무게, BMI */}
@@ -60,100 +65,31 @@ export default function MainScreen({ navigation }) {
           <Text style={styles.text}>BMI : 22.02</Text>
         </View>
       </View>
-
-      {/* 운동 카테고리 */}
       <View
         style={{
-          width: "100%",
-          height: 99,
-          marginTop: 8,
+          flexDirection: "row",
         }}
       >
-        <ScrollView style={{ height: "100%" }} horizontal={true}>
-          <View style={{}}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignItems: "flex-end",
-              }}
-            >
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="요가"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="필라테스"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="기구없이"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="하체"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="상체"
-              />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignItems: "flex-end",
-              }}
-            >
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="다이어트"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="체력강화"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="유산소"
-              />
-              <Button
-                buttonStyle={styles.generalButton}
-                titleStyle={styles.generalFont}
-                title="복근"
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </View>
-
-      {/*
+        {/*
         카메라 페이지로 가는 버튼
         누르면 카메라 권한 요청
       */}
-      <TouchableOpacity
-        style={{ marginTop: 40 }}
-        onPress={async () => {
-          await Camera.requestCameraPermissionsAsync();
-          navigation.navigate("Kamera");
-        }}
-      >
-        {/* 카메라 아이콘 */}
-        <Image
-          source={require("../assets/camera.png")}
-          style={{ width: 48, height: 48, tintColor: "#ffffff" }}
+        <IconButton
+          icon={"camera-outline"}
+          color={Colors.white1}
+          size={50}
+          onPress={moveCamera}
         />
-      </TouchableOpacity>
-
+        {/*
+        운동리스트 검색칸으로 이동
+         */}
+        <IconButton
+          icon={"walk-outline"}
+          color={Colors.white1}
+          size={50}
+          onPress={moveExerciseList}
+        />
+      </View>
       {/* 상단바 밝게 */}
       <StatusBar style="light" />
     </View>

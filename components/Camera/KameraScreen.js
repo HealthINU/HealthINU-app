@@ -1,11 +1,13 @@
 //  카메라 모듈 라이브러리
 import { Camera, CameraType } from "expo-camera";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useState, useEffect, useRef } from "react";
+import { Image, Text, View } from "react-native";
+
+import IconButton from "../ui/IconButton";
+import { Colors } from "../../constant/Color";
+
 //  기기 크기 가져오기 위한 라이브러리
 import { Dimensions } from "react-native";
-//  외부 라이브러리 : 스타일 좋은 컴포넌트 제공하는 라이브러리
-import { Button } from "@rneui/themed";
 //  이미지 불러오는 라이브러리
 import * as ImagePicker from "expo-image-picker";
 //  이미지 resize하는 라이브러리
@@ -20,9 +22,14 @@ const url = "http://138.2.59.246:8080";
 const u_url = url + "/upload";
 const p_url = url + "/process";
 
-import styles from "../styles/styles";
+import styles from "../../styles/styles";
 
 export default function KameraScreen({ navigation }) {
+  //Main화면 돌아감
+  function moveMain() {
+    navigation.navigate("Main");
+  }
+
   //  폰 가로 길이
   const windowWidth = Dimensions.get("window").width;
   //  폰 세로 길이
@@ -187,29 +194,26 @@ export default function KameraScreen({ navigation }) {
             }}
           >
             {/* 갤러리에서 사진 가져오는 버튼 */}
-            <TouchableOpacity onPress={pickImage}>
-              <Image
-                source={require("../assets/gallery.png")}
-                style={{
-                  width: 48,
-                  height: 48,
-                  tintColor: "#ffffff",
-                  marginLeft: 24,
-                }}
-              />
-            </TouchableOpacity>
+            <IconButton
+              icon={"image-outline"}
+              color={Colors.white1}
+              size={50}
+              onPress={pickImage}
+            />
             {/* 사진 찍는 버튼 */}
-            <TouchableOpacity onPress={takePictureHandler}>
-              <Image
-                source={require("../assets/shutter.png")}
-                style={{
-                  width: 48,
-                  height: 48,
-                  tintColor: "#ffffff",
-                  marginRight: windowWidth / 2 - 24,
-                }}
-              />
-            </TouchableOpacity>
+            <IconButton
+              icon={"aperture-outline"}
+              color={Colors.white1}
+              size={50}
+              onPress={takePictureHandler}
+            />
+            {/* 메인 복귀 버튼 */}
+            <IconButton
+              icon={"home-outline"}
+              color={Colors.white1}
+              size={50}
+              onPress={moveMain}
+            />
           </View>
         </View>
       )}
@@ -236,10 +240,10 @@ export default function KameraScreen({ navigation }) {
             }}
           >
             {/* 사진 다시 찍는 버튼 */}
-            <Button
-              buttonStyle={styles.generalButton}
-              titleStyle={styles.generalFont}
-              title="Retake?"
+            <IconButton
+              icon={"camera-reverse-outline"}
+              color={Colors.white1}
+              size={50}
               onPress={() => setImage(null)}
             />
 
@@ -248,10 +252,10 @@ export default function KameraScreen({ navigation }) {
             사진을 서버에 전송하고
             Predict 페이지로 이동
           */}
-            <Button
-              title="Upload"
-              buttonStyle={styles.generalButton}
-              titleStyle={styles.generalFont}
+            <IconButton
+              icon={"thumbs-up-outline"}
+              color={Colors.white1}
+              size={50}
               onPress={async () => {
                 const data = await req_image(image);
                 console.log(data);

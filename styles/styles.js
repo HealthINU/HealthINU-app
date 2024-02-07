@@ -78,6 +78,18 @@ export default styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 20,
   },
+  listContainer: {
+    flex: 1,
+    backgroundColor: "#000000",
+    paddingTop: 40,
+  },
+  barContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+  },
   inputStart: {
     width: "100%",
     borderTopWidth: 1,

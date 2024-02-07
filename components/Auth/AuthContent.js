@@ -81,7 +81,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
     >
       {/* gif 배경이미지 */}
       <ImageBackground
-        source={require("../../assets/gym1.gif")}
+        //source={require("../../assets/gym1.gif")}
         style={{ width: "100%", height: 205 }}
       >
         {/* 그라데이션 배경 */}
