@@ -5,20 +5,34 @@ import * as expo_Linking from "expo-linking";
 import queryString from "query-string";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../util/auth-context";
+import axios from "axios";
+import config from "../../config/config.json";
+
+const URL = config.URL;
 
 export default function GoogleButton() {
   const navigation = useNavigation();
   const authCtx = useContext(AuthContext);
 
-  const handleOpenURL = ({ url }) => {
+  const handleOpenURL = async ({ url }) => {
+    console.log(url);
     const query = url.split("?")[1];
+    //  query string 파싱
     const query_string = queryString.parse(query);
 
-    console.log(query_string.login);
-    if (query_string.login === "true") {
+    //  받아온 토큰 검증
+    const result = await axios.get(`http://${URL}:8080/auth/verify`, {
+      headers: {
+        Authorization: `Bearer ${query_string.token}`,
+      },
+    });
+
+    //  Verified or Unauthorized
+    console.log(result.data);
+
+    //  토큰이 검증되면 저장함 ( 그리고 자동으로 메인으로 이동함 )
+    if (result.data === "Verified") {
       authCtx.authenticate(query_string.token);
-    } else {
-      navigation.navigate("Signup");
     }
   };
 
@@ -27,9 +41,9 @@ export default function GoogleButton() {
 
     const url = expo_Linking.createURL();
     // const url = 123;
-    Linking.openURL(
-      `http://www.healthinu.r-e.kr:8080/auth/google?url=${url}`
-    ).catch((err) => console.error("An error occurred", err));
+    Linking.openURL(`http://${URL}:8080/auth/google?url=${url}`).catch((err) =>
+      console.error("An error occurred", err)
+    );
   };
 
   return (
