@@ -15,7 +15,7 @@ import AuthForm from "./AuthForm";
 import Button from "../ui/Button";
 import GoogleButton from "./GoogleButton";
 
-function AuthContent({ isLogin, onAuthenticate }) {
+function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
   //네비게이션 사용 변수
   const navigation = useNavigation();
 
@@ -39,10 +39,10 @@ function AuthContent({ isLogin, onAuthenticate }) {
     name = name.trim();
 
     const emailIsValid = email.includes("@");
-    //const idIsValid = id.length > 8; // id확인용, 보류
+    const idIsValid = id.length > 8; // id확인용, 보류
     const passwordIsValid = password.length > 6;
     const passwordsAreEqual = password === confirmPassword;
-    //const nameIsValid = name.length > 6; //유저명 확인용, 보류
+    const nameIsValid = name.length > 6; //유저명 확인용, 보류
 
     if (
       //!idIsValid ||
@@ -61,7 +61,13 @@ function AuthContent({ isLogin, onAuthenticate }) {
       });
       return;
     }
-    onAuthenticate({ email, password, id, name });
+    // onAuthenticate({ email, password, id, name });
+    onLocalAuth({
+      user_email: email,
+      user_id: id,
+      user_pw: password,
+      user_name: name,
+    });
   }
 
   // 회원가입 , 로그인 화면 변환 함수
