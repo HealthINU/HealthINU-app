@@ -69,17 +69,17 @@ export default function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
       <View style={styles.inputStart}>
         {/*Email 입력창*/}
         <Input
-          label="Email"
-          onUpdateValue={updateInputValueHandler.bind(this, "email")}
-          value={enteredEmail}
+          label="id"
+          onUpdateValue={updateInputValueHandler.bind(this, "id")}
+          value={enteredId}
           keyboardType="email-address"
         />
         {/* 아이디 입력창 */}
         {!isLogin && (
           <Input
-            label="id"
-            onUpdateValue={updateInputValueHandler.bind(this, "id")}
-            value={enteredId}
+            label="email"
+            onUpdateValue={updateInputValueHandler.bind(this, "email")}
+            value={enteredEmail}
             keyboardType="email-address"
           />
         )}

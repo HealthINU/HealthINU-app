@@ -31,7 +31,7 @@ export default function GoogleButton() {
     console.log(result.data);
 
     //  토큰이 검증되면 저장함 ( 그리고 자동으로 메인으로 이동함 )
-    if (result.data === "Verified") {
+    if (result.data.message === "Verified") {
       authCtx.authenticate(query_string.token);
     }
   };

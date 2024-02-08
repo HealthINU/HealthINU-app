@@ -45,11 +45,11 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
     const nameIsValid = name.length > 6; //유저명 확인용, 보류
 
     if (
-      //!idIsValid ||
-      //!nameIsValid ||
-      !emailIsValid ||
+      !idIsValid ||
       !passwordIsValid ||
-      (!isLogin && !passwordsAreEqual)
+      (!isLogin && !passwordsAreEqual) ||
+      (!isLogin && !emailIsValid) ||
+      (!isLogin && !nameIsValid)
     ) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
       setCredentialsInvalid({

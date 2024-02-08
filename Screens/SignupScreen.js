@@ -41,8 +41,6 @@ function SignUpScreen() {
         user_name
       ); //local-auth.js 참고 return한 data 받음
 
-      console.log(result);
-
       if (result.status === 200) {
         Alert.alert("인증성공", "유저 생성 완료");
         authCtx.authenticate(result.data.token); // 서버가 반환한 토큰 전달

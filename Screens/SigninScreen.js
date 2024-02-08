@@ -28,7 +28,6 @@ function SiginScreen() {
     try {
       const result = await localLogin(user_id, user_pw); //local-auth.js 참고 return한 data 받음
 
-      console.log(result);
       if (result.status === 200) {
         authCtx.authenticate(result.data.token); // firebase가 반환한 토큰 전달
       } else {
@@ -36,6 +35,7 @@ function SiginScreen() {
         setIsAuthenticating(false); // 유저 생성 완료후 다시 false로
       }
     } catch (error) {
+      console.log(error);
       Alert.alert("인증실패", "Undefined error");
       setIsAuthenticating(false); // 유저 생성 완료후 다시 false로
     }
