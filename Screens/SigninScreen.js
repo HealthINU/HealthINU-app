@@ -12,6 +12,7 @@ function SiginScreen() {
 
   const authCtx = useContext(AuthContext); // Context 호출 변수
 
+  // 현재 사용중이 아님 (파이어베이스)
   async function loginHandler({ email, password }) {
     setIsAuthenticating(true);
     try {

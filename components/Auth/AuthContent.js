@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import AuthForm from "./AuthForm";
-import Button from "../ui/Button";
 import GoogleButton from "./GoogleButton";
 
 function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {

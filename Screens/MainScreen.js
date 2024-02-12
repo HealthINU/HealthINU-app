@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, FlatList } from "react-native";
+import { useState } from "react";
 import styles from "../styles/styles";
 import { Camera } from "expo-camera";
 
@@ -7,12 +8,36 @@ import IconButton from "../components/ui/IconButton";
 import { Colors } from "../constant/Color";
 
 export default function MainScreen({ navigation }) {
+  //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
+  const [exerciseItems, setExerciseItems] = useState([
+    {
+      text: "test1",
+      id: Math.random().toString(),
+      detail: "운동에 대한 설명1",
+    },
+    {
+      text: "test2",
+      id: Math.random().toString(),
+      detail: "운동에 대한 설명2",
+    },
+    {
+      text: "test3",
+      id: Math.random().toString(),
+      detail: "운동에 대한 설명3",
+    },
+  ]);
+
   function moveProfile() {
     navigation.navigate("Profile");
   }
   function moveExerciseList() {
     navigation.navigate("ExerciseSearch");
   }
+  // 운동 테스트 화면 이동(임시)
+  function moveExercising() {
+    navigation.navigate("Exercising");
+  }
+
   async function moveCamera() {
     await Camera.requestCameraPermissionsAsync();
     navigation.navigate("Kamera");
@@ -88,6 +113,35 @@ export default function MainScreen({ navigation }) {
           color={Colors.white1}
           size={50}
           onPress={moveExerciseList}
+        />
+      </View>
+      {/*
+        운동 테스트 칸 이동
+         */}
+      <IconButton
+        icon={"walk"}
+        color={Colors.white1}
+        size={50}
+        onPress={moveExercising}
+      />
+      <View>
+        <Text style={[styles.text, { color: Colors.green2 }]}>
+          Today Health
+        </Text>
+        <FlatList
+          data={exerciseItems}
+          horizontal={true}
+          renderItem={(itemData) => {
+            return (
+              <View style={{ marginRight: 10 }}>
+                <Image
+                  source={require("../assets/madong.png")}
+                  style={{ width: 154, height: "30%", borderRadius: 32 }}
+                />
+                <Text style={styles.text}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
         />
       </View>
       {/* 상단바 밝게 */}

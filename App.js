@@ -20,6 +20,7 @@ import { AuthContext } from "./util/auth-context";
 import ExerciseSearch from "./components/ExerciseDetail/ExerciseSearch";
 import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
+import Exercising from "./components/ExerciseDetail/Exercising";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -88,6 +89,12 @@ const MainStack = () => {
       <Stack.Screen
         name="Detail"
         component={DetailScreen}
+        options={{ headerShown: false }}
+      />
+      {/* 화면 확인용 이동 navigate -> 수정해야함 */}
+      <Stack.Screen
+        name="Exercising"
+        component={Exercising}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

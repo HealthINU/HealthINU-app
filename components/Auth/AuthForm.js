@@ -67,7 +67,7 @@ export default function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
   return (
     <View>
       <View style={styles.inputStart}>
-        {/*Email 입력창*/}
+        {/*id 입력창*/}
         <Input
           label="id"
           onUpdateValue={updateInputValueHandler.bind(this, "id")}
@@ -116,7 +116,6 @@ export default function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
         )}
       </View>
       {/* 로그인 버튼 */}
-      {/* 기능 구현 아직 안 함*/}
       <Button onPress={submitHandler}>{isLogin ? "SIGN IN" : "SIGN UP"}</Button>
       {/* 배경이 검정이므로 상단바 스타일 밝게 */}
       <StatusBar style="light" />

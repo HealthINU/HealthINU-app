@@ -1,11 +1,13 @@
-import { View, Text, Dimensions, StyleSheet, Image } from "react-native";
+import { View, Text, Dimensions, StyleSheet, Image, Alert } from "react-native";
 //Context import
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../util/auth-context";
 
 import IconButton from "../components/ui/IconButton";
 import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
+//npx npm install react-native-calendars필요
+import { Calendar } from "react-native-calendars";
 
 //  폰 가로 길이
 const windowWidth = Dimensions.get("window").width;
@@ -14,6 +16,29 @@ const windowHeight = Dimensions.get("window").height;
 
 function Profile({ navigation }) {
   const authCtx = useContext(AuthContext);
+  //달력 표시 예제
+  const [events, setEvents] = useState({
+    "2024-02-15": {
+      selected: true,
+      marked: true,
+      selectedColor: "blue",
+      description: "푸쉬업",
+    },
+    "2024-02-16": {
+      marked: true,
+      dotColor: "red",
+      activeOpacity: 0,
+      description: "레그톱",
+    },
+  });
+  //예시 : 날짜 선택시 정보 알려줌
+  const handleDayPress = (day) => {
+    const date = day.dateString;
+    const description = events[date]
+      ? events[date].description
+      : "운동 정보가 없습니다.";
+    Alert.alert(date, description);
+  };
 
   //Main화면 돌아감
   function moveMain() {
@@ -36,8 +61,12 @@ function Profile({ navigation }) {
             <Text style={[styles.text, { fontSize: 30 }]}>유동현</Text>
           </View>
         </View>
-        <View style={{ flex: 1, marginTop: 10 }}>
-          <Text style={styles.text}>설명란 or 잔디</Text>
+        <View style={{ flex: 3, marginTop: 10, marginBottom: 50 }}>
+          <Calendar
+            style={{ width: "100%", height: "100%" }}
+            markedDates={events}
+            onDayPress={handleDayPress}
+          />
         </View>
       </View>
       <View style={styles.barContainer}>

@@ -1,6 +1,6 @@
 //  스타일만 모아둔 파일
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../constant/Color";
 
 //  container : 최상위 View의 스타일
@@ -70,6 +70,10 @@ import { Colors } from "../constant/Color";
 //	카드?
 
 // -----------------------------------------------
+//  폰 가로 길이
+const windowWidth = Dimensions.get("window").width / 2;
+//  폰 세로 길이
+const windowHeight = Dimensions.get("window").height / 4;
 
 export default styles = StyleSheet.create({
   container: {
@@ -89,6 +93,11 @@ export default styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 16,
+  },
+  setContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
   },
   inputStart: {
     width: "100%",
@@ -164,5 +173,10 @@ export default styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     color: "#ffffff",
+  },
+  Image: {
+    width: windowWidth,
+    height: windowHeight,
+    margin: 20,
   },
 });
