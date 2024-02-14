@@ -55,12 +55,13 @@ function ChangeProfile({ navigation }) {
       ); //local-auth.js 참고 return한 data 받음
       if (result.status == 200) {
         Alert.alert("인증성공", "프로필 수정 완료");
-        authCtx.authenticate(result.data.token);
+        setIsAuthenticating(false); // 프로필 변경 완료후 다시 false로
       } else {
         Alert.alert("인증실패", "입력값의 오류입니다.다시 시도해주세요");
         setIsAuthenticating(false); // 프로필 변경 완료후 다시 false로
       }
     } catch (error) {
+      console.log(error);
       Alert.alert("인증실패", "Undefined error");
       setIsAuthenticating(false); // 프로필 변경 완료후 다시 false로
     }

@@ -27,20 +27,14 @@ async function authenticate(mode, { user_email, user_id, user_pw, user_name }) {
 //운동 정보를 넣음
 async function Information(authCtx, { user_name, user_height, user_weight }) {
   const url = `http://${URL}:8080/info/user`;
-  console.log(url);
 
-  let data;
-  if (mode == "user") {
-    data = { user_name, user_height, user_weight };
-  } else if (mode == "own") {
-    data = {
-      user_email,
-      user_id,
-      user_pw,
-      user_name,
-    };
-  }
-  const response = await axios.get(url, {
+  const data = {
+    user_name,
+    user_height,
+    user_weight,
+  };
+
+  const response = await axios.patch(url, data, {
     headers: {
       Authorization: `Bearer ${authCtx.token}`,
     },
