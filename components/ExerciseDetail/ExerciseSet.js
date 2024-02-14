@@ -6,14 +6,19 @@ import styles from "../../styles/styles";
 function ExerciseSet({ text }) {
   return (
     <View style={styles.setContainer}>
-      <Text style={styles1.exerciseText}>{text}</Text>
+      <Text style={[styles1.exerciseText, { marginLeft: 8, marginRight: 10 }]}>
+        {text}
+      </Text>
+      <TextInput
+        placeholder="10kg"
+        keyboardType="decimal-pad"
+        placeholderTextColor={Colors.gray1}
+      />
       <TextInput
         placeholder="10"
         keyboardType="decimal-pad"
         placeholderTextColor={Colors.gray1}
       />
-      {/*체크박스로 바꿔야함 */}
-      <Text style={[styles1.exerciseText, { color: Colors.gray1 }]}>v</Text>
     </View>
   );
 }

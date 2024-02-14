@@ -36,8 +36,8 @@ function Exercising({ navigation }) {
       <Text style={[styles.text, { marginBottom: 15 }]}>운동이름</Text>
       <View style={styles.setContainer}>
         <Text style={styles.text}>세트</Text>
+        <Text style={styles.text}>무게</Text>
         <Text style={styles.text}>회</Text>
-        <Text style={styles.text}>완료</Text>
       </View>
       {/* sets 배열을 맵핑하여 ExerciseSet 컴포넌트를 생성*/}
       {sets.map((set) => (

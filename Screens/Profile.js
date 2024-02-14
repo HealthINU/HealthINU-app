@@ -22,22 +22,28 @@ function Profile({ navigation }) {
       selected: true,
       marked: true,
       selectedColor: "blue",
-      description: "푸쉬업",
+      description1: "푸쉬업 10회",
+      description2: "친업 20회",
     },
     "2024-02-16": {
       marked: true,
       dotColor: "red",
       activeOpacity: 0,
-      description: "레그톱",
+      description1: "레그톱 20회",
+      description2: "윗몸 30회",
     },
   });
+  //운동 설명
+  const [exercise_des, setExercise_des] = useState();
+
   //예시 : 날짜 선택시 정보 알려줌
   const handleDayPress = (day) => {
     const date = day.dateString;
     const description = events[date]
-      ? events[date].description
+      ? events[date].description1 + "   " + events[date].description2
       : "운동 정보가 없습니다.";
-    Alert.alert(date, description);
+    setExercise_des(description);
+    //Alert.alert(date, description);
   };
 
   //Main화면 돌아감
@@ -52,21 +58,24 @@ function Profile({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.titletext}>Profile</Text>
       <View style={style1.profilecontainer}>
-        <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={{ flex: 2, flexDirection: "row" }}>
           <Image
             source={require("../assets/madong.png")}
             style={style1.profileImage}
           />
           <View style={style1.name}>
-            <Text style={[styles.text, { fontSize: 30 }]}>유동현</Text>
+            <Text style={[styles.text, { fontSize: 20 }]}>유동현</Text>
           </View>
         </View>
-        <View style={{ flex: 3, marginTop: 10, marginBottom: 50 }}>
+        <View style={{ flex: 7, marginTop: 10 }}>
           <Calendar
             style={{ width: "100%", height: "100%" }}
             markedDates={events}
             onDayPress={handleDayPress}
           />
+        </View>
+        <View style={{ flex: 1, marginTop: 10, marginBottom: 50 }}>
+          <Text style={styles.text}>{exercise_des}</Text>
         </View>
       </View>
       <View style={styles.barContainer}>

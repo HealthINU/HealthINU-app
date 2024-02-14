@@ -20,7 +20,6 @@ function ChangeProfile({ navigation }) {
 
   //useState
   const [enteredUserName, setEnteredUserName] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
   const [enteredHeight, setEnteredHeight] = useState("");
   const [enteredWeight, setEnteredWeight] = useState("");
 
@@ -29,9 +28,6 @@ function ChangeProfile({ navigation }) {
     switch (inputType) {
       case "UserName":
         setEnteredUserName(enteredValue);
-        break;
-      case "Age":
-        setEnteredAge(enteredValue);
         break;
       case "Height":
         setEnteredHeight(enteredValue);
@@ -44,18 +40,18 @@ function ChangeProfile({ navigation }) {
 
   // 데이터 정보 최신화
   async function editProfileHandler({
+    authCtx,
     user_name,
     user_height,
     user_weight,
-    age,
   }) {
     setIsAuthenticating(true);
     try {
       const result = await editProfile(
+        authCtx,
         user_name,
         user_height,
-        user_weight,
-        age
+        user_weight
       ); //local-auth.js 참고 return한 data 받음
       if (result.status == 200) {
         Alert.alert("인증성공", "프로필 수정 완료");
@@ -88,12 +84,6 @@ function ChangeProfile({ navigation }) {
           onUpdateValue={updateInputValueHandler.bind(this, "UserName")}
           value={enteredUserName}
         />
-        <Input
-          label="Age"
-          keyboardType="decimal-pad"
-          onUpdateValue={updateInputValueHandler.bind(this, "Age")}
-          value={enteredAge}
-        />
         <View style={styles1.input}>
           <Text style={[{ fontSize: 14, color: Colors.gray1 }]}>
             GenderName
@@ -118,10 +108,10 @@ function ChangeProfile({ navigation }) {
       <Button
         onPress={() =>
           editProfileHandler({
+            authCtx: authCtx,
             user_name: enteredUserName,
             user_height: enteredHeight,
             user_weight: enteredWeight,
-            age: enteredAge,
           })
         }
       >
