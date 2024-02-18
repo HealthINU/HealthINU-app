@@ -40,6 +40,8 @@ async function Information(authCtx, { user_name, user_height, user_weight }) {
     },
   });
 
+  authCtx.info_dispatch({ type: "setUser", payload: data });
+
   return response;
 }
 

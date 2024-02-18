@@ -1,13 +1,19 @@
+import { useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, Image, FlatList } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/styles";
 import { Camera } from "expo-camera";
 
 import IconButton from "../components/ui/IconButton";
 import { Colors } from "../constant/Color";
 
+import { AuthContext } from "../util/auth-context";
+
 export default function MainScreen({ navigation }) {
+  const authCtx = useContext(AuthContext);
+  const user_info = authCtx.info.user;
+
   //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
   const [exerciseItems, setExerciseItems] = useState([
     {
@@ -42,6 +48,8 @@ export default function MainScreen({ navigation }) {
     await Camera.requestCameraPermissionsAsync();
     navigation.navigate("Kamera");
   }
+
+  useEffect(() => {}, [authCtx.info.user]);
 
   return (
     <View style={{ ...styles.container }}>
@@ -83,10 +91,10 @@ export default function MainScreen({ navigation }) {
           }}
         >
           {/* 이름, 레벨, 키, 몸무게, BMI */}
-          <Text style={styles.text}>동근님 안녕하세요</Text>
-          <Text style={styles.text}>Lv. 19</Text>
-          <Text style={styles.text}>키 : 177cm</Text>
-          <Text style={styles.text}>몸무게 : 69kg</Text>
+          <Text style={styles.text}>{user_info.user_name}님 안녕하세요</Text>
+          <Text style={styles.text}>Lv. {user_info.user_level}</Text>
+          <Text style={styles.text}>키 : {user_info.user_height}cm</Text>
+          <Text style={styles.text}>몸무게 : {user_info.user_weight}kg</Text>
           <Text style={styles.text}>BMI : 22.02</Text>
         </View>
       </View>

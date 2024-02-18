@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, FlatList } from "react-native";
 
 import { Colors } from "../../constant/Color";
@@ -6,26 +6,14 @@ import ExerciseItem from "./ExerciseItem";
 import IconButton from "../ui/IconButton";
 import styles from "../../styles/styles";
 import ExerciseDetail from "./ExerciseDetail";
+import { AuthContext } from "../../util/auth-context";
 
 function ExerciseSearch({ navigation }) {
+  const authCtx = useContext(AuthContext);
+  const equipment = authCtx.info.equipment;
+
   //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
-  const [exerciseItems, setExerciseItems] = useState([
-    {
-      text: "test1",
-      id: Math.random().toString(),
-      detail: "운동에 대한 설명1",
-    },
-    {
-      text: "test2",
-      id: Math.random().toString(),
-      detail: "운동에 대한 설명2",
-    },
-    {
-      text: "test3",
-      id: Math.random().toString(),
-      detail: "운동에 대한 설명3",
-    },
-  ]);
+  const [exerciseItems, setExerciseItems] = useState(equipment);
   //모달 여는 용도 변수
   const [modalIsVisible, setModalIsVisible] = useState(false);
   //운동 데이터 설명 변수(모달로 전달)
@@ -66,9 +54,11 @@ function ExerciseSearch({ navigation }) {
             return (
               <View>
                 <ExerciseItem
-                  text={itemData.item.text}
-                  id={itemData.item.id}
-                  onPress={() => startAddFoalHandler(itemData.item.detail)}
+                  text={itemData.item.equipment_name}
+                  id={itemData.item.equipment_num}
+                  onPress={() =>
+                    startAddFoalHandler(itemData.item.equipment_description)
+                  }
                 />
                 <ExerciseDetail
                   visible={modalIsVisible}

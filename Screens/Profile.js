@@ -16,6 +16,9 @@ const windowHeight = Dimensions.get("window").height;
 
 function Profile({ navigation }) {
   const authCtx = useContext(AuthContext);
+  //  유저 정보 가져오기
+  const user_info = authCtx.info.user;
+
   //달력 표시 예제
   const [events, setEvents] = useState({
     "2024-02-15": {
@@ -64,7 +67,9 @@ function Profile({ navigation }) {
             style={style1.profileImage}
           />
           <View style={style1.name}>
-            <Text style={[styles.text, { fontSize: 20 }]}>유동현</Text>
+            <Text style={[styles.text, { fontSize: 20 }]}>
+              {user_info.user_name}
+            </Text>
           </View>
         </View>
         <View style={{ flex: 7, marginTop: 10 }}>
