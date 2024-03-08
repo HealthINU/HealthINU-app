@@ -2,6 +2,7 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { Image, Text, View } from "react-native";
+import * as FileSystem from "expo-file-system";
 
 import IconButton from "../ui/IconButton";
 import { Colors } from "../../constant/Color";
@@ -85,7 +86,8 @@ export default function KameraScreen({ navigation }) {
     //  formData를 만들어서
     //  필요한 정보들 넣어줌
     const formData = new FormData();
-    formData.append("name", "test");
+    // formData.append("name", "test");
+
     formData.append("image", {
       uri:
         Platform.OS === "android"
@@ -97,21 +99,17 @@ export default function KameraScreen({ navigation }) {
 
     //  서버에 전송
     //  서버로부터 이미지 경로 받아옴
-    //  url 본인의 로컬 ip로 바꿔야 함
-    const response = await fetch(u_url, {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-      },
+
+    const img_url =
+      Platform.OS === "android" ? image.uri : image.uri.replace("file://", "");
+
+    let res = await FileSystem.uploadAsync(u_url, img_url, {
+      fieldName: "image",
+      httpMethod: "POST",
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
     });
-
-    //  json으로 변환
-    const data = await response.json();
-    console.log(data);
-
-    return data;
+    res = JSON.parse(res.body);
+    return res;
   };
 
   //  사진 찍는 함수

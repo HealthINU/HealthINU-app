@@ -13,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import AuthForm from "./AuthForm";
 import GoogleButton from "./GoogleButton";
+import Button from "../ui/Button";
 
 function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
   //네비게이션 사용 변수
@@ -77,6 +78,14 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
       navigation.navigate("Signin");
     }
   }
+
+  function autologin() {
+    onLocalAuth({
+      user_id: "healthinu123",
+      user_pw: "healthinu123",
+    });
+  }
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -129,6 +138,7 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
         </Text>
       </View>
       <GoogleButton />
+      <Button onPress={autologin}>빠른 로그인</Button>
     </ScrollView>
   );
 }
