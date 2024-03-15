@@ -1,10 +1,10 @@
-import { StyleSheet, View, Text, Modal, Image } from "react-native";
+import { StyleSheet, View, Text, Modal, Image, ScrollView } from "react-native";
 
 import IconButton from "../ui/IconButton";
 import { Colors } from "../../constant/Color";
 import styles from "../../styles/styles";
 
-function ExerciseDetail({ visible, onCancel, description }) {
+function ExerciseDetail({ visible, onCancel, description, title }) {
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles1.inputContainer}>
@@ -12,7 +12,15 @@ function ExerciseDetail({ visible, onCancel, description }) {
           style={styles.Image}
           source={require("../../assets/madong.png")}
         />
-        <Text style={styles1.modaltext}>{description}</Text>
+        <Text style={styles.titletext}>{title}</Text>
+        <ScrollView
+          style={{
+            width: "100%",
+            padding: 16,
+          }}>
+          <Text style={styles1.modaltext}>{description}</Text>
+        </ScrollView>
+
         <View style={styles1.buttonContainer}>
           <IconButton
             icon={"caret-down-outline"}
@@ -35,11 +43,11 @@ const styles1 = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    backgroundColor: Colors.skyblue1,
+    backgroundColor: Colors.black,
   },
   modaltext: {
     ...styles.text,
-    backgroundColor: Colors.blue1,
+    backgroundColor: Colors.gray2,
     borderRadius: 6,
     width: "100%",
     padding: 16,

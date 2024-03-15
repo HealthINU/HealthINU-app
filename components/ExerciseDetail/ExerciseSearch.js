@@ -18,10 +18,13 @@ function ExerciseSearch({ navigation }) {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   //운동 데이터 설명 변수(모달로 전달)
   const [selectedExercise, setSelectedExercise] = useState(null);
+  //운동 데이터 제목 변수(모달로 전달)
+  const [titleExercise, setTitleExercise] = useState(null);
 
   //모달 열기 함수
   function startAddFoalHandler(detail) {
-    setSelectedExercise(detail);
+    setSelectedExercise(detail.equipment_description);
+    setTitleExercise(detail.equipment_name);
     setModalIsVisible(true);
   }
 
@@ -56,14 +59,16 @@ function ExerciseSearch({ navigation }) {
                 <ExerciseItem
                   text={itemData.item.equipment_name}
                   id={itemData.item.equipment_num}
-                  onPress={() =>
-                    startAddFoalHandler(itemData.item.equipment_description)
-                  }
+                  category={itemData.item.equipment_category}
+                  onPress={() => {
+                    startAddFoalHandler(itemData.item);
+                  }}
                 />
                 <ExerciseDetail
                   visible={modalIsVisible}
                   onCancel={endAddFoalHandler}
                   description={selectedExercise}
+                  title={titleExercise}
                 />
               </View>
             );

@@ -58,12 +58,6 @@ export default function MainScreen({ navigation }) {
         {/* HealthINU 텍스트 */}
         <Text style={styles.text}>HealthINU</Text>
         {/* 프로필 화면 이동 */}
-        <IconButton
-          icon={"person-circle-outline"}
-          color={Colors.white1}
-          size={30}
-          onPress={moveProfile}
-        />
       </View>
 
       {/* 프로필 사진, 이름, 레벨, 키, 몸무게, BMI */}
@@ -72,37 +66,84 @@ export default function MainScreen({ navigation }) {
           width: 350,
           height: 272,
           flexDirection: "row",
+          justifyContent: "space-around",
           backgroundColor: "#1F1F1F",
           borderRadius: 32,
           padding: 8,
-        }}
-      >
+        }}>
         {/* 프로필 사진 */}
         <Image
           source={require("../assets/sample_avatar.png")}
-          style={{ width: 154, height: "100%", borderRadius: 32 }}
+          style={{ width: 150, height: "100%", borderRadius: 32 }}
         />
         <View
           style={{
-            height: "100%",
             justifyContent: "space-around",
             padding: 16,
-            alignItems: "flex-end",
-          }}
-        >
+            alignItems: "center",
+          }}>
           {/* 이름, 레벨, 키, 몸무게, BMI */}
-          <Text style={styles.text}>{user_info.user_name}님 안녕하세요</Text>
-          <Text style={styles.text}>Lv. {user_info.user_level}</Text>
-          <Text style={styles.text}>키 : {user_info.user_height}cm</Text>
-          <Text style={styles.text}>몸무게 : {user_info.user_weight}kg</Text>
-          <Text style={styles.text}>BMI : 22.02</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.text}>{user_info.user_name}</Text>
+            <Text style={styles.grayText}>nickname</Text>
+          </View>
+          {/* <Text style={styles.text}>Lv. {user_info.user_level}</Text> */}
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.text}>{user_info.user_height}cm</Text>
+            <Text style={styles.grayText}>Height</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.text}>{user_info.user_weight}kg</Text>
+            <Text style={styles.grayText}>Weight</Text>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.text}>22.02</Text>
+            <Text style={styles.grayText}>BMI</Text>
+          </View>
         </View>
       </View>
       <View
         style={{
+          backgroundColor: "#1F1F1F",
+          borderRadius: 32,
+          marginTop: 16,
+          width: "100%",
+          padding: 8,
+        }}>
+        <Text
+          style={[
+            styles.text,
+            { color: Colors.green2, padding: 16, fontSize: 24 },
+          ]}>
+          Today Health
+        </Text>
+        <FlatList
+          data={exerciseItems}
+          horizontal={true}
+          renderItem={(itemData) => {
+            return (
+              <View style={{ marginLeft: 15 }}>
+                <Image
+                  source={require("../assets/madong.png")}
+                  style={{ width: 177, height: 144, borderRadius: 32 }}
+                />
+                <Text style={{ ...styles.text, padding: 6 }}>
+                  {itemData.item.text}
+                </Text>
+              </View>
+            );
+          }}
+        />
+      </View>
+      <View
+        style={{
           flexDirection: "row",
-        }}
-      >
+          position: "absolute",
+          justifyContent: "space-around",
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}>
         {/*
         카메라 페이지로 가는 버튼
         누르면 카메라 권한 요청
@@ -122,34 +163,20 @@ export default function MainScreen({ navigation }) {
           size={50}
           onPress={moveExerciseList}
         />
-      </View>
-      {/*
+        {/*
         운동 테스트 칸 이동
          */}
-      <IconButton
-        icon={"walk"}
-        color={Colors.white1}
-        size={50}
-        onPress={moveExercising}
-      />
-      <View>
-        <Text style={[styles.text, { color: Colors.green2 }]}>
-          Today Health
-        </Text>
-        <FlatList
-          data={exerciseItems}
-          horizontal={true}
-          renderItem={(itemData) => {
-            return (
-              <View style={{ marginRight: 10 }}>
-                <Image
-                  source={require("../assets/madong.png")}
-                  style={{ width: 154, height: "30%", borderRadius: 32 }}
-                />
-                <Text style={styles.text}>{itemData.item.text}</Text>
-              </View>
-            );
-          }}
+        <IconButton
+          icon={"walk"}
+          color={Colors.white1}
+          size={50}
+          onPress={moveExercising}
+        />
+        <IconButton
+          icon={"person-circle-outline"}
+          color={Colors.white1}
+          size={30}
+          onPress={moveProfile}
         />
       </View>
       {/* 상단바 밝게 */}

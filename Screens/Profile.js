@@ -59,9 +59,9 @@ function Profile({ navigation }) {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.titletext}>Profile</Text>
+      <Text style={{ ...styles.titletext, paddingTop: 25 }}>Profile</Text>
       <View style={style1.profilecontainer}>
-        <View style={{ flex: 2, flexDirection: "row" }}>
+        <View style={{ flex: 2, flexDirection: "row", alignItems: "center" }}>
           <Image
             source={require("../assets/madong.png")}
             style={style1.profileImage}
@@ -74,7 +74,31 @@ function Profile({ navigation }) {
         </View>
         <View style={{ flex: 7, marginTop: 10 }}>
           <Calendar
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#1f1f1f",
+            }}
+            theme={{
+              backgroundColor: "#000",
+              calendarBackground: "#1f1f1f",
+              textSectionTitleColor: "#fff",
+              selectedDayBackgroundColor: "#ffffff",
+              selectedDayTextColor: "#ffffff",
+              todayTextColor: "#8080ff",
+              dayTextColor: "#fff",
+              textDisabledColor: "#fff",
+              arrowColor: "#40ff40",
+              monthTextColor: "#fff",
+              "stylesheet.calendar.header": {
+                dayTextAtIndex0: {
+                  color: "#ff8080",
+                },
+                dayTextAtIndex6: {
+                  color: "#8080ff",
+                },
+              },
+            }}
             markedDates={events}
             onDayPress={handleDayPress}
           />
@@ -120,8 +144,8 @@ const style1 = StyleSheet.create({
     padding: 20,
   },
   profileImage: {
-    width: "70%",
-    height: "100%",
+    width: 50,
+    height: 50,
     borderRadius: 40,
   },
   name: {

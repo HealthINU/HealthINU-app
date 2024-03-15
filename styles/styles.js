@@ -118,6 +118,10 @@ export default styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
+  grayText: {
+    fontSize: 13,
+    color: "#888888",
+  },
   choiceText: {
     fontSize: 14,
     fontWeight: "bold",
@@ -125,7 +129,7 @@ export default styles = StyleSheet.create({
     borderColor: "#007aff",
   },
   titletext: {
-    fontSize: 50,
+    fontSize: 48,
     fontWeight: "bold",
     color: "#ffffff",
   },
