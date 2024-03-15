@@ -20,11 +20,17 @@ function ExerciseSearch({ navigation }) {
   const [selectedExercise, setSelectedExercise] = useState(null);
   //운동 데이터 제목 변수(모달로 전달)
   const [titleExercise, setTitleExercise] = useState(null);
+  //운동 데이터 category 변수(모달로 전달)
+  const [category, setCategory] = useState(null);
+  //운동 이미지 변수(모달로 전달)
+  const [exerciseImage, setExerciseImage] = useState(null);
 
   //모달 열기 함수
   function startAddFoalHandler(detail) {
     setSelectedExercise(detail.equipment_description);
     setTitleExercise(detail.equipment_name);
+    setCategory(detail.equipment_category);
+
     setModalIsVisible(true);
   }
 
@@ -50,7 +56,7 @@ function ExerciseSearch({ navigation }) {
       </View>
 
       {/*운동리스트*/}
-      <View>
+      <View style={{ flex: 1 }}>
         <FlatList
           data={exerciseItems}
           renderItem={(itemData) => {
@@ -69,6 +75,7 @@ function ExerciseSearch({ navigation }) {
                   onCancel={endAddFoalHandler}
                   description={selectedExercise}
                   title={titleExercise}
+                  category={category}
                 />
               </View>
             );
