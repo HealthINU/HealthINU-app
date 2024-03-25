@@ -1,8 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { Image, ScrollView, TouchableOpacity } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 import { Button } from "@rneui/themed";
+
+import ExerciseSearch from "../ExerciseDetail/ExerciseSearch";
+
 //  styles/styles.js에서 정의한 스타일을 불러옴
 import styles from "../../styles/styles";
 import { exercise_list } from "./exercise_list";
@@ -19,7 +22,13 @@ export default function PredictScreen({ navigation, route }) {
   //  가장 확률 높은 운동 이름
   const top_exercise = result[0]["name"];
 
-  console.log();
+  // 이동할 이름
+  const title = exercise_list[top_exercise]["name"];
+  //console.log("top_exercise : " + title);
+  function moveExerciseSearch(name) {
+    //console.log("가져올 운동 : " + name);
+    navigation.navigate("ExerciseSearch", { title: name });
+  }
 
   return (
     <View style={{ ...styles.container, justifyContent: "center" }}>
@@ -48,15 +57,16 @@ export default function PredictScreen({ navigation, route }) {
           Retake?
         </Button>
         {/*해당 운동이 맞을 시*/}
+        {/*onPress={() =>
+            navigation.navigate("ExerciseList", {
+              top_exercise: exercise_list[top_exercise]["key"],
+            })
+          }코드 변경*/}
         <Button
           buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
           titleStyle={styles.generalFont}
           title={top_exercise}
-          onPress={() =>
-            navigation.navigate("ExerciseList", {
-              top_exercise: exercise_list[top_exercise]["key"],
-            })
-          }
+          onPress={() => moveExerciseSearch(title)}
         >
           Yes
         </Button>

@@ -8,20 +8,23 @@ function ExerciseItem({ id, text, onPress, category }) {
       <Pressable
         android_ripple={{ color: Colors.blue1 }}
         onPress={onPress}
-        style={({ pressed }) => pressed && styles1.pressedItem}>
+        style={({ pressed }) => pressed && styles1.pressedItem}
+      >
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-          }}>
+          }}
+        >
           <View>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 padding: 8,
-              }}>
+              }}
+            >
               <Image
                 source={require("../../assets/madong.png")}
                 style={{ width: 64, height: 64, borderRadius: 32 }}

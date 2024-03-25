@@ -8,7 +8,10 @@ import styles from "../../styles/styles";
 import ExerciseDetail from "./ExerciseDetail";
 import { AuthContext } from "../../util/auth-context";
 
-function ExerciseSearch({ navigation }) {
+function ExerciseSearch({ navigation, route }) {
+  //카메라에서 이 화면으로 이동하는데 여기 title에 값이 전달
+  const title = route.params?.title || "";
+  console.log("가져와진 운동 : " + title);
   const authCtx = useContext(AuthContext);
   const equipment = authCtx.info.equipment;
 
@@ -32,6 +35,10 @@ function ExerciseSearch({ navigation }) {
     setCategory(detail.equipment_category);
 
     setModalIsVisible(true);
+  }
+  //운동 아이템 클릭 시 실행될 함수
+  function handleItemClick(item) {
+    startAddFoalHandler(item);
   }
 
   //모달 닫기 함수
@@ -60,6 +67,13 @@ function ExerciseSearch({ navigation }) {
         <FlatList
           data={exerciseItems}
           renderItem={(itemData) => {
+            {
+              // 카메라 바로이동 버튼 (해결중)-----------------------------
+              /*카메라 인식후 이동한 경우 -> 이거 해결시 카메라 클릭후 바로나옴*/
+            }
+            // if (itemData.item.equipment_name === title) {
+            //   startAddFoalHandler(itemData.item);
+            // }
             return (
               <View>
                 <ExerciseItem
@@ -67,7 +81,7 @@ function ExerciseSearch({ navigation }) {
                   id={itemData.item.equipment_num}
                   category={itemData.item.equipment_category}
                   onPress={() => {
-                    startAddFoalHandler(itemData.item);
+                    handleItemClick(itemData.item);
                   }}
                 />
                 <ExerciseDetail
