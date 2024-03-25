@@ -1,32 +1,30 @@
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import { Colors } from "../../constant/Color";
 import IconButton from "../ui/IconButton";
+import { Images } from "./ImgPath";
 
-function ExerciseItem({ id, text, onPress, category }) {
+function ExerciseItem({ id, text, onPress, category, eng_name }) {
   return (
     <View style={styles1.exerciseItem}>
       <Pressable
         android_ripple={{ color: Colors.blue1 }}
         onPress={onPress}
-        style={({ pressed }) => pressed && styles1.pressedItem}
-      >
+        style={({ pressed }) => pressed && styles1.pressedItem}>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-          }}
-        >
+          }}>
           <View>
             <View
               style={{
                 flexDirection: "row",
                 alignItems: "center",
                 padding: 8,
-              }}
-            >
+              }}>
               <Image
-                source={require("../../assets/madong.png")}
+                source={Images[eng_name]}
                 style={{ width: 64, height: 64, borderRadius: 32 }}
               />
               <View>

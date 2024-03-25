@@ -19,20 +19,26 @@ function ExerciseSearch({ navigation, route }) {
   const [exerciseItems, setExerciseItems] = useState(equipment);
   //모달 여는 용도 변수
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  //운동 데이터 설명 변수(모달로 전달)
-  const [selectedExercise, setSelectedExercise] = useState(null);
+  //운동 데이터 설명 변수1(모달로 전달)
+  const [selectedExercise1, setSelectedExercise1] = useState(null);
+  //운동 데이터 설명 변수2(모달로 전달)
+  const [selectedExercise2, setSelectedExercise2] = useState(null);
   //운동 데이터 제목 변수(모달로 전달)
   const [titleExercise, setTitleExercise] = useState(null);
   //운동 데이터 category 변수(모달로 전달)
   const [category, setCategory] = useState(null);
   //운동 이미지 변수(모달로 전달)
   const [exerciseImage, setExerciseImage] = useState(null);
+  //운동 영어 이름 변수(모달로 전달)
+  const [engName, setEngName] = useState(null);
 
   //모달 열기 함수
   function startAddFoalHandler(detail) {
-    setSelectedExercise(detail.equipment_description);
+    setSelectedExercise1(detail.equipment_description1);
+    setSelectedExercise2(detail.equipment_description2);
     setTitleExercise(detail.equipment_name);
     setCategory(detail.equipment_category);
+    setEngName(detail.equipment_eng);
 
     setModalIsVisible(true);
   }
@@ -79,6 +85,7 @@ function ExerciseSearch({ navigation, route }) {
                 <ExerciseItem
                   text={itemData.item.equipment_name}
                   id={itemData.item.equipment_num}
+                  eng_name={itemData.item.equipment_eng}
                   category={itemData.item.equipment_category}
                   onPress={() => {
                     handleItemClick(itemData.item);
@@ -87,8 +94,10 @@ function ExerciseSearch({ navigation, route }) {
                 <ExerciseDetail
                   visible={modalIsVisible}
                   onCancel={endAddFoalHandler}
-                  description={selectedExercise}
+                  description1={selectedExercise1}
+                  description2={selectedExercise2}
                   title={titleExercise}
+                  eng_name={engName}
                   category={category}
                 />
               </View>
