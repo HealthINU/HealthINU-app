@@ -70,7 +70,8 @@ export default function MainScreen({ navigation }) {
           backgroundColor: "#1F1F1F",
           borderRadius: 32,
           padding: 8,
-        }}>
+        }}
+      >
         {/* 프로필 사진 */}
         <Image
           source={require("../assets/sample_avatar.png")}
@@ -81,7 +82,8 @@ export default function MainScreen({ navigation }) {
             justifyContent: "space-around",
             padding: 16,
             alignItems: "center",
-          }}>
+          }}
+        >
           {/* 이름, 레벨, 키, 몸무게, BMI */}
           <View style={{ alignItems: "center" }}>
             <Text style={styles.text}>{user_info.user_name}</Text>
@@ -109,12 +111,14 @@ export default function MainScreen({ navigation }) {
           marginTop: 16,
           width: "100%",
           padding: 8,
-        }}>
+        }}
+      >
         <Text
           style={[
             styles.text,
             { color: Colors.green2, padding: 16, fontSize: 24 },
-          ]}>
+          ]}
+        >
           Today Health
         </Text>
         <FlatList
@@ -143,7 +147,8 @@ export default function MainScreen({ navigation }) {
           left: 0,
           right: 0,
           bottom: 0,
-        }}>
+        }}
+      >
         {/*
         카메라 페이지로 가는 버튼
         누르면 카메라 권한 요청

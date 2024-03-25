@@ -4,7 +4,33 @@ import IconButton from "../ui/IconButton";
 import { Colors } from "../../constant/Color";
 import styles from "../../styles/styles";
 
+import { Linking } from "react-native";
+//import { searchYoutube } from "../../util/youtube_search";
+
 function ExerciseDetail({ visible, onCancel, description, title, category }) {
+  // async function searchingYoutube(name) {
+  //   try {
+  //     // searchYoutube 함수의 결과를 기다림
+  //     const result = await searchYoutube(name);
+  //     console.log(result); // 결과를 콘솔에 출력하거나 다른 처리를 수행
+  //   } catch (error) {
+  //     console.error(error); // 에러 처리
+  //   }
+  // }
+  async function searchingYoutube(name) {
+    try {
+      const url = `https://www.youtube.com/results?search_query=${name}`;
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        console.log(`링크를 열 수 없습니다: ${url}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles1.inputContainer}>
@@ -14,7 +40,8 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
             width: "100%",
             justifyContent: "flex-start",
             alignItems: "center",
-          }}>
+          }}
+        >
           <View style={styles1.buttonContainer}>
             <IconButton
               icon={"arrow-back-circle-outline"}
@@ -31,7 +58,8 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: Colors.gray2,
-          }}>
+          }}
+        >
           <Image
             style={styles1.Image}
             source={require("../../assets/madong.png")}
@@ -47,7 +75,8 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
             width: "100%",
             justifyContent: "space-around",
             backgroundColor: Colors.gray2,
-          }}>
+          }}
+        >
           <View>
             <IconButton icon={"heart-sharp"} color={Colors.white1} size={32} />
             <Text
@@ -56,7 +85,8 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
                 fontSize: 13,
                 color: Colors.gray1,
                 paddingBottom: 10,
-              }}>
+              }}
+            >
               Bookmark
             </Text>
           </View>
@@ -69,7 +99,8 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
                 color: Colors.gray1,
                 alignSelf: "center",
                 paddingBottom: 10,
-              }}>
+              }}
+            >
               category
             </Text>
           </View>
@@ -80,15 +111,26 @@ function ExerciseDetail({ visible, onCancel, description, title, category }) {
             fontSize: 24,
             alignSelf: "flex-start",
             margin: 20,
-          }}>
+          }}
+        >
           Information
         </Text>
         <ScrollView
           style={{
             width: "100%",
-          }}>
+          }}
+        >
           <Text style={{ ...styles1.modaltext }}>{description}</Text>
         </ScrollView>
+        {/* 유튜브 이동버튼 title로 검색하게 하기 */}
+        <View>
+          <IconButton
+            icon={"logo-youtube"}
+            color={Colors.white1}
+            size={30}
+            onPress={() => searchingYoutube(title)}
+          />
+        </View>
       </View>
     </Modal>
   );
