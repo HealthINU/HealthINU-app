@@ -57,6 +57,15 @@ function ExerciseSearch({ navigation, route }) {
     navigation.navigate("Main");
   }
 
+  useEffect(() => {
+    if (title === "") {
+      return;
+    }
+    const exercise = equipment.find((item) => item.equipment_name === title);
+    startAddFoalHandler(exercise);
+    setTitle("");
+  }, [title]);
+
   return (
     <View style={styles.listContainer}>
       {/*상단바*/}
@@ -75,15 +84,6 @@ function ExerciseSearch({ navigation, route }) {
         <FlatList
           data={exerciseItems}
           renderItem={(itemData) => {
-            // {
-            // 카메라 바로이동 버튼 (해결중)-----------------------------
-            /*카메라 인식후 이동한 경우 -> 이거 해결시 카메라 클릭후 바로나옴*/
-            // }
-            if (itemData.item.equipment_name === title) {
-              startAddFoalHandler(itemData.item);
-              setTitle("");
-            }
-
             return (
               <View>
                 <ExerciseItem
