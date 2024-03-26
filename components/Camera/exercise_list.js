@@ -23,7 +23,7 @@ export const exercise_list = {
   },
   hip_abduction_machine: {
     key: "hip_abduction",
-    name: "힙 어브덕션",
+    name: "힙 어덕션",
     jpg: require("../../assets/exercise_picture/hip_abduction_machine.jpg"),
   },
   leg_press_machine: {

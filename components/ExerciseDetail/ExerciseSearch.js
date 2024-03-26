@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 
 import { Colors } from "../../constant/Color";
@@ -9,11 +9,12 @@ import ExerciseDetail from "./ExerciseDetail";
 import { AuthContext } from "../../util/auth-context";
 
 function ExerciseSearch({ navigation, route }) {
-  //카메라에서 이 화면으로 이동하는데 여기 title에 값이 전달
-  const title = route.params?.title || "";
-  console.log("가져와진 운동 : " + title);
   const authCtx = useContext(AuthContext);
   const equipment = authCtx.info.equipment;
+
+  //카메라에서 이 화면으로 이동하는데 여기 title에 값이 전달
+  const [title, setTitle] = useState(route.params?.title || "");
+  console.log("가져와진 운동 : " + title);
 
   //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
   const [exerciseItems, setExerciseItems] = useState(equipment);
@@ -55,6 +56,7 @@ function ExerciseSearch({ navigation, route }) {
   function moveMain() {
     navigation.navigate("Main");
   }
+
   return (
     <View style={styles.listContainer}>
       {/*상단바*/}
@@ -73,13 +75,15 @@ function ExerciseSearch({ navigation, route }) {
         <FlatList
           data={exerciseItems}
           renderItem={(itemData) => {
-            {
-              // 카메라 바로이동 버튼 (해결중)-----------------------------
-              /*카메라 인식후 이동한 경우 -> 이거 해결시 카메라 클릭후 바로나옴*/
-            }
-            // if (itemData.item.equipment_name === title) {
-            //   startAddFoalHandler(itemData.item);
+            // {
+            // 카메라 바로이동 버튼 (해결중)-----------------------------
+            /*카메라 인식후 이동한 경우 -> 이거 해결시 카메라 클릭후 바로나옴*/
             // }
+            if (itemData.item.equipment_name === title) {
+              startAddFoalHandler(itemData.item);
+              setTitle("");
+            }
+
             return (
               <View>
                 <ExerciseItem
@@ -91,18 +95,18 @@ function ExerciseSearch({ navigation, route }) {
                     handleItemClick(itemData.item);
                   }}
                 />
-                <ExerciseDetail
-                  visible={modalIsVisible}
-                  onCancel={endAddFoalHandler}
-                  description1={selectedExercise1}
-                  description2={selectedExercise2}
-                  title={titleExercise}
-                  eng_name={engName}
-                  category={category}
-                />
               </View>
             );
           }}
+        />
+        <ExerciseDetail
+          visible={modalIsVisible}
+          onCancel={endAddFoalHandler}
+          description1={selectedExercise1}
+          description2={selectedExercise2}
+          title={titleExercise}
+          eng_name={engName}
+          category={category}
         />
       </View>
     </View>
