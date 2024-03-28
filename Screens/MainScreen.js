@@ -12,6 +12,11 @@ export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const user_info = authCtx.info.user;
 
+  const BMI = (
+    user_info.user_weight /
+    (user_info.user_height / 100) ** 2
+  ).toFixed(2);
+
   //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
   const [exerciseItems, setExerciseItems] = useState([
     {
@@ -67,16 +72,16 @@ export default function MainScreen({ navigation }) {
 
           {/* <Text style={styles.text}>Lv. {user_info.user_level}</Text> */}
           <View>
-            <Text style={styles.grayText}>Height</Text>
+            <Text style={styles.redText}>Height</Text>
             <Text style={styles.text}>{user_info.user_height}cm</Text>
           </View>
           <View>
-            <Text style={styles.grayText}>Weight</Text>
+            <Text style={styles.greenText}>Weight</Text>
             <Text style={styles.text}>{user_info.user_weight}kg</Text>
           </View>
           <View>
-            <Text style={styles.grayText}>BMI</Text>
-            <Text style={styles.text}>22.02</Text>
+            <Text style={styles.blueText}>BMI</Text>
+            <Text style={styles.text}>{BMI}</Text>
           </View>
         </View>
       </View>

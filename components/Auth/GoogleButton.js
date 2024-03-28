@@ -49,8 +49,8 @@ export default function GoogleButton() {
   return (
     <TouchableOpacity onPress={login}>
       <Image
-        source={require("../../assets/google.png")}
-        style={{ width: 50, height: 50, alignSelf: "center" }}
+        source={require("../../assets/google_button.png")}
+        style={{ width: 189, height: 40, alignSelf: "center" }}
       />
     </TouchableOpacity>
   );

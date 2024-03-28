@@ -122,6 +122,18 @@ export default styles = StyleSheet.create({
     fontSize: 13,
     color: "#888888",
   },
+  redText: {
+    fontSize: 13,
+    color: "#FF453A",
+  },
+  greenText: {
+    fontSize: 13,
+    color: "#30D158",
+  },
+  blueText: {
+    fontSize: 13,
+    color: "#0A84FF",
+  },
   choiceText: {
     fontSize: 14,
     fontWeight: "bold",

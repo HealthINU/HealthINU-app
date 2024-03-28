@@ -91,13 +91,11 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
       contentContainerStyle={{
         flexGrow: 1,
         backgroundColor: "#000000",
-      }}
-    >
+      }}>
       {/* gif 배경이미지 */}
       <ImageBackground
         //source={require("../../assets/gym1.gif")}
-        style={{ width: "100%", height: 205 }}
-      >
+        style={{ width: "100%", height: 205 }}>
         {/* 그라데이션 배경 */}
         <LinearGradient
           colors={["transparent", "rgba(0,0,0,1.0)"]}
@@ -123,8 +121,7 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
             ...styles.choiceText,
             borderBottomWidth: isLogin ? 2 : undefined,
           }}
-          onPress={switchAuthModeHandler}
-        >
+          onPress={switchAuthModeHandler}>
           SIGN IN
         </Text>
         <Text
@@ -132,8 +129,7 @@ function AuthContent({ isLogin, onAuthenticate, onLocalAuth }) {
             ...styles.choiceText,
             borderBottomWidth: !isLogin ? 2 : undefined,
           }}
-          onPress={switchAuthModeHandler}
-        >
+          onPress={switchAuthModeHandler}>
           SIGN UP
         </Text>
       </View>
