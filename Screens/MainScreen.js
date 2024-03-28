@@ -3,12 +3,10 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View, Image, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import styles from "../styles/styles";
-import { Camera } from "expo-camera";
-
-import IconButton from "../components/ui/IconButton";
 import { Colors } from "../constant/Color";
 
 import { AuthContext } from "../util/auth-context";
+import BottomNav from "../components/ui/BottomNav";
 
 export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
@@ -32,22 +30,6 @@ export default function MainScreen({ navigation }) {
       detail: "운동에 대한 설명3",
     },
   ]);
-
-  function moveProfile() {
-    navigation.navigate("Profile");
-  }
-  function moveExerciseList() {
-    navigation.navigate("ExerciseSearch");
-  }
-  // 운동 테스트 화면 이동(임시)
-  function moveExercising() {
-    navigation.navigate("Exercising");
-  }
-
-  async function moveCamera() {
-    await Camera.requestCameraPermissionsAsync();
-    navigation.navigate("Kamera");
-  }
 
   useEffect(() => {}, [authCtx.info.user]);
 
@@ -143,50 +125,8 @@ export default function MainScreen({ navigation }) {
           }}
         />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          position: "absolute",
-          justifyContent: "space-around",
-          left: 0,
-          right: 0,
-          bottom: 0,
-        }}>
-        {/*
-        카메라 페이지로 가는 버튼
-        누르면 카메라 권한 요청
-      */}
-        <IconButton
-          icon={"camera-outline"}
-          color={Colors.white1}
-          size={50}
-          onPress={moveCamera}
-        />
-        {/*
-        운동리스트 검색칸으로 이동
-         */}
-        <IconButton
-          icon={"walk-outline"}
-          color={Colors.white1}
-          size={50}
-          onPress={moveExerciseList}
-        />
-        {/*
-        운동 테스트 칸 이동
-         */}
-        <IconButton
-          icon={"walk"}
-          color={Colors.white1}
-          size={50}
-          onPress={moveExercising}
-        />
-        <IconButton
-          icon={"person-circle-outline"}
-          color={Colors.white1}
-          size={30}
-          onPress={moveProfile}
-        />
-      </View>
+
+      <BottomNav navigation={navigation} />
       {/* 상단바 밝게 */}
       <StatusBar style="light" />
     </View>
