@@ -8,6 +8,7 @@ import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
 //npx npm install react-native-calendars필요
 import { Calendar } from "react-native-calendars";
+import BottomNav from "../components/ui/BottomNav";
 
 //  폰 가로 길이
 const windowWidth = Dimensions.get("window").width;
@@ -49,19 +50,15 @@ function Profile({ navigation }) {
     //Alert.alert(date, description);
   };
 
-  //Main화면 돌아감
-  function moveMain() {
-    navigation.navigate("Main");
-  }
   //프로필 수정화면
   function profileEdit() {
     navigation.navigate("ChangeProfile");
   }
+
   return (
     <View style={styles.container}>
-      <Text style={{ ...styles.titletext, paddingTop: 25 }}>Profile</Text>
       <View style={style1.profilecontainer}>
-        <View style={{ flex: 2, flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flex: 3, flexDirection: "row", alignItems: "center" }}>
           <Image
             source={require("../assets/madong.png")}
             style={style1.profileImage}
@@ -109,12 +106,6 @@ function Profile({ navigation }) {
       </View>
       <View style={styles.barContainer}>
         <IconButton
-          icon={"home-outline"}
-          color={Colors.white1}
-          size={50}
-          onPress={moveMain}
-        />
-        <IconButton
           icon={"log-out-outline"}
           color={Colors.white1}
           size={50}
@@ -127,6 +118,7 @@ function Profile({ navigation }) {
           onPress={profileEdit}
         />
       </View>
+      <BottomNav navigation={navigation} />
     </View>
   );
 }
@@ -136,12 +128,13 @@ export default Profile;
 const style1 = StyleSheet.create({
   profilecontainer: {
     flex: 1,
-    width: windowWidth,
+    width: "auto",
     height: windowHeight,
     marginTop: 20,
     backgroundColor: Colors.gray2,
-    borderRadius: 32,
+    borderRadius: 16,
     padding: 20,
+    marginHorizontal: 20,
   },
   profileImage: {
     width: 50,

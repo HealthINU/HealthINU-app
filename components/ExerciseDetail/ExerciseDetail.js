@@ -66,6 +66,8 @@ function ExerciseDetail({
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: Colors.gray2,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
           }}>
           <Image style={styles1.Image} source={Images[eng_name]} />
           <View>
@@ -79,6 +81,8 @@ function ExerciseDetail({
             width: "100%",
             justifyContent: "space-around",
             backgroundColor: Colors.gray2,
+            borderBottomLeftRadius: 16,
+            borderBottomRightRadius: 16,
           }}>
           <View>
             <IconButton icon={"heart-sharp"} color={Colors.white1} size={32} />
@@ -163,6 +167,6 @@ const styles1 = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 20,
-    borderRadius: 50,
+    borderRadius: 16,
   },
 });

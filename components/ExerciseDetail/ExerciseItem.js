@@ -3,7 +3,12 @@ import { Colors } from "../../constant/Color";
 import IconButton from "../ui/IconButton";
 import { Images } from "./ImgPath";
 
-function ExerciseItem({ id, text, onPress, category, eng_name }) {
+function ExerciseItem({ id, text, onPress, category, eng_name, navigation }) {
+  // 운동 테스트 화면 이동(임시)
+  function moveExercising() {
+    navigation.navigate("Exercising");
+  }
+
   return (
     <View style={styles1.exerciseItem}>
       <Pressable
@@ -22,11 +27,13 @@ function ExerciseItem({ id, text, onPress, category, eng_name }) {
                 flexDirection: "row",
                 alignItems: "center",
                 padding: 8,
+                marginLeft: 8,
               }}>
               <Image
                 source={Images[eng_name]}
-                style={{ width: 64, height: 64, borderRadius: 32 }}
+                style={{ width: 64, height: 64, borderRadius: 16 }}
               />
+
               <View>
                 <Text style={styles1.exerciseText}>{text}</Text>
                 <Text style={{ ...styles1.exerciseText, color: Colors.gray1 }}>
@@ -35,8 +42,20 @@ function ExerciseItem({ id, text, onPress, category, eng_name }) {
               </View>
             </View>
           </View>
-
-          <IconButton icon={"heart-sharp"} color={Colors.white1} size={30} />
+          {/*
+        운동 테스트 칸 이동
+         */}
+          <View>
+            <View>
+              <IconButton
+                icon={"add-circle"}
+                color={Colors.gray1}
+                size={32}
+                onPress={moveExercising}
+              />
+            </View>
+            <IconButton icon={"heart-sharp"} color={Colors.white1} size={30} />
+          </View>
         </View>
       </Pressable>
     </View>
@@ -48,7 +67,7 @@ export default ExerciseItem;
 const styles1 = StyleSheet.create({
   exerciseItem: {
     margin: 8,
-    borderRadius: 6,
+    borderRadius: 16,
     backgroundColor: Colors.gray2,
   },
   pressedItem: {

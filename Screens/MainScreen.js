@@ -38,12 +38,10 @@ export default function MainScreen({ navigation }) {
       {/* HealthINU 텍스트와 이미지 들어가는 View */}
       <View style={styles.barContainer}>
         {/* HealthINU 텍스트 */}
-        <Text style={{ ...styles.text, fontSize: 32 }}>HealthINU</Text>
+        <Text style={{ ...styles.text, fontSize: 32, marginTop: 16 }}>
+          HealthINU
+        </Text>
         {/* 프로필 화면 이동 */}
-        <Image
-          source={require("../assets/sample_avatar.png")}
-          style={{ width: 64, height: 64, borderRadius: 32, margin: 16 }}
-        />
       </View>
 
       {/* 프로필 사진, 이름, 레벨, 키, 몸무게, BMI */}
@@ -90,40 +88,46 @@ export default function MainScreen({ navigation }) {
         ]}>
         Today Health
       </Text>
+
       <View
         style={{
-          backgroundColor: "#1F1F1F",
-          borderRadius: 16,
-          marginHorizontal: 16,
-          padding: 8,
-          height: 192,
+          flex: 1,
         }}>
-        <FlatList
-          data={exerciseItems}
-          horizontal={true}
-          renderItem={(itemData) => {
-            return (
-              <View>
-                <Image
-                  source={require("../assets/madong.png")}
-                  style={{
-                    width: 128,
-                    height: 128,
-                    borderRadius: 16,
-                    margin: 8,
-                  }}
-                />
-                <Text
-                  style={{
-                    ...styles.text,
-                    marginLeft: 8,
-                  }}>
-                  {itemData.item.text}
-                </Text>
-              </View>
-            );
-          }}
-        />
+        <View
+          style={{
+            backgroundColor: "#1F1F1F",
+            borderRadius: 16,
+            marginHorizontal: 16,
+            padding: 8,
+            height: 192,
+          }}>
+          <FlatList
+            data={exerciseItems}
+            horizontal={true}
+            renderItem={(itemData) => {
+              return (
+                <View>
+                  <Image
+                    source={require("../assets/madong.png")}
+                    style={{
+                      width: 128,
+                      height: 128,
+                      borderRadius: 16,
+                      margin: 8,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      ...styles.text,
+                      marginLeft: 8,
+                    }}>
+                    {itemData.item.text}
+                  </Text>
+                </View>
+              );
+            }}
+          />
+        </View>
       </View>
 
       <BottomNav navigation={navigation} />

@@ -7,6 +7,7 @@ import IconButton from "../ui/IconButton";
 import styles from "../../styles/styles";
 import ExerciseDetail from "./ExerciseDetail";
 import { AuthContext } from "../../util/auth-context";
+import BottomNav from "../ui/BottomNav";
 
 function ExerciseSearch({ navigation, route }) {
   const authCtx = useContext(AuthContext);
@@ -67,8 +68,8 @@ function ExerciseSearch({ navigation, route }) {
   }, [title]);
 
   return (
-    <View style={styles.listContainer}>
-      {/*상단바*/}
+    <View style={{ ...styles.listContainer, height: "auto" }}>
+      {/* 상단바
       <View style={styles.barContainer}>
         <IconButton
           icon={"home-outline"}
@@ -77,7 +78,7 @@ function ExerciseSearch({ navigation, route }) {
           onPress={moveMain}
         />
         <Text style={styles.text}>HealthINU</Text>
-      </View>
+      </View> */}
 
       {/*운동리스트*/}
       <View style={{ flex: 1 }}>
@@ -94,6 +95,7 @@ function ExerciseSearch({ navigation, route }) {
                   onPress={() => {
                     handleItemClick(itemData.item);
                   }}
+                  navigation={navigation}
                 />
               </View>
             );
@@ -109,6 +111,7 @@ function ExerciseSearch({ navigation, route }) {
           category={category}
         />
       </View>
+      <BottomNav navigation={navigation} />
     </View>
   );
 }

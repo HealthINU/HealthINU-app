@@ -14,10 +14,6 @@ function BottomNav({ navigation }) {
   function moveExerciseList() {
     navigation.navigate("ExerciseSearch");
   }
-  // 운동 테스트 화면 이동(임시)
-  function moveExercising() {
-    navigation.navigate("Exercising");
-  }
 
   async function moveCamera() {
     await Camera.requestCameraPermissionsAsync();
@@ -28,9 +24,10 @@ function BottomNav({ navigation }) {
     <View
       style={{
         flexDirection: "row",
-        position: "absolute",
+        // position: "absolute",
         justifyContent: "space-around",
         backgroundColor: "#28282A",
+        width: "100%",
         left: 0,
         right: 0,
         bottom: 0,
@@ -70,19 +67,6 @@ function BottomNav({ navigation }) {
           onPress={moveCamera}
         />
         <Text style={styles.grayText}>Camera</Text>
-      </View>
-
-      {/*
-        운동 테스트 칸 이동
-         */}
-      <View>
-        <IconButton
-          icon={"add-circle"}
-          color={Colors.gray1}
-          size={32}
-          onPress={moveExercising}
-        />
-        <Text style={styles.grayText}>Exercising </Text>
       </View>
       <View>
         <IconButton
