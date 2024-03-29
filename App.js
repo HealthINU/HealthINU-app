@@ -21,6 +21,7 @@ import ExerciseList from "./Screens/ExerciseList";
 import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
 import ExerciseRecord from "./Screens/ExerciseRecordScreen";
+import RankScreen from "./Screens/RankScreen";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -95,6 +96,11 @@ const MainStack = () => {
       <Stack.Screen
         name="ExerciseRecord"
         component={ExerciseRecord}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Rank"
+        component={RankScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

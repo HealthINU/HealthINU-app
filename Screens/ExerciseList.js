@@ -69,17 +69,6 @@ function ExerciseSearch({ navigation, route }) {
 
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
-      {/* 상단바
-      <View style={styles.barContainer}>
-        <IconButton
-          icon={"home-outline"}
-          color={Colors.white1}
-          size={30}
-          onPress={moveMain}
-        />
-        <Text style={styles.text}>HealthINU</Text>
-      </View> */}
-
       {/*운동리스트*/}
       <View style={{ flex: 1 }}>
         <FlatList

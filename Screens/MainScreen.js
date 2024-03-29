@@ -8,6 +8,7 @@ import { Colors } from "../constant/Color";
 import { AuthContext } from "../util/auth-context";
 import BottomNav from "../components/ui/BottomNav";
 import MainProfileView from "../components/Main/MainProfileView";
+import Button from "../components/ui/Button";
 
 export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
@@ -95,6 +96,12 @@ export default function MainScreen({ navigation }) {
             }}
           />
         </View>
+        <Button
+          onPress={() => {
+            navigation.navigate("Rank");
+          }}>
+          랭킹 이동
+        </Button>
       </View>
 
       <BottomNav navigation={navigation} />
