@@ -190,21 +190,21 @@ export default function KameraScreen({ navigation }) {
             }}>
             {/* 갤러리에서 사진 가져오는 버튼 */}
             <IconButton
-              icon={"image-outline"}
+              icon={"image"}
               color={Colors.white1}
               size={50}
               onPress={pickImage}
             />
             {/* 사진 찍는 버튼 */}
             <IconButton
-              icon={"aperture-outline"}
+              icon={"radio-button-on"}
               color={Colors.white1}
-              size={50}
+              size={64}
               onPress={takePictureHandler}
             />
             {/* 메인 복귀 버튼 */}
             <IconButton
-              icon={"home-outline"}
+              icon={"home"}
               color={Colors.white1}
               size={50}
               onPress={moveMain}

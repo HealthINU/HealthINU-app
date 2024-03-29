@@ -19,6 +19,7 @@ const MainProfileView = ({ user_info }) => {
         backgroundColor: "#1F1F1F",
         borderRadius: 16,
         marginHorizontal: 16,
+        marginTop: 16,
       }}>
       <View
         style={{
@@ -33,11 +34,17 @@ const MainProfileView = ({ user_info }) => {
         {/* <Text style={styles.text}>Lv. {user_info.user_level}</Text> */}
         <View>
           <Text style={styles.redText}>Height</Text>
-          <Text style={styles.text}>{user_info.user_height}cm</Text>
+          <Text style={styles.text}>
+            {user_info.user_height}
+            <Text style={styles.grayText}> cm</Text>
+          </Text>
         </View>
         <View>
           <Text style={styles.greenText}>Weight</Text>
-          <Text style={styles.text}>{user_info.user_weight}kg</Text>
+          <Text style={styles.text}>
+            {user_info.user_weight}
+            <Text style={styles.grayText}> kg</Text>
+          </Text>
         </View>
         <View>
           <Text style={styles.blueText}>BMI</Text>
