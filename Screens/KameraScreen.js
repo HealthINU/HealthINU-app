@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { Image, Text, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 
-import IconButton from "../ui/IconButton";
-import { Colors } from "../../constant/Color";
+import IconButton from "../components/ui/IconButton";
+import { Colors } from "../constant/Color";
 
 //  기기 크기 가져오기 위한 라이브러리
 import { Dimensions } from "react-native";
@@ -17,12 +17,12 @@ import * as ImageManipulator from "expo-image-manipulator";
 //  page를 벗어날 때의 로직을 위한 import
 import { useFocusEffect } from "@react-navigation/native";
 
-import config from "../../config/config.json";
+import config from "../config/config.json";
 
 const URL = config.URL;
 const u_url = "http://" + URL + ":8080/image/upload";
 
-import styles from "../../styles/styles";
+import styles from "../styles/styles";
 
 export default function KameraScreen({ navigation }) {
   //Main화면 돌아감
@@ -177,8 +177,7 @@ export default function KameraScreen({ navigation }) {
             type={type}
             ref={cameraRef}
             flashMode={flash}
-            ratio={ratio}
-          ></Camera>
+            ratio={ratio}></Camera>
 
           {/* 사진 찍는 버튼과 갤러리 버튼 */}
           <View
@@ -188,8 +187,7 @@ export default function KameraScreen({ navigation }) {
               justifyContent: "space-between",
               alignItems: "center",
               marginTop: (windowHeight - windowWidth) / 4,
-            }}
-          >
+            }}>
             {/* 갤러리에서 사진 가져오는 버튼 */}
             <IconButton
               icon={"image-outline"}
@@ -234,8 +232,7 @@ export default function KameraScreen({ navigation }) {
               justifyContent: "space-around",
               alignItems: "center",
               marginTop: (windowHeight - windowWidth) / 4,
-            }}
-          >
+            }}>
             {/* 사진 다시 찍는 버튼 */}
             <IconButton
               icon={"camera-reverse-outline"}

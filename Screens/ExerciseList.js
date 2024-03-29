@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 
-import { Colors } from "../../constant/Color";
-import ExerciseItem from "./ExerciseItem";
-import IconButton from "../ui/IconButton";
-import styles from "../../styles/styles";
-import ExerciseDetail from "./ExerciseDetail";
-import { AuthContext } from "../../util/auth-context";
-import BottomNav from "../ui/BottomNav";
+import { Colors } from "../constant/Color";
+import ExerciseItem from "../components/Exercise/ExerciseItem";
+import IconButton from "../components/ui/IconButton";
+import styles from "../styles/styles";
+import ExerciseDetail from "../components/Exercise/ExerciseDetail";
+import { AuthContext } from "../util/auth-context";
+import BottomNav from "../components/ui/BottomNav";
 
 function ExerciseSearch({ navigation, route }) {
   const authCtx = useContext(AuthContext);

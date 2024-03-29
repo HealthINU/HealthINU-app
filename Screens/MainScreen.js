@@ -7,15 +7,11 @@ import { Colors } from "../constant/Color";
 
 import { AuthContext } from "../util/auth-context";
 import BottomNav from "../components/ui/BottomNav";
+import MainProfileView from "../components/Main/MainProfileView";
 
 export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const user_info = authCtx.info.user;
-
-  const BMI = (
-    user_info.user_weight /
-    (user_info.user_height / 100) ** 2
-  ).toFixed(2);
 
   //운동 데이터 예시(categories를 넣어서 나중에 분류화면 만들 예정)
   const [exerciseItems, setExerciseItems] = useState([
@@ -49,42 +45,8 @@ export default function MainScreen({ navigation }) {
         {/* 프로필 화면 이동 */}
       </View>
 
-      {/* 프로필 사진, 이름, 레벨, 키, 몸무게, BMI */}
-      <View
-        style={{
-          width: "auto",
-          height: "272",
-          flexDirection: "row",
-          // justifyContent: "space-around",
-          backgroundColor: "#1F1F1F",
-          borderRadius: 16,
-          marginHorizontal: 16,
-        }}>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            padding: 16,
-            // alignItems: "center",
-          }}>
-          {/* 레벨, 키, 몸무게, BMI */}
-
-          {/* <Text style={styles.text}>Lv. {user_info.user_level}</Text> */}
-          <View>
-            <Text style={styles.redText}>Height</Text>
-            <Text style={styles.text}>{user_info.user_height}cm</Text>
-          </View>
-          <View>
-            <Text style={styles.greenText}>Weight</Text>
-            <Text style={styles.text}>{user_info.user_weight}kg</Text>
-          </View>
-          <View>
-            <Text style={styles.blueText}>BMI</Text>
-            <Text style={styles.text}>{BMI}</Text>
-          </View>
-        </View>
-      </View>
+      {/* 키, 몸무게, BMI 보여주는 Component */}
+      <MainProfileView user_info={user_info} />
 
       <Text
         style={[

@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-import IconButton from "./IconButton";
+import IconButton from "../ui/IconButton";
 
 function AddRemove({ text, Button, onPress, Color }) {
   return (

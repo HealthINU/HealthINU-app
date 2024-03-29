@@ -12,7 +12,7 @@ function BottomNav({ navigation }) {
     navigation.navigate("Profile");
   }
   function moveExerciseList() {
-    navigation.navigate("ExerciseSearch");
+    navigation.navigate("ExerciseList");
   }
 
   async function moveCamera() {

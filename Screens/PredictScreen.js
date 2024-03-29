@@ -4,11 +4,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 import { Button } from "@rneui/themed";
 
-import ExerciseSearch from "../ExerciseDetail/ExerciseSearch";
+import ExerciseSearch from "./ExerciseList";
 
 //  styles/styles.js에서 정의한 스타일을 불러옴
-import styles from "../../styles/styles";
-import { exercise_list } from "./exercise_list";
+import styles from "../styles/styles";
+import { exercise_list } from "../components/Camera/exercise_list";
 
 export default function PredictScreen({ navigation, route }) {
   //  카메라 페이지에서 넘어온 파라미터 받아오기
@@ -46,14 +46,12 @@ export default function PredictScreen({ navigation, route }) {
           flexDirection: "row",
           justifyContent: "space-around",
           width: "100%",
-        }}
-      >
+        }}>
         {/* 카메라 페이지로 이동하는 버튼*/}
         <Button
           buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
           titleStyle={styles.generalFont}
-          onPress={() => navigation.navigate("Kamera")}
-        >
+          onPress={() => navigation.navigate("Kamera")}>
           Retake?
         </Button>
         {/*해당 운동이 맞을 시*/}
@@ -66,8 +64,7 @@ export default function PredictScreen({ navigation, route }) {
           buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
           titleStyle={styles.generalFont}
           title={top_exercise}
-          onPress={() => moveExerciseSearch(title)}
-        >
+          onPress={() => moveExerciseSearch(title)}>
           Yes
         </Button>
       </View>

@@ -12,6 +12,7 @@ import ToggleSwitch from "../components/ui/ToggleSwitch";
 import { AuthContext } from "../util/auth-context";
 import { editProfile } from "../util/local-auth";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import BottomNav from "../components/ui/BottomNav";
 
 function ChangeProfile({ navigation }) {
   const authCtx = useContext(AuthContext); // Context 호출 변수
@@ -78,18 +79,16 @@ function ChangeProfile({ navigation }) {
       <View style={{ margin: 50 }}>
         <Text style={styles.titletext}>프로필 수정</Text>
       </View>
-      <View style={[styles.inputStart, { marginBottom: 20 }]}>
+      <View style={[styles.inputStart, { marginBottom: 20, flex: 1 }]}>
         {/*<Input label="Name" />*/}
         <Input
-          label="UserName"
+          label="Username"
           onUpdateValue={updateInputValueHandler.bind(this, "UserName")}
           value={enteredUserName}
         />
-        <View style={styles1.input}>
-          <Text style={[{ fontSize: 14, color: Colors.gray1 }]}>
-            GenderName
-          </Text>
-          <View style={{ marginLeft: 100 }}>
+        <View style={{ ...styles1.input, justifyContent: "space-between" }}>
+          <Text style={[{ fontSize: 14, color: Colors.gray1 }]}>Gender</Text>
+          <View style={{ marginRight: 16 }}>
             <ToggleSwitch />
           </View>
         </View>
@@ -105,25 +104,26 @@ function ChangeProfile({ navigation }) {
           onUpdateValue={updateInputValueHandler.bind(this, "Weight")}
           value={enteredWeight}
         />
+        <Button
+          onPress={() =>
+            editProfileHandler({
+              authCtx: authCtx,
+              user_name: enteredUserName,
+              user_height: enteredHeight,
+              user_weight: enteredWeight,
+            })
+          }>
+          수정 완료
+        </Button>
+        <IconButton
+          icon={"arrow-back-outline"}
+          color={Colors.white1}
+          size={30}
+          onPress={profile}
+        />
       </View>
-      <Button
-        onPress={() =>
-          editProfileHandler({
-            authCtx: authCtx,
-            user_name: enteredUserName,
-            user_height: enteredHeight,
-            user_weight: enteredWeight,
-          })
-        }
-      >
-        수정 완료
-      </Button>
-      <IconButton
-        icon={"arrow-back-outline"}
-        color={Colors.white1}
-        size={30}
-        onPress={profile}
-      />
+
+      <BottomNav navigation={navigation} />
     </View>
   );
 }

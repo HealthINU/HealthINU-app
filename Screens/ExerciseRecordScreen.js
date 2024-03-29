@@ -1,11 +1,12 @@
 import { View, Text, Image, Alert } from "react-native";
 
-import styles from "../../styles/styles";
-import ExerciseSet from "./ExerciseSet";
-import IconButton from "../ui/IconButton";
-import { Colors } from "../../constant/Color";
+import styles from "../styles/styles";
+import ExerciseSet from "../components/Exercise/ExerciseSet";
+import IconButton from "../components/ui/IconButton";
+import { Colors } from "../constant/Color";
 import { useState } from "react";
-import AddRemove from "../ui/AddRemove";
+import AddRemove from "../components/Exercise/AddRemove";
+import BottomNav from "../components/ui/BottomNav";
 
 function Exercising({ navigation }) {
   const [sets, setSets] = useState([1]); // sets를 배열로 관리
@@ -32,7 +33,7 @@ function Exercising({ navigation }) {
   }
   return (
     <View style={styles.container}>
-      <Image style={styles.Image} source={require("../../assets/madong.png")} />
+      <Image style={styles.Image} source={require("../assets/madong.png")} />
       <Text style={[styles.text, { marginBottom: 15 }]}>운동이름</Text>
       <View style={styles.setContainer}>
         <Text style={styles.text}>세트</Text>
@@ -57,12 +58,15 @@ function Exercising({ navigation }) {
           Button="remove"
         />
       </View>
-      <IconButton
-        icon={"home-outline"}
-        color={Colors.white1}
-        size={50}
-        onPress={moveMain}
-      />
+      <View style={{ flex: 1 }}>
+        <IconButton
+          icon={"home-outline"}
+          color={Colors.white1}
+          size={50}
+          onPress={moveMain}
+        />
+      </View>
+      <BottomNav navigation={navigation} />
     </View>
   );
 }

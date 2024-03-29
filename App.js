@@ -8,19 +8,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 //  사용되는 페이지들 import
 import SigninScreen from "./Screens/SigninScreen";
 import SignupScreen from "./Screens/SignupScreen";
-import KameraScreen from "./components/Camera/KameraScreen";
+import KameraScreen from "./Screens/KameraScreen";
 import MainScreen from "./Screens/MainScreen";
-import PredictScreen from "./components/Camera/PredictScreen";
+import PredictScreen from "./Screens/PredictScreen";
 import ExerciseListScreen from "./components/Camera/ExerciseListScreen";
 import DetailScreen from "./components/Camera/DetailScreen";
 
 // Context 전용 import
 import AuthContextProvider from "./util/auth-context";
 import { AuthContext } from "./util/auth-context";
-import ExerciseSearch from "./components/ExerciseDetail/ExerciseSearch";
+import ExerciseList from "./Screens/ExerciseList";
 import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
-import Exercising from "./components/ExerciseDetail/Exercising";
+import ExerciseRecord from "./Screens/ExerciseRecordScreen";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -70,8 +70,8 @@ const MainStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ExerciseSearch"
-        component={ExerciseSearch}
+        name="ExerciseList"
+        component={ExerciseList}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -81,7 +81,7 @@ const MainStack = () => {
       />
       {/* 화면 확인용 이동 navigate -> 수정해야함 */}
       <Stack.Screen
-        name="ExerciseList"
+        name="Legacy_ExerciseList"
         component={ExerciseListScreen}
         options={{ headerShown: false }}
       />
@@ -93,8 +93,8 @@ const MainStack = () => {
       />
       {/* 화면 확인용 이동 navigate -> 수정해야함 */}
       <Stack.Screen
-        name="Exercising"
-        component={Exercising}
+        name="ExerciseRecord"
+        component={ExerciseRecord}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
