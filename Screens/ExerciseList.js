@@ -98,6 +98,7 @@ function ExerciseSearch({ navigation, route }) {
           title={titleExercise}
           eng_name={engName}
           category={category}
+          navigation={navigation}
         />
       </View>
       <BottomNav navigation={navigation} />

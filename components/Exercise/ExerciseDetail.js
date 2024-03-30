@@ -16,6 +16,7 @@ function ExerciseDetail({
   title,
   category,
   eng_name,
+  navigation,
 }) {
   // async function searchingYoutube(name) {
   //   try {
@@ -38,6 +39,15 @@ function ExerciseDetail({
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const descList1 = description1?.split("\n");
+  const descList2 = description2?.split("\n");
+
+  function moveExercising() {
+    //  eng_name은 운동 영어 이름, title은 운동 한국어 이름
+    onCancel();
+    navigation.navigate("ExerciseRecord", { eng_name: eng_name, title: title });
   }
 
   return (
@@ -66,65 +76,156 @@ function ExerciseDetail({
             justifyContent: "space-between",
             alignItems: "center",
             backgroundColor: Colors.gray2,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
+            borderRadius: 16,
           }}>
           <Image style={styles1.Image} source={Images[eng_name]} />
-          <View>
-            <Text style={{ ...styles.text, paddingRight: 32 }}>{title}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "50%",
+              justifyContent: "space-around",
+              backgroundColor: Colors.gray2,
+            }}>
+            <View>
+              <IconButton
+                icon={"heart-sharp"}
+                color={Colors.white1}
+                size={32}
+              />
+              <Text
+                style={{
+                  ...styles.text,
+                  fontSize: 13,
+                  color: Colors.gray1,
+                  paddingBottom: 10,
+                }}>
+                북마크
+              </Text>
+            </View>
+            <View>
+              <IconButton
+                icon={"add-circle"}
+                color={Colors.white1}
+                size={32}
+                onPress={moveExercising}
+              />
+              <Text
+                style={{
+                  ...styles.text,
+                  fontSize: 13,
+                  color: Colors.gray1,
+                  alignSelf: "center",
+                  paddingBottom: 10,
+                }}>
+                기록 추가
+              </Text>
+            </View>
           </View>
         </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-around",
-            backgroundColor: Colors.gray2,
-            borderBottomLeftRadius: 16,
-            borderBottomRightRadius: 16,
-          }}>
-          <View>
-            <IconButton icon={"heart-sharp"} color={Colors.white1} size={32} />
-            <Text
-              style={{
-                ...styles.text,
-                fontSize: 13,
-                color: Colors.gray1,
-                paddingBottom: 10,
-              }}>
-              Bookmark
-            </Text>
-          </View>
-          <View>
-            <Text style={{ ...styles.text, padding: 10 }}>{category}</Text>
-            <Text
-              style={{
-                ...styles.text,
-                fontSize: 13,
-                color: Colors.gray1,
-                alignSelf: "center",
-                paddingBottom: 10,
-              }}>
-              category
-            </Text>
-          </View>
-        </View>
         <Text
           style={{
             ...styles.titletext,
             fontSize: 24,
             alignSelf: "flex-start",
-            margin: 20,
+            marginLeft: 16,
+            marginTop: 16,
           }}>
-          Information
+          {title}
+        </Text>
+        <Text
+          style={{
+            ...styles.text,
+            fontSize: 16,
+            color: Colors.gray1,
+            alignSelf: "center",
+            alignSelf: "flex-start",
+            marginLeft: 16,
+            marginBottom: 16,
+          }}>
+          {category}
         </Text>
         <ScrollView
           style={{
             width: "100%",
           }}>
-          <Text style={{ ...styles1.modaltext }}>{description1}</Text>
-          <Text style={{ ...styles1.modaltext }}>{description2}</Text>
+          <Text
+            style={{
+              ...styles.text,
+              fontSize: 16,
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              marginVertical: 16,
+            }}>
+            - 준비 단계
+          </Text>
+          {descList1?.map((line, index) => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                width: "100%",
+              }}>
+              <Text
+                key={`desc1_${index}`}
+                style={{
+                  ...styles1.modaltext,
+                  width: "auto",
+                  marginHorizontal: 16,
+                }}>
+                {index + 1}.
+              </Text>
+              <Text
+                key={`desc1_${index}_line`}
+                style={{
+                  ...styles1.modaltext,
+                  width: "auto",
+                  flexWrap: "wrap",
+                  flex: 1,
+                }}>
+                {line.split(". ")[1]}
+                {"\n"}
+              </Text>
+            </View>
+          ))}
+          <Text
+            style={{
+              ...styles.text,
+              fontSize: 16,
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              marginVertical: 16,
+            }}>
+            - 운동
+          </Text>
+          {descList2?.map((line, index) => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+              }}>
+              <Text
+                key={`desc1_${index}`}
+                style={{
+                  ...styles1.modaltext,
+                  width: "auto",
+                  marginHorizontal: 16,
+                }}>
+                {index + 1}.
+              </Text>
+              <Text
+                key={`desc2_${index}_line`}
+                style={{
+                  ...styles1.modaltext,
+                  width: "auto",
+                  flexWrap: "wrap",
+                  flex: 1,
+                }}>
+                {line.split(". ")[1]}
+                {"\n"}
+              </Text>
+            </View>
+          ))}
         </ScrollView>
         {/* 유튜브 이동버튼 title로 검색하게 하기 */}
         <View>
@@ -154,10 +255,8 @@ const styles1 = StyleSheet.create({
   modaltext: {
     ...styles.text,
     fontSize: 13,
-    backgroundColor: Colors.gray2,
+
     borderRadius: 6,
-    width: "100%",
-    padding: 16,
   },
   buttonContainer: {
     // marginTop: 16,
