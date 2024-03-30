@@ -2,7 +2,6 @@ import { View, Text, Image, Alert } from "react-native";
 
 import styles from "../styles/styles";
 import ExerciseSet from "../components/Exercise/ExerciseSet";
-import IconButton from "../components/ui/IconButton";
 import { Colors } from "../constant/Color";
 import { useState } from "react";
 import AddRemove from "../components/Exercise/AddRemove";
@@ -49,6 +48,7 @@ function Exercising({ navigation, route }) {
           width: "100%",
           paddingHorizontal: 16,
         }}>
+        {/* 기구 이미지 */}
         <Image
           style={{
             ...styles.Image,
@@ -59,6 +59,7 @@ function Exercising({ navigation, route }) {
           }}
           source={Images[eng_name]}
         />
+        {/* 기구 이름 */}
         <Text style={[styles.text]}>{title}</Text>
       </View>
       <View
@@ -71,6 +72,7 @@ function Exercising({ navigation, route }) {
             width: "25%",
             height: "25%",
           }}>
+          {/* 플러스 마이너스 버튼 */}
           <View
             style={[
               styles.setContainer,
@@ -80,7 +82,6 @@ function Exercising({ navigation, route }) {
                 height: (windowWidth / 4 / 79) * 32,
                 backgroundColor: "#767680",
                 borderRadius: 16,
-                // paddingHorizontal: 8,
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",

@@ -4,8 +4,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 import { Button } from "@rneui/themed";
 
-import ExerciseSearch from "./ExerciseList";
-
 //  styles/styles.js에서 정의한 스타일을 불러옴
 import styles from "../styles/styles";
 import { exercise_list } from "../components/Camera/exercise_list";
@@ -16,8 +14,6 @@ export default function PredictScreen({ navigation, route }) {
 
   //  폰 가로 길이
   const windowWidth = Dimensions.get("window").width;
-  //  폰 세로 길이
-  const windowHeight = Dimensions.get("window").height;
 
   //  가장 확률 높은 운동 이름
   const top_exercise = result[0]["name"];
@@ -54,12 +50,8 @@ export default function PredictScreen({ navigation, route }) {
           onPress={() => navigation.navigate("Kamera")}>
           Retake?
         </Button>
+
         {/*해당 운동이 맞을 시*/}
-        {/*onPress={() =>
-            navigation.navigate("ExerciseList", {
-              top_exercise: exercise_list[top_exercise]["key"],
-            })
-          }코드 변경*/}
         <Button
           buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
           titleStyle={styles.generalFont}

@@ -5,7 +5,7 @@ import { Colors } from "../constant/Color";
 import ExerciseItem from "../components/Exercise/ExerciseItem";
 import IconButton from "../components/ui/IconButton";
 import styles from "../styles/styles";
-import ExerciseDetail from "../components/Exercise/ExerciseDetail";
+import ExerciseDetail from "./ExerciseDetail";
 import { AuthContext } from "../util/auth-context";
 import BottomNav from "../components/ui/BottomNav";
 

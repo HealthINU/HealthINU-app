@@ -1,3 +1,4 @@
+//  이미지 경로들 모아놓은 파일
 export const Images = {
   bench_press_machine: require("../../assets/exercise_picture/bench_press_machine.jpg"),
   chest_press_machine: require("../../assets/exercise_picture/chest_press_machine.jpg"),

@@ -13,15 +13,16 @@ import MainScreen from "./Screens/MainScreen";
 import PredictScreen from "./Screens/PredictScreen";
 import ExerciseListScreen from "./components/Camera/ExerciseListScreen";
 import DetailScreen from "./components/Camera/DetailScreen";
-
-// Context 전용 import
-import AuthContextProvider from "./util/auth-context";
-import { AuthContext } from "./util/auth-context";
+import RankScreen from "./Screens/RankScreen";
 import ExerciseList from "./Screens/ExerciseList";
 import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
 import ExerciseRecord from "./Screens/ExerciseRecordScreen";
-import RankScreen from "./Screens/RankScreen";
+import CustumSplit from "./Screens/CustomSplit";
+
+// Context 전용 import
+import AuthContextProvider from "./util/auth-context";
+import { AuthContext } from "./util/auth-context";
 
 //  Stack Navigator 생성
 const Stack = createStackNavigator();
@@ -101,6 +102,11 @@ const MainStack = () => {
       <Stack.Screen
         name="Rank"
         component={RankScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CustumSplit"
+        component={CustumSplit}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

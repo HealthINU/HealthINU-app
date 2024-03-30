@@ -1,9 +1,8 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Colors } from "../../constant/Color";
 
 //  키, 몸무게, BMI 보여주는 컴포넌트
-const MainProfileView = ({ user_info }) => {
+export default function MainProfileView({ user_info }) {
   const BMI = (
     user_info.user_weight /
     (user_info.user_height / 100) ** 2
@@ -30,8 +29,6 @@ const MainProfileView = ({ user_info }) => {
           // alignItems: "center",
         }}>
         {/* 레벨, 키, 몸무게, BMI */}
-
-        {/* <Text style={styles.text}>Lv. {user_info.user_level}</Text> */}
         <View>
           <Text style={styles.redText}>Height</Text>
           <Text style={styles.text}>
@@ -53,6 +50,4 @@ const MainProfileView = ({ user_info }) => {
       </View>
     </View>
   );
-};
-
-export default MainProfileView;
+}

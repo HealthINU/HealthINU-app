@@ -1,11 +1,12 @@
 import { StyleSheet, View, Text, Modal, Image, ScrollView } from "react-native";
 
-import IconButton from "../ui/IconButton";
-import { Colors } from "../../constant/Color";
-import styles from "../../styles/styles";
-import { Images } from "./ImgPath";
+import IconButton from "../components/ui/IconButton";
+import { Colors } from "../constant/Color";
+import styles from "../styles/styles";
+import { Images } from "../components/Exercise/ImgPath";
 
 import { Linking } from "react-native";
+import ExDetailDesc from "../components/Exercise/ExDetailDesc";
 //import { searchYoutube } from "../../util/youtube_search";
 
 function ExerciseDetail({
@@ -80,6 +81,7 @@ function ExerciseDetail({
               borderRadius: 16,
             }}>
             <Image style={styles1.Image} source={Images[eng_name]} />
+            {/* 북마크, 기록 추가 뷰 */}
             <View
               style={{
                 flexDirection: "row",
@@ -88,6 +90,7 @@ function ExerciseDetail({
                 backgroundColor: Colors.gray2,
               }}>
               <View>
+                {/* 북마크 */}
                 <IconButton
                   icon={"heart-sharp"}
                   color={Colors.white1}
@@ -104,6 +107,7 @@ function ExerciseDetail({
                 </Text>
               </View>
               <View>
+                {/* 기록 추가 */}
                 <IconButton
                   icon={"add-circle"}
                   color={Colors.white1}
@@ -124,6 +128,7 @@ function ExerciseDetail({
             </View>
           </View>
 
+          {/* 기구 이름 */}
           <Text
             style={{
               ...styles.titletext,
@@ -134,12 +139,12 @@ function ExerciseDetail({
             }}>
             {title}
           </Text>
+          {/* 카테고리 */}
           <Text
             style={{
               ...styles.text,
               fontSize: 16,
               color: Colors.gray1,
-              alignSelf: "center",
               alignSelf: "flex-start",
               marginLeft: 16,
               marginBottom: 16,
@@ -150,83 +155,18 @@ function ExerciseDetail({
             style={{
               width: "100%",
             }}>
-            <Text
-              style={{
-                ...styles.text,
-                fontSize: 16,
-                alignSelf: "flex-start",
-                marginLeft: 16,
-                marginVertical: 16,
-              }}>
-              - 준비 단계
-            </Text>
+            <Text style={[styles1.toc]}>- 준비 단계</Text>
+            {/* 준비 단계 텍스트 출력 */}
             {descList1?.map((line, index) => {
               return (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    width: "100%",
-                  }}
-                  key={`${title}1_${index}`}>
-                  <Text
-                    style={{
-                      ...styles1.modaltext,
-                      width: "auto",
-                      marginHorizontal: 16,
-                    }}>
-                    {index + 1}.
-                  </Text>
-                  <Text
-                    style={{
-                      ...styles1.modaltext,
-                      width: "auto",
-                      flexWrap: "wrap",
-                      flex: 1,
-                    }}>
-                    {line.split(". ")[1]}
-                    {"\n"}
-                  </Text>
-                </View>
+                <ExDetailDesc title={title} line={line} index={index} num={1} />
               );
             })}
-            <Text
-              style={{
-                ...styles.text,
-                fontSize: 16,
-                alignSelf: "flex-start",
-                marginLeft: 16,
-                marginVertical: 16,
-              }}>
-              - 운동
-            </Text>
+            <Text style={[styles1.toc]}>- 운동</Text>
+            {/* 운동 단계 텍스트 출력 */}
             {descList2?.map((line, index) => {
               return (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                  }}
-                  key={`${title}2_${index}`}>
-                  <Text
-                    style={{
-                      ...styles1.modaltext,
-                      width: "auto",
-                      marginHorizontal: 16,
-                    }}>
-                    {index + 1}.
-                  </Text>
-                  <Text
-                    style={{
-                      ...styles1.modaltext,
-                      width: "auto",
-                      flexWrap: "wrap",
-                      flex: 1,
-                    }}>
-                    {line.split(". ")[1]}
-                    {"\n"}
-                  </Text>
-                </View>
+                <ExDetailDesc title={title} line={line} index={index} num={2} />
               );
             })}
           </ScrollView>
@@ -256,12 +196,6 @@ const styles1 = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.black,
   },
-  modaltext: {
-    ...styles.text,
-    fontSize: 13,
-
-    borderRadius: 6,
-  },
   buttonContainer: {
     // marginTop: 16,
     flexDirection: "row",
@@ -271,5 +205,12 @@ const styles1 = StyleSheet.create({
     height: 100,
     margin: 20,
     borderRadius: 16,
+  },
+  toc: {
+    ...styles.text,
+    fontSize: 16,
+    alignSelf: "flex-start",
+    marginLeft: 16,
+    marginVertical: 16,
   },
 });

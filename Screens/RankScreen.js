@@ -4,29 +4,25 @@ import { useEffect, useContext, useState } from "react";
 
 import { apiFunction } from "../util/api/api";
 import { AuthContext } from "../util/auth-context";
-import { Button } from "@rneui/themed";
 import { Colors } from "../constant/Color";
 import BottomNav from "../components/ui/BottomNav";
-import { Skeleton } from "@rneui/themed";
 
+//  랭크 화면
 function RankScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const [rank, setRank] = useState(null);
 
+  //  화면 처음 로딩시 랭크 정보 가져오기
   useEffect(() => {
+    //  이미 불러왔으면 다시 불러오지 않음
     if (rank) return;
 
-    console.log(authCtx.token);
     const fetchData = async () => {
       const data = await apiFunction(authCtx.token, "get", "/info/rank");
       setRank(data);
     };
     fetchData();
   }, [rank]);
-
-  const logRank = () => {
-    console.log(rank);
-  };
 
   return (
     <View style={styles.container}>
@@ -67,13 +63,16 @@ function RankScreen({ navigation }) {
                       alignItems: "center",
                       paddingLeft: 16,
                     }}>
+                    {/* 순위 표시 */}
                     <Text style={{ ...styles.text, paddingRight: 32 }}>
                       {index + 1}
                     </Text>
                     <View>
+                      {/* 유저 이름 */}
                       <Text style={styles.text}>
                         {item.user_name.substring(0, 10)}
                       </Text>
+                      {/* 유저 레벨 */}
                       <Text style={styles.grayText}>lv. {item.user_level}</Text>
                     </View>
                   </View>
@@ -82,6 +81,7 @@ function RankScreen({ navigation }) {
                       flexDirection: "row",
                       alignItems: "center",
                     }}>
+                    {/* 유저 경험치 */}
                     <Text style={styles.text}>{item.user_exp}</Text>
                     <Text style={styles.grayText}> pts.</Text>
                   </View>
