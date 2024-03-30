@@ -3,6 +3,7 @@ import axios from "axios";
 
 import conifg from "../config/config.json";
 const URL = conifg.URL;
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext({
   token: "",
@@ -78,8 +79,9 @@ function AuthContextProvider({ children }) {
     setAuthToken(token);
   }
   //로그아웃
-  function logout() {
+  async function logout() {
     setAuthToken(null);
+    await AsyncStorage.removeItem("token");
   }
 
   const value = {

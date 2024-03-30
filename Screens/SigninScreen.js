@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 
 import AuthContent from "../components/Auth/AuthContent";
@@ -6,6 +6,7 @@ import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { AuthContext } from "../util/auth-context";
 import { login } from "../util/auth";
 import { localLogin } from "../util/local-auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function SiginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false); // 로딩상태관리
@@ -30,6 +31,7 @@ function SiginScreen() {
       const result = await localLogin(user_id, user_pw); //local-auth.js 참고 return한 data 받음
 
       if (result.status === 200) {
+        await AsyncStorage.setItem("token", result.data.token);
         authCtx.authenticate(result.data.token); // firebase가 반환한 토큰 전달
       } else {
         Alert.alert("인증실패", "로그인 실패. 정확한지 확인해주세요");
@@ -41,6 +43,17 @@ function SiginScreen() {
       setIsAuthenticating(false); // 유저 생성 완료후 다시 false로
     }
   }
+
+  useEffect(() => {
+    // 로그인 상태 확인
+    const tryLogin = async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        authCtx.authenticate(token);
+      }
+    };
+    tryLogin();
+  }, []);
 
   if (isAuthenticating) {
     return <LoadingOverlay message="로그인 중..." />;
