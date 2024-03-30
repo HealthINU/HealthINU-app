@@ -27,7 +27,7 @@ export default function PredictScreen({ navigation, route }) {
   //console.log("top_exercise : " + title);
   function moveExerciseSearch(name) {
     //console.log("가져올 운동 : " + name);
-    navigation.navigate("ExerciseSearch", { title: name });
+    navigation.navigate("ExerciseList", { title: name });
   }
 
   return (
