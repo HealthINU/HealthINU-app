@@ -52,191 +52,195 @@ function ExerciseDetail({
 
   return (
     <Modal visible={visible} animationType="slide">
-      <View style={styles1.inputContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "flex-start",
-            alignItems: "center",
-          }}>
-          <View style={styles1.buttonContainer}>
-            <IconButton
-              icon={"arrow-back-circle-outline"}
-              color={Colors.white1}
-              size={32}
-              onPress={onCancel}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: Colors.gray2,
-            borderRadius: 16,
-          }}>
-          <Image style={styles1.Image} source={Images[eng_name]} />
+      {visible ? (
+        <View style={styles1.inputContainer}>
           <View
             style={{
               flexDirection: "row",
-              width: "50%",
-              justifyContent: "space-around",
-              backgroundColor: Colors.gray2,
+              width: "100%",
+              justifyContent: "flex-start",
+              alignItems: "center",
             }}>
-            <View>
+            <View style={styles1.buttonContainer}>
               <IconButton
-                icon={"heart-sharp"}
+                icon={"arrow-back-circle-outline"}
                 color={Colors.white1}
                 size={32}
+                onPress={onCancel}
               />
-              <Text
-                style={{
-                  ...styles.text,
-                  fontSize: 13,
-                  color: Colors.gray1,
-                  paddingBottom: 10,
-                }}>
-                북마크
-              </Text>
-            </View>
-            <View>
-              <IconButton
-                icon={"add-circle"}
-                color={Colors.white1}
-                size={32}
-                onPress={moveExercising}
-              />
-              <Text
-                style={{
-                  ...styles.text,
-                  fontSize: 13,
-                  color: Colors.gray1,
-                  alignSelf: "center",
-                  paddingBottom: 10,
-                }}>
-                기록 추가
-              </Text>
             </View>
           </View>
-        </View>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: Colors.gray2,
+              borderRadius: 16,
+            }}>
+            <Image style={styles1.Image} source={Images[eng_name]} />
+            <View
+              style={{
+                flexDirection: "row",
+                width: "50%",
+                justifyContent: "space-around",
+                backgroundColor: Colors.gray2,
+              }}>
+              <View>
+                <IconButton
+                  icon={"heart-sharp"}
+                  color={Colors.white1}
+                  size={32}
+                />
+                <Text
+                  style={{
+                    ...styles.text,
+                    fontSize: 13,
+                    color: Colors.gray1,
+                    paddingBottom: 10,
+                  }}>
+                  북마크
+                </Text>
+              </View>
+              <View>
+                <IconButton
+                  icon={"add-circle"}
+                  color={Colors.white1}
+                  size={32}
+                  onPress={moveExercising}
+                />
+                <Text
+                  style={{
+                    ...styles.text,
+                    fontSize: 13,
+                    color: Colors.gray1,
+                    alignSelf: "center",
+                    paddingBottom: 10,
+                  }}>
+                  기록 추가
+                </Text>
+              </View>
+            </View>
+          </View>
 
-        <Text
-          style={{
-            ...styles.titletext,
-            fontSize: 24,
-            alignSelf: "flex-start",
-            marginLeft: 16,
-            marginTop: 16,
-          }}>
-          {title}
-        </Text>
-        <Text
-          style={{
-            ...styles.text,
-            fontSize: 16,
-            color: Colors.gray1,
-            alignSelf: "center",
-            alignSelf: "flex-start",
-            marginLeft: 16,
-            marginBottom: 16,
-          }}>
-          {category}
-        </Text>
-        <ScrollView
-          style={{
-            width: "100%",
-          }}>
+          <Text
+            style={{
+              ...styles.titletext,
+              fontSize: 24,
+              alignSelf: "flex-start",
+              marginLeft: 16,
+              marginTop: 16,
+            }}>
+            {title}
+          </Text>
           <Text
             style={{
               ...styles.text,
               fontSize: 16,
+              color: Colors.gray1,
+              alignSelf: "center",
               alignSelf: "flex-start",
               marginLeft: 16,
-              marginVertical: 16,
+              marginBottom: 16,
             }}>
-            - 준비 단계
+            {category}
           </Text>
-          {descList1?.map((line, index) => (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                width: "100%",
-              }}>
-              <Text
-                key={`desc1_${index}`}
-                style={{
-                  ...styles1.modaltext,
-                  width: "auto",
-                  marginHorizontal: 16,
-                }}>
-                {index + 1}.
-              </Text>
-              <Text
-                key={`desc1_${index}_line`}
-                style={{
-                  ...styles1.modaltext,
-                  width: "auto",
-                  flexWrap: "wrap",
-                  flex: 1,
-                }}>
-                {line.split(". ")[1]}
-                {"\n"}
-              </Text>
-            </View>
-          ))}
-          <Text
+          <ScrollView
             style={{
-              ...styles.text,
-              fontSize: 16,
-              alignSelf: "flex-start",
-              marginLeft: 16,
-              marginVertical: 16,
+              width: "100%",
             }}>
-            - 운동
-          </Text>
-          {descList2?.map((line, index) => (
-            <View
+            <Text
               style={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
+                ...styles.text,
+                fontSize: 16,
+                alignSelf: "flex-start",
+                marginLeft: 16,
+                marginVertical: 16,
               }}>
-              <Text
-                key={`desc1_${index}`}
-                style={{
-                  ...styles1.modaltext,
-                  width: "auto",
-                  marginHorizontal: 16,
-                }}>
-                {index + 1}.
-              </Text>
-              <Text
-                key={`desc2_${index}_line`}
-                style={{
-                  ...styles1.modaltext,
-                  width: "auto",
-                  flexWrap: "wrap",
-                  flex: 1,
-                }}>
-                {line.split(". ")[1]}
-                {"\n"}
-              </Text>
-            </View>
-          ))}
-        </ScrollView>
-        {/* 유튜브 이동버튼 title로 검색하게 하기 */}
-        <View>
-          <IconButton
-            icon={"logo-youtube"}
-            color={Colors.white1}
-            size={30}
-            onPress={() => searchingYoutube(title)}
-          />
+              - 준비 단계
+            </Text>
+            {descList1?.map((line, index) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    width: "100%",
+                  }}
+                  key={`${title}1_${index}`}>
+                  <Text
+                    style={{
+                      ...styles1.modaltext,
+                      width: "auto",
+                      marginHorizontal: 16,
+                    }}>
+                    {index + 1}.
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles1.modaltext,
+                      width: "auto",
+                      flexWrap: "wrap",
+                      flex: 1,
+                    }}>
+                    {line.split(". ")[1]}
+                    {"\n"}
+                  </Text>
+                </View>
+              );
+            })}
+            <Text
+              style={{
+                ...styles.text,
+                fontSize: 16,
+                alignSelf: "flex-start",
+                marginLeft: 16,
+                marginVertical: 16,
+              }}>
+              - 운동
+            </Text>
+            {descList2?.map((line, index) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                  }}
+                  key={`${title}2_${index}`}>
+                  <Text
+                    style={{
+                      ...styles1.modaltext,
+                      width: "auto",
+                      marginHorizontal: 16,
+                    }}>
+                    {index + 1}.
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles1.modaltext,
+                      width: "auto",
+                      flexWrap: "wrap",
+                      flex: 1,
+                    }}>
+                    {line.split(". ")[1]}
+                    {"\n"}
+                  </Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+          {/* 유튜브 이동버튼 title로 검색하게 하기 */}
+          <View>
+            <IconButton
+              icon={"logo-youtube"}
+              color={Colors.white1}
+              size={30}
+              onPress={() => searchingYoutube(title)}
+            />
+          </View>
         </View>
-      </View>
+      ) : null}
     </Modal>
   );
 }
