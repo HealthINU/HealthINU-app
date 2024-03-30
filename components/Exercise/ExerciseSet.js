@@ -5,19 +5,26 @@ import styles from "../../styles/styles";
 
 function ExerciseSet({ text }) {
   return (
-    <View style={styles.setContainer}>
-      <Text style={[styles1.exerciseText, { marginLeft: 8, marginRight: 10 }]}>
-        {text}
-      </Text>
+    <View
+      style={{
+        ...styles.setContainer,
+        width: "100%",
+        justifyContent: "space-around",
+        marginVertical: 4,
+      }}>
       <TextInput
         placeholder="10kg"
         keyboardType="decimal-pad"
         placeholderTextColor={Colors.gray1}
+        color={Colors.white1}
+        style={{ fontSize: 16 }}
       />
       <TextInput
         placeholder="10"
         keyboardType="decimal-pad"
         placeholderTextColor={Colors.gray1}
+        color={Colors.white1}
+        style={{ fontSize: 16 }}
       />
     </View>
   );

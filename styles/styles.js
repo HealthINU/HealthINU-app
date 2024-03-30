@@ -97,7 +97,7 @@ export default styles = StyleSheet.create({
   setContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "70%",
+    width: "50%",
   },
   inputStart: {
     width: "100%",

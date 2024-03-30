@@ -6,7 +6,8 @@ import { Images } from "./ImgPath";
 function ExerciseItem({ id, text, onPress, category, eng_name, navigation }) {
   // 운동 테스트 화면 이동(임시)
   function moveExercising() {
-    navigation.navigate("ExerciseRecord");
+    //  eng_name은 운동 영어 이름, title은 운동 한국어 이름
+    navigation.navigate("ExerciseRecord", { eng_name: eng_name, title: text });
   }
 
   return (
