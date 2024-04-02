@@ -80,7 +80,7 @@ export default styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: 10,
   },
   listContainer: {
     flex: 1,
@@ -92,7 +92,8 @@ export default styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 16,
+    //padding: 16,
+    paddingHorizontal : 10,
   },
   setContainer: {
     flexDirection: "row",

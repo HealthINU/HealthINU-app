@@ -9,6 +9,7 @@ import { Colors } from "../constant/Color";
 //npx npm install react-native-calendars필요
 import { Calendar } from "react-native-calendars";
 import BottomNav from "../components/ui/BottomNav";
+import Button from "../components/ui/Button";
 
 //  폰 가로 길이
 const windowWidth = Dimensions.get("window").width;
@@ -22,14 +23,14 @@ function Profile({ navigation }) {
 
   //달력 표시 예제
   const [events, setEvents] = useState({
-    "2024-02-15": {
+    "2024-04-21": {
       selected: true,
       marked: true,
       selectedColor: "blue",
       description1: "푸쉬업 10회",
       description2: "친업 20회",
     },
-    "2024-02-16": {
+    "2024-04-24": {
       marked: true,
       dotColor: "red",
       activeOpacity: 0,
@@ -47,7 +48,7 @@ function Profile({ navigation }) {
       ? events[date].description1 + "   " + events[date].description2
       : "운동 정보가 없습니다.";
     setExercise_des(description);
-    //Alert.alert(date, description);
+    Alert.alert(date, description);
   };
 
   //프로필 수정화면
@@ -74,11 +75,11 @@ function Profile({ navigation }) {
             style={{
               width: "100%",
               height: "100%",
-              backgroundColor: "#1f1f1f",
+              backgroundColor: "#000000",
             }}
             theme={{
-              backgroundColor: "#000",
-              calendarBackground: "#1f1f1f",
+              backgroundColor: "#000000",
+              calendarBackground: "#000000",
               textSectionTitleColor: "#fff",
               selectedDayBackgroundColor: "#ffffff",
               selectedDayTextColor: "#ffffff",
@@ -100,23 +101,13 @@ function Profile({ navigation }) {
             onDayPress={handleDayPress}
           />
         </View>
-        <View style={{ flex: 1, marginTop: 10, marginBottom: 50 }}>
+        {/*<View style={{ flex: 1, marginTop: 10, marginBottom: 50 }}>
           <Text style={styles.text}>{exercise_des}</Text>
-        </View>
+          </View>*/}
+      <View >
+        <Button children={"logout"} onPress={authCtx.logout}/>
+        <Button children={"profile edit"} onPress={authCtx.logout}/>
       </View>
-      <View style={styles.barContainer}>
-        <IconButton
-          icon={"log-out-outline"}
-          color={Colors.white1}
-          size={50}
-          onPress={authCtx.logout}
-        />
-        <IconButton
-          icon={"person-outline"}
-          color={Colors.white1}
-          size={50}
-          onPress={profileEdit}
-        />
       </View>
       <BottomNav navigation={navigation} />
     </View>
@@ -128,10 +119,11 @@ export default Profile;
 const style1 = StyleSheet.create({
   profilecontainer: {
     flex: 1,
-    width: "auto",
+    width: windowWidth,
     height: windowHeight,
     marginTop: 20,
-    backgroundColor: Colors.gray2,
+    marginBottom : 20,
+    //backgroundColor: Colors.gray2,
     borderRadius: 16,
     padding: 20,
     marginHorizontal: 20,
