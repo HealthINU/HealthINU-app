@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Colors } from "../constant/Color";
 import ExerciseItem from "../components/Exercise/ExerciseItem";
@@ -34,6 +35,20 @@ function ExerciseSearch({ navigation, route }) {
   //운동 영어 이름 변수(모달로 전달)
   const [engName, setEngName] = useState(null);
 
+  //북마크 저장 변수
+  const [bookmarks, setBookmarks] = useState([]);
+  // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
+  const [currentBookmarkStatus, setCurrentBookmarkStatus] = useState("heart-outline");
+  // 현재 선택된 운동 아이템 상태 변수
+  const [currentItemSelected, setCurrentItemSelected] = useState(null);
+  const bookmarkHandler = () => {
+    heartButtonPressHandler(currentItemSelected);
+    // 북마크 상태인 경우 하트가 채워지도록 설정
+    const bookmarked = isItemBookmarked(currentItemSelected);
+    setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
+  };
+
+
   //모달 열기 함수
   function startAddFoalHandler(detail) {
     setSelectedExercise1(detail.equipment_description1);
@@ -46,7 +61,13 @@ function ExerciseSearch({ navigation, route }) {
   }
   //운동 아이템 클릭 시 실행될 함수
   function handleItemClick(item) {
+    // 현재 선택된 아이템 상태 업데이트
+    setCurrentItemSelected(item);
+    //모달 창 열기
     startAddFoalHandler(item);
+    // 북마크 상태인 경우 하트가 채워지도록 설정
+    const bookmarked = isItemBookmarked(item);
+    setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   }
 
   //모달 닫기 함수
@@ -57,6 +78,54 @@ function ExerciseSearch({ navigation, route }) {
   function moveMain() {
     navigation.navigate("Main");
   }
+
+  //북마크 함수
+  async function saveBookmarks(value) {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@bookmarks', jsonValue);
+    } catch (e) {
+      // 저장 에러 처리
+      console.log(e);
+    }
+  }
+
+  function heartButtonPressHandler(item) {
+    // 아이템이 이미 북마크 되었는지 확인
+    const isBookmarked = bookmarks.find((bookmark) => bookmark.equipment_num === item.equipment_num);
+
+    if (!isBookmarked) {
+      const newBookmarks = [...bookmarks, item];
+      setBookmarks(newBookmarks);
+      saveBookmarks(newBookmarks);
+      console.log("북마크 추가됨", item.equipment_name);
+    } else {
+      // 이미 북마크된 아이템을 제거
+      const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.equipment_num !== item.equipment_num);
+      setBookmarks(filteredBookmarks);
+      saveBookmarks(filteredBookmarks);
+      console.log("북마크 제거됨", item.equipment_name);
+    }
+  }
+  // 북마크 상태 확인 함수
+  function isItemBookmarked(item) {
+    const isBookmarked = bookmarks.find((bookmark) => bookmark.equipment_num === item.equipment_num);
+    return isBookmarked;
+  }
+  //북마크 로드
+  async function loadBookmarks() {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@bookmarks');
+      return jsonValue != null ? setBookmarks(JSON.parse(jsonValue)) : null;
+    } catch (e) {
+      // 로드 에러 처리
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    loadBookmarks();
+  }, []);
 
   useEffect(() => {
     if (title === "") {
@@ -74,6 +143,8 @@ function ExerciseSearch({ navigation, route }) {
         <FlatList
           data={exerciseItems}
           renderItem={(itemData) => {
+            // 현재 아이템의 북마크 상태 확인
+            const bookmarked = isItemBookmarked(itemData.item);
             return (
               <View>
                 <ExerciseItem
@@ -85,6 +156,8 @@ function ExerciseSearch({ navigation, route }) {
                     handleItemClick(itemData.item);
                   }}
                   navigation={navigation}
+                  bookmark={() => heartButtonPressHandler(itemData.item)}
+                  BookmarkStatus={bookmarked ? "heart-sharp" : "heart-outline"}
                 />
               </View>
             );
@@ -99,6 +172,8 @@ function ExerciseSearch({ navigation, route }) {
           eng_name={engName}
           category={category}
           navigation={navigation}
+          bookmark={bookmarkHandler}
+          BookmarkStatus={currentBookmarkStatus}
         />
       </View>
       <BottomNav navigation={navigation} />
