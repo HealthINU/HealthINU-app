@@ -2,8 +2,9 @@ import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { Colors } from "../constant/Color";
+
 import ExerciseItem from "../components/Exercise/ExerciseItem";
+import { Colors } from "../constant/Color";
 import IconButton from "../components/ui/IconButton";
 import styles from "../styles/styles";
 import ExerciseDetail from "./ExerciseDetail";
@@ -48,6 +49,14 @@ function ExerciseSearch({ navigation, route }) {
     setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   };
 
+  // 북마크된 아이템만 보기 상태를 추가
+  const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
+  // 북마크 표시 토글 함수
+  const toggleShowOnlyBookmarked = () => {
+    setShowOnlyBookmarked((current) => !current);
+  };
+  // 북마크된 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
+  const filteredExerciseItems = showOnlyBookmarked ? exerciseItems.filter((item) => bookmarks.some((bookmark) => bookmark.equipment_num === item.equipment_num)) : exerciseItems;
 
   //모달 열기 함수
   function startAddFoalHandler(detail) {
@@ -138,10 +147,17 @@ function ExerciseSearch({ navigation, route }) {
 
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
+      <View>
+        <IconButton 
+          icon={"heart-sharp"}
+          color={Colors.white1}
+          size={32} 
+          onPress={toggleShowOnlyBookmarked} />
+      </View>
       {/*운동리스트*/}
       <View style={{ flex: 1 }}>
         <FlatList
-          data={exerciseItems}
+          data={filteredExerciseItems}
           renderItem={(itemData) => {
             // 현재 아이템의 북마크 상태 확인
             const bookmarked = isItemBookmarked(itemData.item);
