@@ -89,15 +89,35 @@ function ExerciseSearch({ navigation, route }) {
   }
 
   //북마크 함수
+  // async function saveBookmarks(value) {
+  //   try {
+  //     const jsonValue = JSON.stringify(value);
+  //     await AsyncStorage.setItem('@bookmarks', jsonValue);
+  //   } catch (e) {
+  //     // 저장 에러 처리
+  //     console.log(e);
+  //   }
+  // }
   async function saveBookmarks(value) {
     try {
+      // 사용자별 북마크 키 생성을 위해 사용자 토큰을 가져옵니다.
+      const userToken = authCtx.token;
+  
+      // JSON 문자열로 변환
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem('@bookmarks', jsonValue);
+  
+      // 사용자 토큰을 기반으로 한 고유 키를 생성합니다.
+      // 예: '@bookmarks:userToken'
+      const bookmarksKey = `@bookmarks:${userToken}`;
+  
+      // AsyncStorage에 사용자별 북마크 데이터 저장
+      await AsyncStorage.setItem(bookmarksKey, jsonValue);
     } catch (e) {
       // 저장 에러 처리
       console.log(e);
     }
   }
+  
 
   function heartButtonPressHandler(item) {
     // 아이템이 이미 북마크 되었는지 확인
