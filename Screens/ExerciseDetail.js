@@ -159,14 +159,26 @@ function ExerciseDetail({
             {/* 준비 단계 텍스트 출력 */}
             {descList1?.map((line, index) => {
               return (
-                <ExDetailDesc title={title} line={line} index={index} num={1} />
+                <ExDetailDesc
+                  key={`${title}_${index}_0`}
+                  title={title}
+                  line={line}
+                  index={index}
+                  num={1}
+                />
               );
             })}
             <Text style={[styles1.toc]}>- 운동</Text>
             {/* 운동 단계 텍스트 출력 */}
             {descList2?.map((line, index) => {
               return (
-                <ExDetailDesc title={title} line={line} index={index} num={2} />
+                <ExDetailDesc
+                  key={`${title}_${index}_1`}
+                  title={title}
+                  line={line}
+                  index={index}
+                  num={2}
+                />
               );
             })}
           </ScrollView>
