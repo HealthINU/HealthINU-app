@@ -19,7 +19,7 @@ export function apiFunction(token, Oper, endPoint, data = null) {
     },
   })
     .then(function (res) {
-      return res.data;
+      return res.status;
     })
     .catch(function (err) {
       return err;

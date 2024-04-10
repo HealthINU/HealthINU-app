@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 import ExerciseItem from "../components/Exercise/ExerciseItem";
 import { Colors } from "../constant/Color";
 import IconButton from "../components/ui/IconButton";
@@ -35,11 +34,13 @@ function ExerciseSearch({ navigation, route }) {
   const [exerciseImage, setExerciseImage] = useState(null);
   //운동 영어 이름 변수(모달로 전달)
   const [engName, setEngName] = useState(null);
+  const [equip_num, setEquip_num] = useState(null);
 
   //북마크 저장 변수
   const [bookmarks, setBookmarks] = useState([]);
   // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
-  const [currentBookmarkStatus, setCurrentBookmarkStatus] = useState("heart-outline");
+  const [currentBookmarkStatus, setCurrentBookmarkStatus] =
+    useState("heart-outline");
   // 현재 선택된 운동 아이템 상태 변수
   const [currentItemSelected, setCurrentItemSelected] = useState(null);
   const bookmarkHandler = () => {
@@ -56,7 +57,13 @@ function ExerciseSearch({ navigation, route }) {
     setShowOnlyBookmarked((current) => !current);
   };
   // 북마크된 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
-  const filteredExerciseItems = showOnlyBookmarked ? exerciseItems.filter((item) => bookmarks.some((bookmark) => bookmark.equipment_num === item.equipment_num)) : exerciseItems;
+  const filteredExerciseItems = showOnlyBookmarked
+    ? exerciseItems.filter((item) =>
+        bookmarks.some(
+          (bookmark) => bookmark.equipment_num === item.equipment_num
+        )
+      )
+    : exerciseItems;
 
   //모달 열기 함수
   function startAddFoalHandler(detail) {
@@ -65,7 +72,7 @@ function ExerciseSearch({ navigation, route }) {
     setTitleExercise(detail.equipment_name);
     setCategory(detail.equipment_category);
     setEngName(detail.equipment_eng);
-
+    setEquip_num(detail.equipment_num);
     setModalIsVisible(true);
   }
   //운동 아이템 클릭 시 실행될 함수
@@ -102,14 +109,14 @@ function ExerciseSearch({ navigation, route }) {
     try {
       // 사용자별 북마크 키 생성을 위해 사용자 토큰을 가져옵니다.
       const userToken = authCtx.token;
-  
+
       // JSON 문자열로 변환
       const jsonValue = JSON.stringify(value);
-  
+
       // 사용자 토큰을 기반으로 한 고유 키를 생성합니다.
       // 예: '@bookmarks:userToken'
       const bookmarksKey = `@bookmarks:${userToken}`;
-  
+
       // AsyncStorage에 사용자별 북마크 데이터 저장
       await AsyncStorage.setItem(bookmarksKey, jsonValue);
     } catch (e) {
@@ -117,11 +124,12 @@ function ExerciseSearch({ navigation, route }) {
       console.log(e);
     }
   }
-  
 
   function heartButtonPressHandler(item) {
     // 아이템이 이미 북마크 되었는지 확인
-    const isBookmarked = bookmarks.find((bookmark) => bookmark.equipment_num === item.equipment_num);
+    const isBookmarked = bookmarks.find(
+      (bookmark) => bookmark.equipment_num === item.equipment_num
+    );
 
     if (!isBookmarked) {
       const newBookmarks = [...bookmarks, item];
@@ -130,7 +138,9 @@ function ExerciseSearch({ navigation, route }) {
       console.log("북마크 추가됨", item.equipment_name);
     } else {
       // 이미 북마크된 아이템을 제거
-      const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.equipment_num !== item.equipment_num);
+      const filteredBookmarks = bookmarks.filter(
+        (bookmark) => bookmark.equipment_num !== item.equipment_num
+      );
       setBookmarks(filteredBookmarks);
       saveBookmarks(filteredBookmarks);
       console.log("북마크 제거됨", item.equipment_name);
@@ -138,13 +148,15 @@ function ExerciseSearch({ navigation, route }) {
   }
   // 북마크 상태 확인 함수
   function isItemBookmarked(item) {
-    const isBookmarked = bookmarks.find((bookmark) => bookmark.equipment_num === item.equipment_num);
+    const isBookmarked = bookmarks.find(
+      (bookmark) => bookmark.equipment_num === item.equipment_num
+    );
     return isBookmarked;
   }
   //북마크 로드
   async function loadBookmarks() {
     try {
-      const jsonValue = await AsyncStorage.getItem('@bookmarks');
+      const jsonValue = await AsyncStorage.getItem("@bookmarks");
       return jsonValue != null ? setBookmarks(JSON.parse(jsonValue)) : null;
     } catch (e) {
       // 로드 에러 처리
@@ -168,11 +180,12 @@ function ExerciseSearch({ navigation, route }) {
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
       <View>
-        <IconButton 
+        <IconButton
           icon={"heart-sharp"}
           color={Colors.white1}
-          size={32} 
-          onPress={toggleShowOnlyBookmarked} />
+          size={32}
+          onPress={toggleShowOnlyBookmarked}
+        />
       </View>
       {/*운동리스트*/}
       <View style={{ flex: 1 }}>
@@ -188,6 +201,7 @@ function ExerciseSearch({ navigation, route }) {
                   id={itemData.item.equipment_num}
                   eng_name={itemData.item.equipment_eng}
                   category={itemData.item.equipment_category}
+                  equipment_num={itemData.item.equipment_num}
                   onPress={() => {
                     handleItemClick(itemData.item);
                   }}

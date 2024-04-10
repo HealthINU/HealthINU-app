@@ -3,20 +3,27 @@ import { View, Text, Image, Alert } from "react-native";
 import styles from "../styles/styles";
 import ExerciseSet from "../components/Exercise/ExerciseSet";
 import { Colors } from "../constant/Color";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AddRemove from "../components/Exercise/AddRemove";
 import BottomNav from "../components/ui/BottomNav";
 import { Images } from "../components/Exercise/ImgPath";
-import { Divider } from "@rneui/themed";
+import { Divider, SocialIcon } from "@rneui/themed";
 import { Dimensions } from "react-native";
+import Button from "../components/ui/Button";
+import { AuthContext } from "../util/auth-context";
+import { apiFunction } from "../util/api/api";
 
 function Exercising({ navigation, route }) {
-  const [sets, setSets] = useState([1]); // sets를 배열로 관리
-  const { eng_name, title } = route.params;
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
+
+  const [sets, setSets] = useState([{ weight: 0, count: 0 }]); // sets를 배열로 관리
+  console.log(sets);
+  const { eng_name, title, equipment_num } = route.params;
   function addSetHandler() {
     if (sets.length < 5) {
       // sets 배열의 길이가 5 미만일 때만 세트를 추가
-      setSets([...sets, sets.length + 1]); // sets 배열에 새로운 세트를 추가
+      setSets([...sets, { weight: 0, count: 0 }]); // sets 배열에 새로운 세트를 추가
     } else {
       Alert.alert("추가 불가능!!", "세트는 5개까지만 추가 가능합니다");
     }
@@ -32,6 +39,43 @@ function Exercising({ navigation, route }) {
   //Main화면 돌아감
   function moveMain() {
     navigation.navigate("Main");
+  }
+
+  function getDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    return year + "-" + month + "-" + day;
+  }
+
+  function addRecord() {
+    let setLength = 0;
+
+    try {
+      sets.map((item, index) => {
+        //  횟수 x 무게가 0이 아닐 때만 기록 추가
+        const volume = item.weight * item.count;
+        if (volume != 0 && isNaN(volume) === false) {
+          const data = {
+            record_date: getDate(),
+            equipment_num: equipment_num,
+            record_count: item.count,
+            record_weight: item.weight,
+          };
+
+          const res = apiFunction(token, "POST", "/info/record", data);
+          setLength = setLength + 1;
+        }
+      });
+    } catch (error) {
+      Alert.alert("기록 추가 실패", "다시 시도해주세요.");
+    } finally {
+      console.log(`${setLength}개의 기록이 추가되었습니다.`);
+      if (setLength !== 0) Alert.alert("기록이 추가되었습니다.");
+      else
+        Alert.alert("기록 추가 실패", "최소 한 개 이상 기록을 추가해주세요.");
+    }
   }
 
   const windowWidth = Dimensions.get("window").width;
@@ -122,9 +166,10 @@ function Exercising({ navigation, route }) {
             <Text style={styles.text}>회</Text>
           </View>
           {/* sets 배열을 맵핑하여 ExerciseSet 컴포넌트를 생성*/}
-          {sets.map((set) => (
-            <ExerciseSet key={set} text={set} />
+          {sets.map((item, index) => (
+            <ExerciseSet key={index} index={index} setSets={setSets} />
           ))}
+          <Button onPress={addRecord}>기록 추가</Button>
         </View>
       </View>
 

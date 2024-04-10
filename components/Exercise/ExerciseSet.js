@@ -3,7 +3,15 @@ import { StyleSheet, View, Text, TextInput } from "react-native";
 import { Colors } from "../../constant/Color";
 import styles from "../../styles/styles";
 
-function ExerciseSet({ text }) {
+function ExerciseSet({ index, setSets }) {
+  const handleChange = ({ name, text }) => {
+    setSets((prev) => {
+      const newSets = [...prev];
+      newSets[index][name] = parseInt(text);
+      return newSets;
+    });
+  };
+
   return (
     <View
       style={{
@@ -13,6 +21,8 @@ function ExerciseSet({ text }) {
         marginVertical: 4,
       }}>
       <TextInput
+        name="weight"
+        onChangeText={(text) => handleChange({ name: "weight", text })}
         placeholder="10kg"
         keyboardType="decimal-pad"
         placeholderTextColor={Colors.gray1}
@@ -20,6 +30,8 @@ function ExerciseSet({ text }) {
         style={{ fontSize: 16 }}
       />
       <TextInput
+        name="count"
+        onChangeText={(text) => handleChange({ name: "count", text })}
         placeholder="10"
         keyboardType="decimal-pad"
         placeholderTextColor={Colors.gray1}
