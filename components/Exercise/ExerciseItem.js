@@ -3,7 +3,7 @@ import { Colors } from "../../constant/Color";
 import IconButton from "../ui/IconButton";
 import { Images } from "./ImgPath";
 
-function ExerciseItem({ id, text, onPress, category, eng_name, navigation }) {
+function ExerciseItem({ id, text, onPress, category, eng_name, navigation,bookmark,BookmarkStatus}) {
   // 운동 테스트 화면 이동(임시)
   function moveExercising() {
     //  eng_name은 운동 영어 이름, title은 운동 한국어 이름
@@ -55,7 +55,7 @@ function ExerciseItem({ id, text, onPress, category, eng_name, navigation }) {
                 onPress={moveExercising}
               />
             </View>
-            <IconButton icon={"heart-sharp"} color={Colors.white1} size={30} />
+            <IconButton icon={BookmarkStatus} color={Colors.white1} size={30} onPress={bookmark}/>
           </View>
         </View>
       </Pressable>

@@ -106,7 +106,7 @@ function Profile({ navigation }) {
           </View>*/}
       <View >
         <Button children={"logout"} onPress={authCtx.logout}/>
-        <Button children={"profile edit"} onPress={authCtx.logout}/>
+        <Button children={"profile edit"} onPress={profileEdit}/>
       </View>
       </View>
       <BottomNav navigation={navigation} />

@@ -18,7 +18,11 @@ function ExerciseDetail({
   category,
   eng_name,
   navigation,
+  BookmarkStatus,
+  bookmark,
 }) {
+  
+  
   // async function searchingYoutube(name) {
   //   try {
   //     // searchYoutube 함수의 결과를 기다림
@@ -92,9 +96,10 @@ function ExerciseDetail({
               <View>
                 {/* 북마크 */}
                 <IconButton
-                  icon={"heart-sharp"}
+                  icon={BookmarkStatus}
                   color={Colors.white1}
                   size={32}
+                  onPress={bookmark}
                 />
                 <Text
                   style={{
