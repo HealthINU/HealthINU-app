@@ -4,18 +4,19 @@ import { useState } from "react";
 import { Dropdown } from 'react-native-element-dropdown';
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constant/Color";
-function SplitExercise() {
-    const [value, setValue] = useState(null);
-    const data = [
-        { label: '벤치 프레스', value: '1' },
-        { label: '체스트 프레스', value: '2' },
-        { label: '펙 덱 플라이', value: '3' },
-        { label: '랫 풀 다운', value: '4' },
-        { label: '숄더 프레스', value: '5' },
-        { label: '레그 익스텐션', value: '6' },
-        { label: '힙 어덕션', value: '7' },
-        { label: '레그 프레스', value: '8' },
-    ];
+import IconButton from "../ui/IconButton";
+function SplitExercise({data,onSaveExerciseData}) {
+    const [value, setValue] = useState(null); // 선택한 운동
+    const [exerciseCount, setExerciseCount] = useState('');
+    const handleSaveData = () => {
+        console.log("운동명:",  value);
+        console.log("운동 횟수:", exerciseCount);
+        onSaveExerciseData({ 
+            exercise: value,
+            count: exerciseCount
+        });
+      };
+      
     return (
         <View style={{
             flexDirection: 'row',
@@ -36,8 +37,9 @@ function SplitExercise() {
                 //searchPlaceholder="Search..." //둘이 한세트
                 value={value}
                 onChange={item => {
-                    setValue(item.value);
+                    setValue(item.label);
                 }}
+                
                 renderLeftIcon={() => (
                     <Ionicons name="walk-outline" color={Colors.white1} size={25} />
                 )}
@@ -47,6 +49,14 @@ function SplitExercise() {
                 placeholderTextColor={Colors.gray1}
                 style={styles1.textinput}
                 keyboardType="numeric"
+                value={exerciseCount}
+                onChangeText={text => setExerciseCount(text)}
+            />
+            <IconButton
+              icon={"checkmark"}
+              color={Colors.white1}
+              size={30}
+              onPress={handleSaveData} // 클릭 시 저장된 데이터를 출력 , 값 저장되었는지 Test용
             />
         </View>);
 }

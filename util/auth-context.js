@@ -56,11 +56,11 @@ function AuthContextProvider({ children }) {
         },
       });
 
-      // const record = await axios.get(`http://${URL}:8080/info/record`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
+      const record = await axios.get(`http://${URL}:8080/info/record`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       // const own = await axios.get(`http://${URL}:8080/info/own`, {
       //   headers: {
@@ -70,7 +70,7 @@ function AuthContextProvider({ children }) {
 
       info_dispatch({ type: "setUser", payload: user.data });
       info_dispatch({ type: "setEquipment", payload: equip.data.data });
-      // info_dispatch({ type: "setRecord", payload: record.data });
+      info_dispatch({ type: "setRecord", payload: record.data });
       // info_dispatch({ type: "setOwn", payload: own.data });
     } catch (e) {
       console.log(e);

@@ -3,7 +3,6 @@ import { View, Text, Dimensions, StyleSheet, Image, Alert } from "react-native";
 import { useContext, useState } from "react";
 import { AuthContext } from "../util/auth-context";
 
-import IconButton from "../components/ui/IconButton";
 import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
 //npx npm install react-native-calendars필요
@@ -20,7 +19,13 @@ function Profile({ navigation }) {
   const authCtx = useContext(AuthContext);
   //  유저 정보 가져오기
   const user_info = authCtx.info.user;
+  // 운동 기록 가져오기
+  const record = authCtx.info.record;
 
+  const [userRecord,setUserRecord]= useState(record);
+  console.log(userRecord);
+  //{"equipment_num": 4, "record_count": 20, "record_date": "2024-04-10", "record_num": 26, "record_weight": 20},
+  //record_date를 event와 같은 구성이 필요 marked: true,selectedColor: "blue",dotColor: "red",등의 요소 추가 필요
   //달력 표시 예제
   const [events, setEvents] = useState({
     "2024-04-21": {
@@ -42,10 +47,18 @@ function Profile({ navigation }) {
   const [exercise_des, setExercise_des] = useState();
 
   //예시 : 날짜 선택시 정보 알려줌
+  // const handleDayPress = (day) => {
+  //   const date = day.dateString;
+  //   const description = events[date]
+  //     ? events[date].description1 + "   " + events[date].description2
+  //     : "운동 정보가 없습니다.";
+  //   setExercise_des(description);
+  //   Alert.alert(date, description);
+  // };
   const handleDayPress = (day) => {
-    const date = day.dateString;
-    const description = events[date]
-      ? events[date].description1 + "   " + events[date].description2
+    const date = day.record_date;
+    const description = userRecord.data
+      ? userRecord.data.equipment_num + "운동 "+ userRecord.data.record_weight + "kg "+ userRecord.data.record_count + "회"
       : "운동 정보가 없습니다.";
     setExercise_des(description);
     Alert.alert(date, description);
@@ -97,18 +110,23 @@ function Profile({ navigation }) {
                 },
               },
             }}
-            markedDates={events}
+            //markedDates={events}
+            markedDates={userRecord}
             onDayPress={handleDayPress}
           />
         </View>
         {/*<View style={{ flex: 1, marginTop: 10, marginBottom: 50 }}>
           <Text style={styles.text}>{exercise_des}</Text>
           </View>*/}
-      <View >
-        <Button children={"logout"} onPress={authCtx.logout}/>
-        <Button children={"profile edit"} onPress={profileEdit}/>
-      </View>
-      </View>
+        <View style={{ flexDirection: 'row',justifyContent:'center' }}>
+          <View style={{marginHorizontal:10}}>
+            <Button children={"logout"} onPress={authCtx.logout} style={style1.customButton} textStyle={style1.customText}/>
+          </View>
+          <View style={{marginHorizontal:10}}>
+            <Button children={"profile edit"} onPress={profileEdit} style={style1.customButton} textStyle={style1.customText}/>
+          </View>
+        </View>
+      </View >
       <BottomNav navigation={navigation} />
     </View>
   );
@@ -122,11 +140,18 @@ const style1 = StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     marginTop: 20,
-    marginBottom : 20,
+    marginBottom: 20,
     //backgroundColor: Colors.gray2,
     borderRadius: 16,
     padding: 20,
     marginHorizontal: 20,
+  },
+  customButton:{
+    height:windowHeight * 0.1,
+    width : windowWidth * 0.4,
+  },
+  customText:{
+    fontSize : 30,
   },
   profileImage: {
     width: 50,
