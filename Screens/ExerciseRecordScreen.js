@@ -68,6 +68,7 @@ function Exercising({ navigation, route }) {
 
           const res = apiFunction(token, "POST", "/info/record", data);
           setLength = setLength + 1;
+          console.log(data);
         }
       });
     } catch (error) {

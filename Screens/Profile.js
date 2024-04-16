@@ -24,25 +24,23 @@ function Profile({ navigation }) {
 
   const [userRecord,setUserRecord]= useState(record);
   console.log(userRecord);
-  //{"equipment_num": 4, "record_count": 20, "record_date": "2024-04-10", "record_num": 26, "record_weight": 20},
-  //record_date를 event와 같은 구성이 필요 marked: true,selectedColor: "blue",dotColor: "red",등의 요소 추가 필요
   //달력 표시 예제
-  const [events, setEvents] = useState({
-    "2024-04-21": {
-      selected: true,
-      marked: true,
-      selectedColor: "blue",
-      description1: "푸쉬업 10회",
-      description2: "친업 20회",
-    },
-    "2024-04-24": {
-      marked: true,
-      dotColor: "red",
-      activeOpacity: 0,
-      description1: "레그톱 20회",
-      description2: "윗몸 30회",
-    },
-  });
+  // const [events, setEvents] = useState({
+  //   "2024-04-21": {
+  //     selected: true,
+  //     marked: true,
+  //     selectedColor: "blue",
+  //     description1: "푸쉬업 10회",
+  //     description2: "친업 20회",
+  //   },
+  //   "2024-04-24": {
+  //     marked: true,
+  //     dotColor: "red",
+  //     activeOpacity: 0,
+  //     description1: "레그톱 20회",
+  //     description2: "윗몸 30회",
+  //   },
+  // });
   //운동 설명
   const [exercise_des, setExercise_des] = useState();
 
@@ -55,14 +53,31 @@ function Profile({ navigation }) {
   //   setExercise_des(description);
   //   Alert.alert(date, description);
   // };
-  const handleDayPress = (day) => {
-    const date = day.record_date;
-    const description = userRecord.data
-      ? userRecord.data.equipment_num + "운동 "+ userRecord.data.record_weight + "kg "+ userRecord.data.record_count + "회"
-      : "운동 정보가 없습니다.";
+  // const handleDayPress = () => {
+  //   const date = userRecord.data[0].record_date;
+  //   const description = userRecord.data
+  //     ? userRecord.data[0].Equipment.equipment_name + " "+ userRecord.data[0].record_weight + "kg "+ userRecord.data[0].record_count + "회"
+  //     : "운동 정보가 없습니다.";
+  //   setExercise_des(description);
+  //   Alert.alert(date, description);
+  // };
+  const handleDayPress = (date) => {
+    let description = "운동 정보가 없습니다.";
+    const selectedRecords = userRecord.data.filter(record => record.record_date === date.dateString);
+    if (selectedRecords.length > 0) {
+      description = selectedRecords.map(record => {
+        return record.Equipment.equipment_name + " " + record.record_weight + "kg " + record.record_count + "회";
+      }).join("\n");
+    }
     setExercise_des(description);
-    Alert.alert(date, description);
+    Alert.alert(date.dateString, description);
   };
+  
+  const markedDates = {};
+  userRecord.data.forEach((record) => {
+    markedDates[record.record_date] = { dotColor: record.dotColor , marked: true};
+  });
+  console.log(markedDates);
 
   //프로필 수정화면
   function profileEdit() {
@@ -111,7 +126,7 @@ function Profile({ navigation }) {
               },
             }}
             //markedDates={events}
-            markedDates={userRecord}
+            markedDates={markedDates}
             onDayPress={handleDayPress}
           />
         </View>
