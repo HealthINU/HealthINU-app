@@ -19,7 +19,7 @@ function RankScreen({ navigation }) {
 
     const fetchData = async () => {
       const data = await apiFunction(authCtx.token, "get", "/info/rank");
-      setRank(data);
+      setRank(data.data);
     };
     fetchData();
   }, [rank]);

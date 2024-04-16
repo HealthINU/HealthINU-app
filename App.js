@@ -19,6 +19,7 @@ import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
 import ExerciseRecord from "./Screens/ExerciseRecordScreen";
 import CustumSplit from "./Screens/CustomSplit";
+import BodyHistory from "./Screens/BodyHistory";
 
 // Context 전용 import
 import AuthContextProvider from "./util/auth-context";
@@ -107,6 +108,11 @@ const MainStack = () => {
       <Stack.Screen
         name="CustumSplit"
         component={CustumSplit}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BodyHistory"
+        component={BodyHistory}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

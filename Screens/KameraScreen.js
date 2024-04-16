@@ -1,7 +1,14 @@
 //  카메라 모듈 라이브러리
 import { Camera, CameraType } from "expo-camera";
-import { useState, useEffect, useRef } from "react";
-import { Image, Text, View } from "react-native";
+import { useState, useEffect, useRef, useContext } from "react";
+import {
+  Image,
+  Text,
+  View,
+  StatusBar,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import * as FileSystem from "expo-file-system";
 
 import IconButton from "../components/ui/IconButton";
@@ -20,9 +27,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import config from "../config/config.json";
 
 const URL = config.URL;
-const u_url = "http://" + URL + ":8080/image/upload";
+const predict_url = "http://" + URL + ":8080/image/upload";
+const after_url = "http://" + URL + ":8080/info/body";
 
 import styles from "../styles/styles";
+import Button from "../components/ui/Button";
+
+import { AuthContext } from "../util/auth-context";
 
 export default function KameraScreen({ navigation }) {
   //Main화면 돌아감
@@ -30,12 +41,13 @@ export default function KameraScreen({ navigation }) {
     navigation.navigate("Main");
   }
 
+  const authCtx = useContext(AuthContext);
   //  폰 가로 길이
   const windowWidth = Dimensions.get("window").width;
   //  폰 세로 길이
   const windowHeight = Dimensions.get("window").height;
 
-  //  카메라 타입 : 후면 카메라만 사용할 예정
+  //  카메라 타입 : 전후면 전환 가능
   const [type, setType] = useState(CameraType.back);
 
   //  카메라 권한 상태 : 초기에는 null
@@ -56,6 +68,11 @@ export default function KameraScreen({ navigation }) {
   //  페이지를 벗어났는지 체크할 state
   const [blured, setBlured] = useState(false);
 
+  //  키와 몸무게 state
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+
+  console.log(height, weight);
   //  이 화면이 focus 되면 blured false로 바꾸고
   //  이 화면이 blur 되면 (이 화면에서 나가면) blured를 true로 바꾼다.
   useFocusEffect(() => {
@@ -82,7 +99,7 @@ export default function KameraScreen({ navigation }) {
   }, []);
 
   //  찍은 사진을 서버에 전송하는 함수
-  const req_image = async (image) => {
+  const req_image = async (image, uploadType) => {
     //  formData를 만들어서
     //  필요한 정보들 넣어줌
     const formData = new FormData();
@@ -103,11 +120,24 @@ export default function KameraScreen({ navigation }) {
     const img_url =
       Platform.OS === "android" ? image.uri : image.uri.replace("file://", "");
 
-    let res = await FileSystem.uploadAsync(u_url, img_url, {
+    //  받은 uploadType에 따라 다른 url로 전송
+    const to_post_url = uploadType === "predict" ? predict_url : after_url;
+
+    let res = await FileSystem.uploadAsync(to_post_url, img_url, {
       fieldName: "image",
       httpMethod: "POST",
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      //  키와 몸무게를 같이 보냄 ( 유저 사진 추가 시에만 유효 )
+      parameters: {
+        height: height == null ? "0" : height,
+        weight: weight == null ? "0" : weight,
+      },
+      headers: {
+        Authorization: "Bearer " + authCtx.token,
+      },
     });
+
+    console.log(res.body);
     res = JSON.parse(res.body);
     return res;
   };
@@ -163,16 +193,41 @@ export default function KameraScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#000000" }}>
+      <StatusBar hidden={true} />
       {/* 화면이 활성화되어 있고 이미지가 없을 때*/}
       {!blured && !image && (
         <View style={{ flex: 1 }}>
+          {/* 전후면 전환 뷰*/}
+          <View
+            style={{
+              position: "absolute",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              height: 64,
+              width: windowWidth,
+
+              top: 16,
+            }}>
+            {/* 전후면 전환 버튼*/}
+            <IconButton
+              icon={"sync"}
+              color={Colors.white1}
+              size={50}
+              onPress={() => {
+                setType(
+                  type === CameraType.back ? CameraType.front : CameraType.back
+                );
+              }}
+            />
+          </View>
+
           {/* 카메라 화면 보여줌 */}
           <Camera
             style={{
               ...styles.camera,
               width: windowWidth,
               height: windowWidth,
-              marginTop: (windowHeight - windowWidth) / 2,
+              marginTop: (windowHeight - windowWidth) / 2 - 20,
             }}
             type={type}
             ref={cameraRef}
@@ -216,6 +271,99 @@ export default function KameraScreen({ navigation }) {
       {/* 이미지가 있으면 (사진을 찍었거나 갤러리에서 가져온 경우) */}
       {image ? (
         <View>
+          <View
+            style={{
+              position: "absolute",
+              width: windowWidth,
+              flexDirection: "column",
+              justifyContent: "space-around",
+              alignItems: "center",
+              marginTop: 32,
+            }}>
+            {/* 사진 다시 찍는 버튼 */}
+            {/* <IconButton
+              icon={"camera-reverse-outline"}
+              color={Colors.white1}
+              size={50}
+              onPress={() => setImage(null)}
+            /> */}
+
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}>
+              <Button style={{ width: "45%" }} onPress={() => setImage(null)}>
+                다시 찍기
+              </Button>
+              <Button
+                style={{ width: "45%" }}
+                onPress={async () => {
+                  const data = await req_image(image, "predict");
+                  console.log(data);
+                  navigation.navigate("Predict", { data: data.result });
+                }}>
+                기구 분류
+              </Button>
+            </View>
+
+            {/* 
+            업로드 버튼
+            사진을 서버에 전송하고
+            Predict 페이지로 이동
+          */}
+            {/* <IconButton
+              icon={"thumbs-up-outline"}
+              color={Colors.white1}
+              size={50}
+              onPress={async () => {
+                const data = await req_image(image);
+                console.log(data);
+                navigation.navigate("Predict", { data: data.result });
+              }}
+            /> */}
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}>
+              <Button
+                style={{ width: "45%" }}
+                onPress={async () => {
+                  const data = await req_image(image, "after");
+                  console.log(data);
+                  navigation.navigate("BodyHistory", { data: data.result });
+                }}>
+                After 사진 추가
+              </Button>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  width: "45%",
+                }}>
+                <TextInput
+                  style={style1.input}
+                  onChangeText={setHeight}
+                  value={height}
+                  placeholder="키 입력(cm)"
+                  keyboardType="numeric"
+                  placeholderTextColor={"#888888"}
+                />
+                <TextInput
+                  style={style1.input}
+                  onChangeText={setWeight}
+                  value={weight}
+                  placeholder="몸무게(kg)"
+                  keyboardType="numeric"
+                  placeholderTextColor={"#888888"}
+                />
+              </View>
+            </View>
+          </View>
           {/* 이미지 보여줌 */}
           <Image
             source={{ uri: image.uri }}
@@ -225,40 +373,18 @@ export default function KameraScreen({ navigation }) {
               marginTop: (windowHeight - windowWidth) / 2,
             }}
           />
-          <View
-            style={{
-              width: windowWidth,
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-              marginTop: (windowHeight - windowWidth) / 4,
-            }}>
-            {/* 사진 다시 찍는 버튼 */}
-            <IconButton
-              icon={"camera-reverse-outline"}
-              color={Colors.white1}
-              size={50}
-              onPress={() => setImage(null)}
-            />
-
-            {/* 
-            업로드 버튼
-            사진을 서버에 전송하고
-            Predict 페이지로 이동
-          */}
-            <IconButton
-              icon={"thumbs-up-outline"}
-              color={Colors.white1}
-              size={50}
-              onPress={async () => {
-                const data = await req_image(image);
-                console.log(data);
-                navigation.navigate("Predict", { data: data.result });
-              }}
-            />
-          </View>
         </View>
       ) : null}
     </View>
   );
 }
+
+const style1 = StyleSheet.create({
+  input: {
+    color: "white",
+    borderBottomColor: "white",
+    width: "45%",
+    borderWidth: 1,
+    height: 48,
+  },
+});

@@ -137,6 +137,28 @@ export default function MainBox({ windowWidth, navigation }) {
             </Text>
           </View>
         </View>
+        {/* before % after */}
+        <View
+          style={{
+            ...style1.box,
+          }}>
+          <IconButton
+            icon={"analytics-outline"}
+            color={Colors.white1}
+            size={(windowWidth - 48) / 2 / 2}
+            onPress={() => {
+              navigation.navigate("BodyHistory");
+            }}
+          />
+          <Text
+            style={{
+              ...styles.text,
+              fontSize: 16,
+              textAlign: "center",
+            }}>
+            Before & After
+          </Text>
+        </View>
       </View>
     </View>
   );

@@ -18,6 +18,7 @@ import MainBox from "../components/Main/MainBox";
 export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const user_info = authCtx.info.user;
+  console.log(authCtx.token);
 
   //  폰 가로 길이
   const windowWidth = Dimensions.get("window").width;

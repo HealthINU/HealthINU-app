@@ -64,6 +64,8 @@ function Exercising({ navigation, route }) {
             record_weight: item.weight,
           };
 
+          console.log(data);
+
           const res = apiFunction(token, "POST", "/info/record", data);
           setLength = setLength + 1;
         }
