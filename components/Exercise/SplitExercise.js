@@ -44,14 +44,14 @@ function SplitExercise({data,onSaveExerciseData}) {
                     <Ionicons name="walk-outline" color={Colors.white1} size={25} />
                 )}
             />
-            <TextInput
+            {/* {<TextInput
                 placeholder="횟수 입력"
                 placeholderTextColor={Colors.gray1}
                 style={styles1.textinput}
                 keyboardType="numeric"
                 value={exerciseCount}
                 onChangeText={text => setExerciseCount(text)}
-            />
+            />} */}
             <IconButton
               icon={"checkmark"}
               color={Colors.white1}

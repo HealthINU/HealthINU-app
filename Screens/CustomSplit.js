@@ -13,14 +13,10 @@ function CustumSplit({ navigation }) {
 
 
   const data = [ //item 값들의 예시
-    { label: '벤치 프레스', value: '1' }, 
-    { label: '체스트 프레스', value: '2' },
-    { label: '펙 덱 플라이', value: '3' },
-    { label: '랫 풀 다운', value: '4' },
-    { label: '숄더 프레스', value: '5' },
-    { label: '레그 익스텐션', value: '6' },
-    { label: '힙 어덕션', value: '7' },
-    { label: '레그 프레스', value: '8' },
+    { label: '가슴', value: '1' }, 
+    { label: '어깨', value: '2' },
+    { label: '등', value: '3' },
+    { label: '하체', value: '3' },
 ];
 
 // 해당 코드를 통해 savedData를 백엔드에 보내게 할 예정
