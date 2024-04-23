@@ -22,6 +22,7 @@ function SplitExercise({ data, onSaveExerciseData, categoryNum, SplitCount}) {
     }else{
         num = "fourth_category";
     }
+    // context에 저장된 카테고리들 가져와 checkCategory에 저장 / 이후 다른 index에 카테고리와 비교할 수 있게 된다.=============================
     useEffect(() => {
         console.log("선택된 운동:", checkCategory);
     }, [checkCategory]);
@@ -51,12 +52,14 @@ function SplitExercise({ data, onSaveExerciseData, categoryNum, SplitCount}) {
                 }]);
             }
         }
+        // context로 카테고리 저장 필요================================================================================================
         onSaveExerciseData({
             [num]: values,
         });
     };
     const appendDropDown = () => {
         setCategories(Categories + 1);
+        // 백엔드에 Splitcount를 가져와 각 index카테고리 합이 4이상이되지 않도록 제한해야함====================================================
         if (Categories+limitCount > 4) {
             Alert.alert('주의', '4을 초과할 수 없습니다.', [{
                 text: '확인',
