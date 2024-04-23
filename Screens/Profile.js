@@ -21,7 +21,7 @@ function Profile({ navigation }) {
   const user_info = authCtx.info.user;
   // 운동 기록 가져오기
   const record = authCtx.info.record;
-
+  
   const [userRecord,setUserRecord]= useState(record);
   console.log(userRecord);
   //달력 표시 예제
