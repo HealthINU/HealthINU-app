@@ -1,5 +1,5 @@
 import { View, StyleSheet, TextInput, Alert } from "react-native";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
 import IconButton from "../components/ui/IconButton";
@@ -10,7 +10,7 @@ function CustumSplit({ navigation }) {
   const [splitCount, setSplitCount] = useState(1); //  input value를 숫자로 변환한 값을 상태로 관리
 
   const [savedData, setSavedData] = useState([]); // 저장된 데이터를 상태로 관리
-
+  const [sendData, setSendData] = useState([]); // 백엔드로 보낼 데이터를 상태로 관리 -> 백엔드 규격과 똑같이 맞춰놓음
 
   const data = [ //item 값들의 예시
     { label: '가슴', value: '1' },
@@ -24,9 +24,13 @@ function CustumSplit({ navigation }) {
     console.log('Split Count:', splitCount);
     console.log('Input Value:', inputValue);
     console.log('Saved Data:', savedData);
+    const mergedData = savedData.reduce((acc, cur) => ({ ...acc, ...cur }), {"division_count": splitCount});
+    setSendData([mergedData]);
     setSavedData('');
   };
-
+  useEffect(() => {
+    console.log('Send Data:', sendData);
+  }, [sendData]);
   const handleSaveExerciseData = (exerciseData) => {
     setSavedData(prevSavedData => [...prevSavedData, exerciseData]);
   };
@@ -73,9 +77,9 @@ function CustumSplit({ navigation }) {
           icon={"checkmark"}
           color={Colors.white1}
           size={30}
-          onPress={handleSaveData} // 클릭 시 저장된 데이터를 출력
-
+          onPress={handleSaveData} 
         />
+
       </View>
       <BottomNav navigation={navigation} />
     </View>
