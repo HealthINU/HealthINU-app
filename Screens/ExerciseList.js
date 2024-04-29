@@ -10,9 +10,12 @@ import ExerciseDetail from "./ExerciseDetail";
 import { AuthContext } from "../util/auth-context";
 import BottomNav from "../components/ui/BottomNav";
 
+import { apiFunction } from "../util/api/api";
+
 function ExerciseSearch({ navigation, route }) {
   const authCtx = useContext(AuthContext);
   const equipment = authCtx.info.equipment;
+  const own = authCtx.info.own;
 
   //카메라에서 이 화면으로 이동하는데 여기 title에 값이 전달
   const [title, setTitle] = useState(route.params?.title || "");
@@ -37,7 +40,7 @@ function ExerciseSearch({ navigation, route }) {
   const [equip_num, setEquip_num] = useState(null);
 
   //북마크 저장 변수
-  const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarks, setBookmarks] = useState(own);
   // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
   const [currentBookmarkStatus, setCurrentBookmarkStatus] =
     useState("heart-outline");
@@ -46,8 +49,8 @@ function ExerciseSearch({ navigation, route }) {
   const bookmarkHandler = () => {
     heartButtonPressHandler(currentItemSelected);
     // 북마크 상태인 경우 하트가 채워지도록 설정
-    const bookmarked = isItemBookmarked(currentItemSelected);
-    setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
+    // const bookmarked = isItemBookmarked(currentItemSelected);
+    // setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   };
 
   // 북마크된 아이템만 보기 상태를 추가
@@ -60,7 +63,7 @@ function ExerciseSearch({ navigation, route }) {
   const filteredExerciseItems = showOnlyBookmarked
     ? exerciseItems.filter((item) =>
         bookmarks.some(
-          (bookmark) => bookmark.equipment_num === item.equipment_num
+          (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
         )
       )
     : exerciseItems;
@@ -95,78 +98,52 @@ function ExerciseSearch({ navigation, route }) {
     navigation.navigate("Main");
   }
 
-  //북마크 함수
-  // async function saveBookmarks(value) {
-  //   try {
-  //     const jsonValue = JSON.stringify(value);
-  //     await AsyncStorage.setItem('@bookmarks', jsonValue);
-  //   } catch (e) {
-  //     // 저장 에러 처리
-  //     console.log(e);
-  //   }
-  // }
   async function saveBookmarks(value) {
     try {
-      // 사용자별 북마크 키 생성을 위해 사용자 토큰을 가져옵니다.
-      const userToken = authCtx.token;
+      const to_send_data = {"equipment_num": value};
+      console.log(to_send_data);
+      const res = await apiFunction(authCtx.token, "post", "/info/own", to_send_data);
+      const newOwn =  await apiFunction(authCtx.token, "get", "/info/own");
+      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data});
+      setBookmarks(newOwn.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      // JSON 문자열로 변환
-      const jsonValue = JSON.stringify(value);
-
-      // 사용자 토큰을 기반으로 한 고유 키를 생성합니다.
-      // 예: '@bookmarks:userToken'
-      const bookmarksKey = `@bookmarks:${userToken}`;
-
-      // AsyncStorage에 사용자별 북마크 데이터 저장
-      await AsyncStorage.setItem(bookmarksKey, jsonValue);
-    } catch (e) {
-      // 저장 에러 처리
-      console.log(e);
+  async function deleteBookmarks(value) {
+    try {
+      const res = await apiFunction(authCtx.token, "delete", `/info/own/${value}`);
+      const newOwn =  await apiFunction(authCtx.token, "get", "/info/own");
+      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data});
+      setBookmarks(newOwn.data.data);
+    } catch (error) {
+      console.log(error);
     }
   }
 
   function heartButtonPressHandler(item) {
     // 아이템이 이미 북마크 되었는지 확인
     const isBookmarked = bookmarks.find(
-      (bookmark) => bookmark.equipment_num === item.equipment_num
+      (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
     );
 
     if (!isBookmarked) {
-      const newBookmarks = [...bookmarks, item];
-      setBookmarks(newBookmarks);
-      saveBookmarks(newBookmarks);
+      saveBookmarks(item.equipment_num);
       console.log("북마크 추가됨", item.equipment_name);
     } else {
       // 이미 북마크된 아이템을 제거
-      const filteredBookmarks = bookmarks.filter(
-        (bookmark) => bookmark.equipment_num !== item.equipment_num
-      );
-      setBookmarks(filteredBookmarks);
-      saveBookmarks(filteredBookmarks);
+      deleteBookmarks(item.equipment_num);
       console.log("북마크 제거됨", item.equipment_name);
     }
   }
   // 북마크 상태 확인 함수
   function isItemBookmarked(item) {
     const isBookmarked = bookmarks.find(
-      (bookmark) => bookmark.equipment_num === item.equipment_num
+      (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
     );
     return isBookmarked;
   }
-  //북마크 로드
-  async function loadBookmarks() {
-    try {
-      const jsonValue = await AsyncStorage.getItem("@bookmarks");
-      return jsonValue != null ? setBookmarks(JSON.parse(jsonValue)) : null;
-    } catch (e) {
-      // 로드 에러 처리
-      console.log(e);
-    }
-  }
-
-  useEffect(() => {
-    loadBookmarks();
-  }, []);
 
   useEffect(() => {
     if (title === "") {
@@ -176,6 +153,13 @@ function ExerciseSearch({ navigation, route }) {
     startAddFoalHandler(exercise);
     setTitle("");
   }, [title]);
+
+  useEffect(() => {
+    if(currentItemSelected === null)
+      return;
+    const bookmarked = isItemBookmarked(currentItemSelected);
+    setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
+  }, [bookmarks]);
 
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
