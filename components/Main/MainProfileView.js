@@ -11,15 +11,15 @@ export default function MainProfileView({ user_info }) {
   return (
     <View
       style={{
-        width: "auto",
-        height: "272",
         flexDirection: "row",
-        // justifyContent: "space-around",
-        backgroundColor: "#1F1F1F",
+        justifyContent: "space-between",
+        backgroundColor: "#1f1f1f",
+        marginTop: 8,
+        width: "auto",
         borderRadius: 16,
         marginHorizontal: 16,
-        marginTop: 16,
-      }}>
+      }}
+    >
       <View
         style={{
           width: "100%",
@@ -27,7 +27,8 @@ export default function MainProfileView({ user_info }) {
           justifyContent: "space-around",
           padding: 16,
           // alignItems: "center",
-        }}>
+        }}
+      >
         {/* 레벨, 키, 몸무게, BMI */}
         <View>
           <Text style={styles.redText}>Height</Text>

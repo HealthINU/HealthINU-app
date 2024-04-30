@@ -12,18 +12,41 @@ import MainProfileView from "../components/Main/MainProfileView";
 
 //  기기 크기 가져오기 위한 라이브러리
 import { Dimensions } from "react-native";
-
 import MainBox from "../components/Main/MainBox";
+
+import { apiFunction } from "../util/api/api";
 
 export default function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const user_info = authCtx.info.user;
   console.log(authCtx.token);
 
+  //  출석 정보
+  const [attendance, setAttendance] = useState(null);
+  //  출석 퀘스트 정보
+  const [attendanceQuest, setAttendanceQuest] = useState(null);
+
   //  폰 가로 길이
   const windowWidth = Dimensions.get("window").width;
 
   useEffect(() => {}, [authCtx.info.user]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await apiFunction(
+        authCtx.token,
+        "get",
+        "/info/attendance_day"
+      );
+      const data2 = await apiFunction(
+        authCtx.token,
+        "get",
+        "/info/attendance_quest"
+      );
+      setAttendance(data.data.data);
+      setAttendanceQuest(data2.data.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <View style={{ ...styles.container }}>
@@ -40,7 +63,12 @@ export default function MainScreen({ navigation }) {
       <MainProfileView user_info={user_info} />
 
       {/* 메인 화면의 4개 박스 */}
-      <MainBox windowWidth={windowWidth} navigation={navigation} />
+      <MainBox
+        windowWidth={windowWidth}
+        navigation={navigation}
+        attendance={attendance}
+        attendanceQuest={attendanceQuest}
+      />
 
       {/* 하단바 */}
       <BottomNav navigation={navigation} />
