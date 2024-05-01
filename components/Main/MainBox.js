@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../../constant/Color";
 import styles from "../../styles/styles";
@@ -6,13 +6,10 @@ import { ProgressChart } from "react-native-chart-kit";
 import IconButton from "../ui/IconButton";
 import Button from "../ui/Button";
 
+import { apiFunction } from "../../util/api/api";
+
 //  메인 화면의 4개 박스
-export default function MainBox({
-  windowWidth,
-  navigation,
-  attendance,
-  attendanceQuest,
-}) {
+export default function MainBox({ windowWidth, navigation, token }) {
   //  메인 화면 원 그래프 설정
   const chartConfig = {
     backgroundGradientFrom: Colors.gray2,
@@ -26,10 +23,57 @@ export default function MainBox({
 
   const style1 = createStyles(windowWidth);
 
+  //  출석 정보
+  const [attendance, setAttendance] = useState(null);
+  //  출석 퀘스트 정보
+  const [attendanceQuest, setAttendanceQuest] = useState(null);
+
+  useEffect(() => {
+    if (attendance !== null && attendanceQuest !== null) {
+      return;
+    }
+
+    const fetchData = async () => {
+      const data = await apiFunction(token, "get", "/info/attendance_day");
+      const data2 = await apiFunction(token, "get", "/info/attendance_quest");
+      setAttendance(data.data.data);
+      setAttendanceQuest(data2.data.data);
+    };
+
+    fetchData();
+  }, [attendance, attendanceQuest]);
+
   const a_rate = attendance ? attendance.attendance_rate / 100 : 0;
   const a_day = attendance ? attendance.attendance_day : 0;
 
+  //  출석퀘스트 상태
   const atdBtnText = attendanceQuest?.quest_state;
+
+  const attendance_que_click = async () => {
+    if (atdBtnText === "미진행") {
+      const res = await apiFunction(
+        token,
+        "get",
+        "/info/accept_attendance_quest"
+      );
+
+      const data = await apiFunction(token, "get", "/info/attendance_quest");
+      setAttendanceQuest(data.data.data);
+    } else if (atdBtnText === "달성") {
+      const res = await apiFunction(
+        token,
+        "get",
+        "/info/accept_attendance_quest"
+      );
+
+      const data = await apiFunction(
+        token,
+        "get",
+        "/info/finish_attendance_quest"
+      );
+      setAttendanceQuest(data.data.data);
+    }
+  };
 
   return (
     <>
@@ -207,6 +251,7 @@ export default function MainBox({
                 marginTop: 0,
                 marginBottom: 0,
               }}
+              onPress={attendance_que_click}
             >
               {atdBtnText}
             </Button>
