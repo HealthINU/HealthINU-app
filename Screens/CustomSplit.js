@@ -12,10 +12,10 @@ import { apiFunction } from "../util/api/api";
 function CustumSplit({ navigation }) {
   const authCtx = useContext(AuthContext);
 
-  const [inputValue, setInputValue] = useState(""); // 입력된 값을 상태로 관리
+  const [inputValue, setInputValue] = useState("1"); // 입력된 값을 상태로 관리
   const [splitCount, setSplitCount] = useState(1); //  input value를 숫자로 변환한 값을 상태로 관리
 
-  const [savedData, setSavedData] = useState([]); // 저장된 데이터를 상태로 관리
+  const [savedData, setSavedData] = useState({ division_count: 1 }); // 저장된 데이터를 상태로 관리
   const [sendData, setSendData] = useState([]); // 백엔드로 보낼 데이터를 상태로 관리 -> 백엔드 규격과 똑같이 맞춰놓음
 
   const data = [
@@ -26,36 +26,110 @@ function CustumSplit({ navigation }) {
     { label: "하체", value: "4" },
   ];
 
-  // 해당 코드를 통해 savedData를 백엔드에 보내게 할 예정
-  const handleSaveData = () => {
-    console.log("Split Count:", splitCount);
-    console.log("Input Value:", inputValue);
-    console.log("Saved Data:", savedData);
-    const mergedData = savedData.reduce((acc, cur) => ({ ...acc, ...cur }), {
-      division_count: splitCount,
-    });
-    setSendData(mergedData);
-    setSavedData(""); // 저장된 데이터 초기화
+  const categoryReturn = (categoryNum) => {
+    if (categoryNum == 1) {
+      num = "first_category";
+    } else if (categoryNum == 2) {
+      num = "second_category";
+    } else if (categoryNum == 3) {
+      num = "third_category";
+    } else {
+      num = "fourth_category";
+    }
+    return num;
   };
 
-  //  useEffect를 통해 sendData가 변경될 때마다 백엔드로 데이터를 보내게 함
-  useEffect(() => {
-    console.log("Send Data:", sendData);
+  // 해당 코드를 통해 savedData를 백엔드에 보내게 할 예정
+  const handleSaveData = async () => {
+    console.log("Send Data:", savedData);
+
+    const exerList = [];
+
+    for (let i = 1; i <= splitCount; i++) {
+      if (
+        !savedData[categoryReturn(i)] ||
+        savedData[categoryReturn(i)].length == 0
+      ) {
+        Alert.alert("주의", "모든 카테고리를 선택해주세요", [
+          {
+            text: "확인",
+            onPress: () => {},
+          },
+        ]);
+        return;
+      }
+
+      exerList.push(...savedData[categoryReturn(i)]);
+    }
+
+    console.log(`exerList: ${exerList}`);
+
+    //  exerList에 중복 요소 있으면 alert
+    const set = new Set(exerList);
+
+    console.log(`set.size: ${set.size}`);
+    console.log(`exerList.length: ${exerList.length}`);
+    if (set.size !== exerList.length) {
+      Alert.alert("주의", "중복된 운동이 있습니다", [
+        {
+          text: "확인",
+          onPress: () => {},
+        },
+      ]);
+      return;
+    }
+
     const fetchData = async () => {
       const data = await apiFunction(
         authCtx.token,
         "post",
         "/info/division",
-        sendData
+        savedData
       );
+
+      return data;
     };
 
     try {
-      fetchData();
+      const data = await fetchData();
+      if (data.status == 200) {
+        Alert.alert("저장 완료", "저장이 완료되었습니다.", [
+          {
+            text: "확인",
+            onPress: () => {},
+          },
+        ]);
+      }
     } catch (error) {}
-  }, [sendData]);
+  };
+
+  useEffect(() => {
+    //  전의 splitCount
+    const preSaveSize = savedData.division_count;
+    const maxCount = splitCount > preSaveSize ? splitCount : preSaveSize;
+    const minCount = splitCount > preSaveSize ? preSaveSize : splitCount;
+
+    for (let i = minCount + 1; i <= maxCount; i++) {
+      savedData[categoryReturn(i)] = [];
+    }
+
+    setSavedData((prevSavedData) => {
+      const data = {
+        ...prevSavedData,
+        division_count: splitCount,
+      };
+
+      return data;
+    });
+  }, [splitCount]);
+
   const handleSaveExerciseData = (exerciseData) => {
-    setSavedData((prevSavedData) => [...prevSavedData, exerciseData]);
+    //  first_category, second... , third... , fourth... 문자열로 변환
+    const category = exerciseData.category;
+    setSavedData((prevSavedData) => ({
+      ...prevSavedData,
+      [category]: exerciseData.values,
+    }));
   };
 
   console.log(savedData);

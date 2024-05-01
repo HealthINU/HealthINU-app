@@ -47,7 +47,11 @@ function SplitExercise({ data, onSaveExerciseData, categoryNum, SplitCount }) {
           },
         },
       ]);
+
+      return;
     }
+
+    setValues(values.slice(0, -1));
   };
 
   useEffect(() => {
@@ -55,7 +59,8 @@ function SplitExercise({ data, onSaveExerciseData, categoryNum, SplitCount }) {
     console.log(values);
     // context로 카테고리 저장 필요================================================================================================
     onSaveExerciseData({
-      [num]: values,
+      category: num,
+      values: values,
     });
   }, [values]);
 
