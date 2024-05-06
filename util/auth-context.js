@@ -49,31 +49,31 @@ function AuthContextProvider({ children }) {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("user")
       const equip = await axios.get(`http://${URL}:8080/info/equip`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("equip")
       const record = await axios.get(`http://${URL}:8080/info/record`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("record")
       const own = await axios.get(`http://${URL}:8080/info/own`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log("own")
       info_dispatch({ type: "setUser", payload: user.data });
       info_dispatch({ type: "setEquipment", payload: equip.data.data });
       info_dispatch({ type: "setRecord", payload: record.data });
       info_dispatch({ type: "setOwn", payload: own.data.data});
     } catch (e) {
-      console.log(e);
+      console.log("here?",e);
     }
 
     setAuthToken(token);

@@ -33,7 +33,7 @@ export default function GoogleButton() {
 
     //  토큰이 검증되면 저장함 ( 그리고 자동으로 메인으로 이동함 )
     if (result.data.message === "Verified") {
-      await AsyncStorage.setItem("token", result.data.token);
+      await AsyncStorage.setItem("token", query_string.token);
       authCtx.authenticate(query_string.token);
     }
   };
