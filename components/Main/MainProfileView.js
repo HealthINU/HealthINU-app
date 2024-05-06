@@ -4,8 +4,8 @@ import { View, Text } from "react-native";
 //  키, 몸무게, BMI 보여주는 컴포넌트
 export default function MainProfileView({ user_info }) {
   const BMI = (
-    user_info.user_weight /
-    (user_info.user_height / 100) ** 2
+    user_info?.user_weight /
+    (user_info?.user_height / 100) ** 2
   ).toFixed(2);
 
   return (
@@ -33,14 +33,14 @@ export default function MainProfileView({ user_info }) {
         <View>
           <Text style={styles.redText}>Height</Text>
           <Text style={styles.text}>
-            {user_info.user_height}
+            {user_info?.user_height}
             <Text style={styles.grayText}> cm</Text>
           </Text>
         </View>
         <View>
           <Text style={styles.greenText}>Weight</Text>
           <Text style={styles.text}>
-            {user_info.user_weight}
+            {user_info?.user_weight}
             <Text style={styles.grayText}> kg</Text>
           </Text>
         </View>
