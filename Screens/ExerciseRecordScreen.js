@@ -36,10 +36,6 @@ function Exercising({ navigation, route }) {
       Alert.alert("추가 불가능!!", "세트는 1개까지만 제거 가능합니다");
     }
   }
-  //Main화면 돌아감
-  function moveMain() {
-    navigation.navigate("Main");
-  }
 
   function getDate() {
     const today = new Date();

@@ -160,26 +160,51 @@ export default function MainBox({ windowWidth, navigation, token }) {
           >
             <View
               style={{
-                ...style1.box,
+                //...style1.box,
               }}
             >
-              <IconButton
-                icon={"grid"}
-                color={Colors.white1}
-                size={(windowWidth - 48) / 2 / 2}
-                onPress={() => {
-                  navigation.navigate("CustumSplit");
-                }}
-              />
-              <Text
-                style={{
-                  ...styles.text,
-                  fontSize: 16,
-                  textAlign: "center",
-                }}
-              >
-                맞춤형 분할
-              </Text>
+              <View style={{
+                ...style1.mbox,
+              }}>
+                <IconButton
+                  icon={"grid-outline"}
+                  color={Colors.white1}
+                  size={(windowWidth - 48) / 2 / 4}
+                  onPress={() => {
+                    navigation.navigate("CustumSplit");
+                  }}
+                />
+                <Text
+                  style={{
+                    ...styles.text,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  카테고리 지정
+                </Text>
+              </View>
+              <View style={{
+                ...style1.mbox,
+              }}>
+                <IconButton
+                  icon={"grid"}
+                  color={Colors.white1}
+                  size={(windowWidth - 48) / 2 / 4}
+                  onPress={() => {
+                    navigation.navigate("PlayCustomSplit");
+                  }}
+                />
+                <Text
+                  style={{
+                    ...styles.text,
+                    fontSize: 16,
+                    textAlign: "center",
+                  }}
+                >
+                  맞춤형 분할
+                </Text>
+              </View>
             </View>
             <View
               style={{
@@ -313,7 +338,15 @@ const createStyles = (windowWidth) =>
       borderRadius: 16,
       height: (windowWidth - 48) / 2,
       width: (windowWidth - 48) / 2,
-      margin: 8,
+      margin: 5,
+      justifyContent: "center",
+    },
+    mbox :{
+      backgroundColor: Colors.gray2,
+      borderRadius: 16,
+      height: 'auto',
+      width: (windowWidth - 48) / 2,
+      margin: 3,
       justifyContent: "center",
     },
     topLeftText: {

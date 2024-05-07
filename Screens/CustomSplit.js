@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput, Alert } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
@@ -146,7 +146,7 @@ function CustumSplit({ navigation }) {
         <TextInput
           placeholder="Split?"
           placeholderTextColor={Colors.gray1}
-          style={styles1.textinput}
+          style={styles.textinput}
           keyboardType="numeric"
           value={inputValue} // 입력된 값을 상태로 설정
           onChangeText={(text) => {
@@ -191,13 +191,3 @@ function CustumSplit({ navigation }) {
 
 export default CustumSplit;
 
-const styles1 = StyleSheet.create({
-  textinput: {
-    height: 50,
-    width: 50,
-    borderColor: Colors.gray1,
-    borderWidth: 0.5,
-    color: Colors.white1,
-    textAlign: "center",
-  },
-});

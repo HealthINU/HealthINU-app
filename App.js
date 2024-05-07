@@ -19,6 +19,7 @@ import Profile from "./Screens/Profile";
 import ChangeProfile from "./Screens/ChangeProfile";
 import ExerciseRecord from "./Screens/ExerciseRecordScreen";
 import CustumSplit from "./Screens/CustomSplit";
+import PlayCustomSplit from "./Screens/PlayCustomSplit";
 import BodyHistory from "./Screens/BodyHistory";
 
 // Context 전용 import
@@ -108,6 +109,11 @@ const MainStack = () => {
       <Stack.Screen
         name="CustumSplit"
         component={CustumSplit}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PlayCustomSplit"
+        component={PlayCustomSplit}
         options={{ headerShown: false }}
       />
       <Stack.Screen

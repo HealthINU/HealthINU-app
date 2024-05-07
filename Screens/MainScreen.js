@@ -34,7 +34,6 @@ export default function MainScreen({ navigation }) {
         <Text style={{ ...styles.text, fontSize: 32, marginTop: 16 }}>
           HealthINU
         </Text>
-        {/* 프로필 화면 이동 */}
       </View>
 
       {/* 키, 몸무게, BMI 보여주는 Component */}

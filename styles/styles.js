@@ -119,6 +119,14 @@ export default styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
   },
+  textinput: {
+    height: 50,
+    width: 50,
+    borderColor: Colors.gray1,
+    borderWidth: 0.5,
+    color: Colors.white1,
+    textAlign: "center",
+  },
   grayText: {
     fontSize: 13,
     color: "#888888",
