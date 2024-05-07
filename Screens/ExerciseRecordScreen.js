@@ -49,11 +49,11 @@ function Exercising({ navigation, route }) {
     return year + "-" + month + "-" + day;
   }
 
-  function addRecord() {
+  async function addRecord() {
     let setLength = 0;
 
     try {
-      sets.map((item, index) => {
+      const promises = sets.map(async (item, index) => {
         //  횟수 x 무게가 0이 아닐 때만 기록 추가
         const volume = item.weight * item.count;
         if (volume != 0 && isNaN(volume) === false) {
@@ -66,16 +66,25 @@ function Exercising({ navigation, route }) {
 
           console.log(data);
 
-          const res = apiFunction(token, "POST", "/info/record", data);
+          const res = await apiFunction(token, "POST", "/info/record", data);
           setLength = setLength + 1;
           console.log(data);
+          console.log(setLength)
         }
       });
+
+      await Promise.all(promises);
+      console.log("debug")
     } catch (error) {
       Alert.alert("기록 추가 실패", "다시 시도해주세요.");
     } finally {
       console.log(`${setLength}개의 기록이 추가되었습니다.`);
-      if (setLength !== 0) Alert.alert("기록이 추가되었습니다.");
+      if (setLength !== 0) {
+        //  갱신된 기록 가져옴
+        const new_record = await apiFunction(token,"GET", "/info/record");
+        //  context에 갱신
+        authCtx.info_dispatch({ type: "setRecord", payload: new_record.data });
+        Alert.alert("기록이 추가되었습니다.");}
       else
         Alert.alert("기록 추가 실패", "최소 한 개 이상 기록을 추가해주세요.");
     }
