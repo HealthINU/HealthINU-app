@@ -21,8 +21,8 @@ function Profile({ navigation }) {
   const user_info = authCtx.info.user;
   // 운동 기록 가져오기
   const record = authCtx.info.record;
-  
-  const [userRecord,setUserRecord]= useState(record);
+
+  const [userRecord, setUserRecord] = useState(record);
   console.log(userRecord);
   //달력 표시 예제
   // const [events, setEvents] = useState({
@@ -63,19 +63,33 @@ function Profile({ navigation }) {
   // };
   const handleDayPress = (date) => {
     let description = "운동 정보가 없습니다.";
-    const selectedRecords = userRecord.data.filter(record => record.record_date === date.dateString);
+    const selectedRecords = userRecord.data.filter(
+      (record) => record.record_date === date.dateString
+    );
     if (selectedRecords.length > 0) {
-      description = selectedRecords.map(record => {
-        return record.Equipment.equipment_name + " " + record.record_weight + "kg " + record.record_count + "회";
-      }).join("\n");
+      description = selectedRecords
+        .map((record) => {
+          return (
+            record.Equipment.equipment_name +
+            " " +
+            record.record_weight +
+            "kg " +
+            record.record_count +
+            "회"
+          );
+        })
+        .join("\n");
     }
     setExercise_des(description);
     Alert.alert(date.dateString, description);
   };
-  
+
   const markedDates = {};
   userRecord.data.forEach((record) => {
-    markedDates[record.record_date] = { dotColor: record.dotColor , marked: true};
+    markedDates[record.record_date] = {
+      dotColor: record.dotColor,
+      marked: true,
+    };
   });
   console.log(markedDates);
 
@@ -133,15 +147,25 @@ function Profile({ navigation }) {
         {/*<View style={{ flex: 1, marginTop: 10, marginBottom: 50 }}>
           <Text style={styles.text}>{exercise_des}</Text>
           </View>*/}
-        <View style={{ flexDirection: 'row',justifyContent:'center' }}>
-          <View style={{marginHorizontal:10}}>
-            <Button children={"logout"} onPress={authCtx.logout} style={style1.customButton} textStyle={style1.customText}/>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <View style={{ marginHorizontal: 10 }}>
+            <Button
+              children={"logout"}
+              onPress={authCtx.logout}
+              style={style1.customButton}
+              textStyle={style1.customText}
+            />
           </View>
-          <View style={{marginHorizontal:10}}>
-            <Button children={"profile edit"} onPress={profileEdit} style={style1.customButton} textStyle={style1.customText}/>
+          <View style={{ marginHorizontal: 10 }}>
+            <Button
+              children={"profile edit"}
+              onPress={profileEdit}
+              style={style1.customButton}
+              textStyle={style1.customText}
+            />
           </View>
         </View>
-      </View >
+      </View>
       <BottomNav navigation={navigation} />
     </View>
   );
@@ -161,12 +185,12 @@ const style1 = StyleSheet.create({
     padding: 20,
     marginHorizontal: 20,
   },
-  customButton:{
-    height:windowHeight * 0.1,
-    width : windowWidth * 0.4,
+  customButton: {
+    height: windowHeight * 0.075,
+    width: windowWidth * 0.4,
   },
-  customText:{
-    fontSize : 30,
+  customText: {
+    fontSize: 20,
   },
   profileImage: {
     width: 50,
