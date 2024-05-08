@@ -100,11 +100,16 @@ function ExerciseSearch({ navigation, route }) {
 
   async function saveBookmarks(value) {
     try {
-      const to_send_data = {"equipment_num": value};
+      const to_send_data = { equipment_num: value };
       console.log(to_send_data);
-      const res = await apiFunction(authCtx.token, "post", "/info/own", to_send_data);
-      const newOwn =  await apiFunction(authCtx.token, "get", "/info/own");
-      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data});
+      const res = await apiFunction(
+        authCtx.token,
+        "post",
+        "/info/own",
+        to_send_data
+      );
+      const newOwn = await apiFunction(authCtx.token, "get", "/info/own");
+      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data });
       setBookmarks(newOwn.data.data);
     } catch (error) {
       console.log(error);
@@ -113,9 +118,13 @@ function ExerciseSearch({ navigation, route }) {
 
   async function deleteBookmarks(value) {
     try {
-      const res = await apiFunction(authCtx.token, "delete", `/info/own/${value}`);
-      const newOwn =  await apiFunction(authCtx.token, "get", "/info/own");
-      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data});
+      const res = await apiFunction(
+        authCtx.token,
+        "delete",
+        `/info/own/${value}`
+      );
+      const newOwn = await apiFunction(authCtx.token, "get", "/info/own");
+      authCtx.info_dispatch({ type: "setOwn", payload: newOwn.data.data });
       setBookmarks(newOwn.data.data);
     } catch (error) {
       console.log(error);
@@ -155,8 +164,7 @@ function ExerciseSearch({ navigation, route }) {
   }, [title]);
 
   useEffect(() => {
-    if(currentItemSelected === null)
-      return;
+    if (currentItemSelected === null) return;
     const bookmarked = isItemBookmarked(currentItemSelected);
     setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   }, [bookmarks]);
@@ -208,6 +216,7 @@ function ExerciseSearch({ navigation, route }) {
           navigation={navigation}
           bookmark={bookmarkHandler}
           BookmarkStatus={currentBookmarkStatus}
+          equipment_num={equip_num}
         />
       </View>
       <BottomNav navigation={navigation} />

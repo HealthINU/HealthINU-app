@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../../constant/Color";
 import styles from "../../styles/styles";
@@ -23,10 +24,15 @@ export default function MainBox({ windowWidth, navigation, token }) {
 
   const style1 = createStyles(windowWidth);
 
+  const isFocused = useIsFocused();
+
   //  출석 정보
   const [attendance, setAttendance] = useState(null);
   //  출석 퀘스트 정보
   const [attendanceQuest, setAttendanceQuest] = useState(null);
+
+  // 운동 퀘스트 정보
+  const [exerQuest, setExerQuest] = useState(null);
 
   useEffect(() => {
     if (attendance !== null && attendanceQuest !== null) {
@@ -36,18 +42,38 @@ export default function MainBox({ windowWidth, navigation, token }) {
     const fetchData = async () => {
       const data = await apiFunction(token, "get", "/info/attendance_day");
       const data2 = await apiFunction(token, "get", "/info/attendance_quest");
+      const data3 = await apiFunction(token, "get", "/info/exercise_quest");
       setAttendance(data.data.data);
       setAttendanceQuest(data2.data.data);
+      setExerQuest(data3.data.data);
     };
 
     fetchData();
   }, [attendance, attendanceQuest]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await apiFunction(token, "get", "/info/attendance_day");
+      const data2 = await apiFunction(token, "get", "/info/attendance_quest");
+      const data3 = await apiFunction(token, "get", "/info/exercise_quest");
+      setAttendance(data.data.data);
+      setAttendanceQuest(data2.data.data);
+      setExerQuest(data3.data.data);
+    };
+
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   const a_rate = attendance ? attendance.attendance_rate / 100 : 0;
   const a_day = attendance ? attendance.attendance_day : 0;
 
   //  출석퀘스트 상태
   const atdBtnText = attendanceQuest?.quest_state;
+
+  //   운동퀘스트 상태
+  const exerBtnText = exerQuest?.quest_state;
 
   const attendance_que_click = async () => {
     if (atdBtnText === "미진행") {
@@ -60,18 +86,38 @@ export default function MainBox({ windowWidth, navigation, token }) {
       const data = await apiFunction(token, "get", "/info/attendance_quest");
       setAttendanceQuest(data.data.data);
     } else if (atdBtnText === "달성") {
-      const res = await apiFunction(
-        token,
-        "get",
-        "/info/accept_attendance_quest"
-      );
-
       const data = await apiFunction(
         token,
         "get",
         "/info/finish_attendance_quest"
       );
-      setAttendanceQuest(data.data.data);
+
+      const res = await apiFunction(token, "get", "/info/attendance_quest");
+
+      setAttendanceQuest(res.data.data);
+    }
+  };
+
+  const exer_que_click = async () => {
+    if (exerBtnText === "미진행") {
+      const res = await apiFunction(
+        token,
+        "get",
+        "/info/accept_exercise_quest"
+      );
+
+      const data = await apiFunction(token, "get", "/info/exercise_quest");
+      setExerQuest(data.data.data);
+    } else if (exerBtnText === "달성") {
+      const data = await apiFunction(
+        token,
+        "get",
+        "/info/finish_exercise_quest"
+      );
+
+      const res = await apiFunction(token, "get", "/info/exercise_quest");
+
+      setExerQuest(res.data.data);
     }
   };
 
@@ -135,9 +181,10 @@ export default function MainBox({ windowWidth, navigation, token }) {
                   paddingBottom: 16,
                   position: "absolute",
                   alignSelf: "center",
+                  paddingBottom: 64,
                 }}
               >
-                레그 프레스
+                {exerQuest?.Quest.quest_description}
               </Text>
               <Text
                 style={{
@@ -147,9 +194,19 @@ export default function MainBox({ windowWidth, navigation, token }) {
                   marginTop: 64,
                 }}
               >
-                10<Text style={{ ...styles.grayText }}> kg</Text> x 10{" "}
-                <Text style={{ ...styles.grayText }}> 회</Text>
+                {exerQuest?.Quest.quest_requirement}
+                <Text style={{ ...styles.grayText }}> volume </Text>
               </Text>
+              <Button
+                style={{
+                  paddingHorizontal: 16,
+                  marginTop: 0,
+                  marginBottom: 0,
+                }}
+                onPress={exer_que_click}
+              >
+                {exerBtnText}
+              </Button>
             </View>
           </View>
           <View
@@ -159,13 +216,17 @@ export default function MainBox({ windowWidth, navigation, token }) {
             }}
           >
             <View
-              style={{
-                //...style1.box,
-              }}
+              style={
+                {
+                  //...style1.box,
+                }
+              }
             >
-              <View style={{
-                ...style1.mbox,
-              }}>
+              <View
+                style={{
+                  ...style1.mbox,
+                }}
+              >
                 <IconButton
                   icon={"grid-outline"}
                   color={Colors.white1}
@@ -184,9 +245,11 @@ export default function MainBox({ windowWidth, navigation, token }) {
                   카테고리 지정
                 </Text>
               </View>
-              <View style={{
-                ...style1.mbox,
-              }}>
+              <View
+                style={{
+                  ...style1.mbox,
+                }}
+              >
                 <IconButton
                   icon={"grid"}
                   color={Colors.white1}
@@ -341,10 +404,10 @@ const createStyles = (windowWidth) =>
       margin: 5,
       justifyContent: "center",
     },
-    mbox :{
+    mbox: {
       backgroundColor: Colors.gray2,
       borderRadius: 16,
-      height: 'auto',
+      height: "auto",
       width: (windowWidth - 48) / 2,
       margin: 3,
       justifyContent: "center",

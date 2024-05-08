@@ -20,9 +20,8 @@ function ExerciseDetail({
   navigation,
   BookmarkStatus,
   bookmark,
+  equipment_num,
 }) {
-  
-  
   // async function searchingYoutube(name) {
   //   try {
   //     // searchYoutube 함수의 결과를 기다림
@@ -52,7 +51,11 @@ function ExerciseDetail({
   function moveExercising() {
     //  eng_name은 운동 영어 이름, title은 운동 한국어 이름
     onCancel();
-    navigation.navigate("ExerciseRecord", { eng_name: eng_name, title: title });
+    navigation.navigate("ExerciseRecord", {
+      eng_name: eng_name,
+      title: title,
+      equipment_num,
+    });
   }
 
   return (
@@ -65,7 +68,8 @@ function ExerciseDetail({
               width: "100%",
               justifyContent: "flex-start",
               alignItems: "center",
-            }}>
+            }}
+          >
             <View style={styles1.buttonContainer}>
               <IconButton
                 icon={"arrow-back-circle-outline"}
@@ -83,7 +87,8 @@ function ExerciseDetail({
               alignItems: "center",
               backgroundColor: Colors.gray2,
               borderRadius: 16,
-            }}>
+            }}
+          >
             <Image style={styles1.Image} source={Images[eng_name]} />
             {/* 북마크, 기록 추가 뷰 */}
             <View
@@ -92,7 +97,8 @@ function ExerciseDetail({
                 width: "50%",
                 justifyContent: "space-around",
                 backgroundColor: Colors.gray2,
-              }}>
+              }}
+            >
               <View>
                 {/* 북마크 */}
                 <IconButton
@@ -107,7 +113,8 @@ function ExerciseDetail({
                     fontSize: 13,
                     color: Colors.gray1,
                     paddingBottom: 10,
-                  }}>
+                  }}
+                >
                   북마크
                 </Text>
               </View>
@@ -126,7 +133,8 @@ function ExerciseDetail({
                     color: Colors.gray1,
                     alignSelf: "center",
                     paddingBottom: 10,
-                  }}>
+                  }}
+                >
                   기록 추가
                 </Text>
               </View>
@@ -141,7 +149,8 @@ function ExerciseDetail({
               alignSelf: "flex-start",
               marginLeft: 16,
               marginTop: 16,
-            }}>
+            }}
+          >
             {title}
           </Text>
           {/* 카테고리 */}
@@ -153,13 +162,15 @@ function ExerciseDetail({
               alignSelf: "flex-start",
               marginLeft: 16,
               marginBottom: 16,
-            }}>
+            }}
+          >
             {category}
           </Text>
           <ScrollView
             style={{
               width: "100%",
-            }}>
+            }}
+          >
             <Text style={[styles1.toc]}>- 준비 단계</Text>
             {/* 준비 단계 텍스트 출력 */}
             {descList1?.map((line, index) => {

@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { StatusBar } from "expo-status-bar";
 import { Text, View, Image, FlatList } from "react-native";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ import MainBox from "../components/Main/MainBox";
 
 import { apiFunction } from "../util/api/api";
 
-export default function MainScreen({ navigation }) {
+function MainScreen({ navigation }) {
   const authCtx = useContext(AuthContext);
   const user_info = authCtx.info.user;
   console.log(authCtx.token);
@@ -54,3 +55,5 @@ export default function MainScreen({ navigation }) {
     </View>
   );
 }
+
+export default MainScreen;
