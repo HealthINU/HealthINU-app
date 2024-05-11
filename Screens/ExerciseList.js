@@ -47,16 +47,15 @@ function ExerciseSearch({ navigation, route }) {
   //북마크 저장 변수
   const [bookmarks, setBookmarks] = useState(own);
   // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
-  const [currentBookmarkStatus, setCurrentBookmarkStatus] =
-    useState("heart-outline");
+  const [currentBookmarkStatus, setCurrentBookmarkStatus] = useState("heart-outline");
   // 현재 선택된 운동 아이템 상태 변수
   const [currentItemSelected, setCurrentItemSelected] = useState(null);
   const bookmarkHandler = () => {
     heartButtonPressHandler(currentItemSelected);
-    // 북마크 상태인 경우 하트가 채워지도록 설정
-    // const bookmarked = isItemBookmarked(currentItemSelected);
-    // setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   };
+
+
+
   // 카테고리만 보여주기 상태 추가
   const [showOnlyCategories, setShowOnlyCategories] = useState(false);
   // 카테고리 토글 함수
@@ -66,14 +65,17 @@ function ExerciseSearch({ navigation, route }) {
   // 카테고리 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
   const filteredCategories = showOnlyCategories
     ? exerciseItems.filter((item) =>
-      categories.some(
+      bookmarks.some(
         //(categories) => categories.Equipment.equipment_category === item.equipment_category
-        (categories) => categories.Equipment.equipment_category === '가슴'
+        (bookmarks) => bookmarks.Equipment.equipment_category === '가슴'
       )
     )
     : exerciseItems;
     //console.log(filteredCategories.Equipment.equipment_category);
 
+
+
+    
   // 북마크된 아이템만 보기 상태를 추가
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   // 북마크 표시 토글 함수
