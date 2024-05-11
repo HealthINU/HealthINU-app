@@ -9,6 +9,7 @@ import { Colors } from "../constant/Color";
 import { apiFunction } from "../util/api/api";
 
 import RecordComponent from "../components/Exercise/RecordComponent";
+import IconButton from "../components/ui/IconButton";
 
 function PlayCustomSplit({ navigation }) {
   const windowWidth = Dimensions.get("window").width;
@@ -49,7 +50,11 @@ function PlayCustomSplit({ navigation }) {
     };
     fetchData();
   }, []);
+  //console.log(exerciseItems);
+  // 운동리스트에서 북마크된 운동들만 보여주는 함수
+  function showOnlyBookmarked(){
 
+  }
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
       {!exerciseItems ? (
@@ -64,10 +69,19 @@ function PlayCustomSplit({ navigation }) {
         </View>
       ) : (
         <>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text style={{ ...styles.titletext, fontSize: 14 }}>
+
+          <View style={{ justifyContent: 'center', alignItems: "center", flexDirection: "row" }}>
+            <Text style={{ ...styles.titletext, fontSize: 25 }}>
               맞춤형 분할운동
             </Text>
+          </View>
+          <View style={{ flexDirection: 'row-reverse', alignItems: "center", paddingHorizontal:30 }}>
+            <IconButton
+              icon={"heart-sharp"}
+              color={Colors.white1}
+              size={32}
+              onPress={showOnlyBookmarked}
+            />
           </View>
           {/*운동리스트*/}
           <View style={{ flex: 1 }}>

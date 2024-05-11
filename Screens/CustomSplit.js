@@ -1,4 +1,4 @@
-import { View, TextInput, Alert } from "react-native";
+import { View, Text, TextInput, Alert } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import styles from "../styles/styles";
 import { Colors } from "../constant/Color";
@@ -53,7 +53,7 @@ function CustumSplit({ navigation }) {
         Alert.alert("주의", "모든 카테고리를 선택해주세요", [
           {
             text: "확인",
-            onPress: () => {},
+            onPress: () => { },
           },
         ]);
         return;
@@ -73,7 +73,7 @@ function CustumSplit({ navigation }) {
       Alert.alert("주의", "중복된 운동이 있습니다", [
         {
           text: "확인",
-          onPress: () => {},
+          onPress: () => { },
         },
       ]);
       return;
@@ -96,11 +96,11 @@ function CustumSplit({ navigation }) {
         Alert.alert("저장 완료", "저장이 완료되었습니다.", [
           {
             text: "확인",
-            onPress: () => {},
+            onPress: () => { },
           },
         ]);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -142,32 +142,38 @@ function CustumSplit({ navigation }) {
           justifyContent: "center",
         }}
       >
-        {/* Split 운동을 몇개로 나눌지 입력 */}
-        <TextInput
-          placeholder="Split?"
-          placeholderTextColor={Colors.gray1}
-          style={styles.textinput}
-          keyboardType="numeric"
-          value={inputValue} // 입력된 값을 상태로 설정
-          onChangeText={(text) => {
-            setInputValue(text); // 입력된 값을 상태로 업데이트
-          }}
-          onEndEditing={() => {
-            let count = parseInt(inputValue) || 1; // 숫자로 변환하고, 숫자가 아니면 1로 처리
-            if (count > 4) {
-              Alert.alert("주의", "분할수는 4을 초과할 수 없습니다.", [
-                {
-                  text: "확인",
-                  onPress: () => {
-                    setInputValue(""); // 입력된 값을 지움
+        <View style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}>
+          <Text style={[styles.text,{fontSize:20}]}>분할 수 :   </Text>
+          {/* Split 운동을 몇개로 나눌지 입력 */}
+          <TextInput
+            //placeholder="Split?"
+            placeholderTextColor={Colors.gray1}
+            style={[styles.textinput, {fontSize: 30}]}
+            keyboardType="numeric"
+            value={inputValue} // 입력된 값을 상태로 설정
+            onChangeText={(text) => {
+              setInputValue(text); // 입력된 값을 상태로 업데이트
+            }}
+            onEndEditing={() => {
+              let count = parseInt(inputValue) || 1; // 숫자로 변환하고, 숫자가 아니면 1로 처리
+              if (count > 4) {
+                Alert.alert("주의", "분할수는 4을 초과할 수 없습니다.", [
+                  {
+                    text: "확인",
+                    onPress: () => {
+                      setInputValue(""); // 입력된 값을 지움
+                    },
                   },
-                },
-              ]);
-              return;
-            }
-            setSplitCount(count);
-          }}
-        />
+                ]);
+                return;
+              }
+              setSplitCount(count);
+            }}
+          />
+        </View>
         {[...Array(splitCount)].map((_, index) => (
           <SplitExercise
             key={index}

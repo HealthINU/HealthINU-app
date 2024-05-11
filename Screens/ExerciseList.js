@@ -11,6 +11,7 @@ import { AuthContext } from "../util/auth-context";
 import BottomNav from "../components/ui/BottomNav";
 
 import { apiFunction } from "../util/api/api";
+import Button from "../components/ui/Button";
 
 function ExerciseSearch({ navigation, route }) {
   const authCtx = useContext(AuthContext);
@@ -39,6 +40,10 @@ function ExerciseSearch({ navigation, route }) {
   const [engName, setEngName] = useState(null);
   const [equip_num, setEquip_num] = useState(null);
 
+  // 카테고리 버튼용 변수
+  const categories = ['가슴', '등', '어깨', '하체'];
+  
+  
   //북마크 저장 변수
   const [bookmarks, setBookmarks] = useState(own);
   // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
@@ -52,6 +57,22 @@ function ExerciseSearch({ navigation, route }) {
     // const bookmarked = isItemBookmarked(currentItemSelected);
     // setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   };
+  // 카테고리만 보여주기 상태 추가
+  const [showOnlyCategories, setShowOnlyCategories] = useState(false);
+  // 카테고리 토글 함수
+  const toggleShowOnlyCategories = () => {
+    setShowOnlyCategories((current) => !current);
+  };
+  // 카테고리 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
+  const filteredCategories = showOnlyCategories
+    ? exerciseItems.filter((item) =>
+      categories.some(
+        //(categories) => categories.Equipment.equipment_category === item.equipment_category
+        (categories) => categories.Equipment.equipment_category === '가슴'
+      )
+    )
+    : exerciseItems;
+    //console.log(filteredCategories.Equipment.equipment_category);
 
   // 북마크된 아이템만 보기 상태를 추가
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
@@ -62,12 +83,12 @@ function ExerciseSearch({ navigation, route }) {
   // 북마크된 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
   const filteredExerciseItems = showOnlyBookmarked
     ? exerciseItems.filter((item) =>
-        bookmarks.some(
-          (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
-        )
+      bookmarks.some(
+        (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
       )
+    )
     : exerciseItems;
-
+    
   //모달 열기 함수
   function startAddFoalHandler(detail) {
     setSelectedExercise1(detail.equipment_description1);
@@ -168,10 +189,18 @@ function ExerciseSearch({ navigation, route }) {
     const bookmarked = isItemBookmarked(currentItemSelected);
     setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   }, [bookmarks]);
-
+  
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
-      <View>
+      <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: 'center' }}>
+        {categories.map((button, index) => (
+          <Button 
+          key={index} 
+          children={button} 
+          style={{ width: '20%' , marginHorizontal:3, backgroundColor: Colors.gray2 }} 
+          onPress={toggleShowOnlyCategories}
+          />
+        ))}
         <IconButton
           icon={"heart-sharp"}
           color={Colors.white1}
