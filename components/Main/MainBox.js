@@ -75,6 +75,37 @@ export default function MainBox({ windowWidth, navigation, token }) {
   //   운동퀘스트 상태
   const exerBtnText = exerQuest?.quest_state;
 
+  const [atdBtnColor, setAtdBtnColor] = useState(Colors.blue1);
+  const [exerBtnColor, setExerBtnColor] = useState(Colors.blue1);
+
+  useEffect(() => {
+    switch (atdBtnText) {
+      case "진행":
+        setAtdBtnColor("#ffcc00");
+        break;
+      case "달성":
+        setAtdBtnColor("#30D158");
+        break;
+      case "완료":
+        setAtdBtnColor("#1f1f1f");
+        break;
+    }
+  }, [atdBtnText]);
+
+  useEffect(() => {
+    switch (exerBtnText) {
+      case "진행":
+        setExerBtnColor("#ffcc00");
+        break;
+      case "달성":
+        setExerBtnColor("#30D158");
+        break;
+      case "완료":
+        setExerBtnColor("#1f1f1f");
+        break;
+    }
+  }, [exerBtnText]);
+
   const attendance_que_click = async () => {
     if (atdBtnText === "미진행") {
       const res = await apiFunction(
@@ -172,11 +203,11 @@ export default function MainBox({ windowWidth, navigation, token }) {
                 ...style1.box,
               }}
             >
-              <Text style={[styles.text, style1.topLeftText]}>오늘의 운동</Text>
+              {/* <Text style={[styles.text, style1.topLeftText]}>오늘의 운동</Text> */}
               <Text
                 style={{
                   ...styles.text,
-                  fontSize: 24,
+                  fontSize: 18,
                   textAlign: "center",
                   paddingBottom: 16,
                   position: "absolute",
@@ -184,28 +215,20 @@ export default function MainBox({ windowWidth, navigation, token }) {
                   paddingBottom: 64,
                 }}
               >
-                {exerQuest?.Quest.quest_description}
+                Before & After
               </Text>
-              <Text
-                style={{
-                  ...styles.text,
-                  alignSelf: "center",
-                  textAlign: "center",
-                  marginTop: 64,
-                }}
-              >
-                {exerQuest?.Quest.quest_requirement}
-                <Text style={{ ...styles.grayText }}> volume </Text>
-              </Text>
+
               <Button
                 style={{
                   paddingHorizontal: 16,
-                  marginTop: 0,
+                  marginTop: 64,
                   marginBottom: 0,
                 }}
-                onPress={exer_que_click}
+                onPress={() => {
+                  navigation.navigate("BodyHistory");
+                }}
               >
-                {exerBtnText}
+                기록 보기
               </Button>
             </View>
           </View>
@@ -340,8 +363,11 @@ export default function MainBox({ windowWidth, navigation, token }) {
                 marginBottom: 0,
               }}
               onPress={attendance_que_click}
+              buttonColor={{ backgroundColor: atdBtnColor }}
             >
-              {atdBtnText}
+              {atdBtnText === "완료"
+                ? `+${attendanceQuest?.Quest.quest_reward}EXP`
+                : atdBtnText}
             </Button>
           </View>
         </View>
@@ -367,25 +393,36 @@ export default function MainBox({ windowWidth, navigation, token }) {
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ ...styles.text, alignSelf: "center" }}>
-            Before & After
-          </Text>
-          {/* <IconButton
-            icon={"analytics-outline"}
-            color={Colors.white1}
-            size={(windowWidth - 48) / 2 / 2 / 2}
-            onPress={() => {
-              navigation.navigate("BodyHistory");
+          <View>
+            <Text style={styles.grayText}>오늘의 운동</Text>
+            <Text style={{ ...styles.text, alignSelf: "center" }}>
+              {exerQuest?.Quest.quest_description}
+            </Text>
+          </View>
+          <Text
+            style={{
+              ...styles.text,
+              alignSelf: "center",
+              textAlign: "center",
+              marginTop: 16,
             }}
-          /> */}
+          >
+            {exerQuest?.Quest.quest_requirement}
+            <Text style={{ ...styles.grayText }}> vol </Text>
+          </Text>
           <View>
             <Button
-              style={{ paddingHorizontal: 16, marginTop: 0, marginBottom: 0 }}
-              onPress={() => {
-                navigation.navigate("BodyHistory");
+              style={{
+                paddingHorizontal: 16,
+                marginTop: 0,
+                marginBottom: 0,
               }}
+              onPress={exer_que_click}
+              buttonColor={{ backgroundColor: exerBtnColor }}
             >
-              기록 보기
+              {exerBtnText === "완료"
+                ? `+${exerQuest?.Quest.quest_reward}EXP`
+                : exerBtnText}
             </Button>
           </View>
         </View>

@@ -66,7 +66,8 @@ function BodyHistory({ navigation }) {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-          }}>
+          }}
+        >
           <ActivityIndicator size="large" color={Colors.gray2} />
         </View>
       ) : (
@@ -76,7 +77,8 @@ function BodyHistory({ navigation }) {
               marginTop: 16,
               marginHorizontal: 16,
               flex: 1,
-            }}>
+            }}
+          >
             {rank.data.length === 0 && (
               <Text style={{ ...styles.text, marginTop: 32 }}>
                 기록이 없습니다.
@@ -95,14 +97,16 @@ function BodyHistory({ navigation }) {
                       padding: 16,
                       width: "100%",
                       borderRadius: 16,
-                    }}>
+                    }}
+                  >
                     <View
                       style={{
                         flexDirection: "row",
                         width: "50%",
                         alignItems: "center",
                         paddingLeft: 16,
-                      }}>
+                      }}
+                    >
                       <Image
                         source={{
                           uri: `http://${URL}:8080/${item.body_image}`,
@@ -127,7 +131,8 @@ function BodyHistory({ navigation }) {
                       style={{
                         flexDirection: "row",
                         alignItems: "center",
-                      }}>
+                      }}
+                    >
                       {/* 유저 경험치 */}
                       <Text style={styles.text}>
                         {getDateDiff(item.body_date)}
@@ -143,11 +148,13 @@ function BodyHistory({ navigation }) {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-            }}>
+            }}
+          >
             <View
               style={{
                 ...style1.box,
-              }}>
+              }}
+            >
               <Text style={{ ...styles.text, marginBottom: 8 }}>Before</Text>
               <Image
                 source={{
@@ -159,7 +166,8 @@ function BodyHistory({ navigation }) {
             <View
               style={{
                 ...style1.box,
-              }}>
+              }}
+            >
               <>
                 <Text style={{ ...styles.text, marginBottom: 8 }}>After</Text>
 
@@ -178,11 +186,13 @@ function BodyHistory({ navigation }) {
             style={{
               flexDirection: "row",
               justifyContent: "space-around",
-            }}>
+            }}
+          >
             <View
               style={{
                 ...style1.box,
-              }}>
+              }}
+            >
               {rank.data.length < 2 ? (
                 <Text style={style1.descText}>! 이전 기록이 없습니다</Text>
               ) : (
@@ -193,7 +203,7 @@ function BodyHistory({ navigation }) {
                   </Text>
                   <Text style={style1.descText}>
                     {rank.data[beforeNum]?.body_bmi}{" "}
-                    <Text style={styles.grayText}> BMI</Text>
+                    {/* <Text style={styles.grayText}> BMI</Text> */}
                   </Text>
                   <Text style={style1.descText}>
                     {rank.data[beforeNum]?.body_date}{" "}
@@ -212,7 +222,8 @@ function BodyHistory({ navigation }) {
             <View
               style={{
                 ...style1.box,
-              }}>
+              }}
+            >
               {rank.data.length < 1 ? (
                 <Text style={style1.descText}>! 이전 기록이 없습니다</Text>
               ) : (
@@ -223,7 +234,7 @@ function BodyHistory({ navigation }) {
                   </Text>
                   <Text style={style1.descText}>
                     {rank.data.slice(-1)[0].body_bmi}{" "}
-                    <Text style={styles.grayText}> BMI</Text>
+                    {/* <Text style={styles.grayText}> BMI</Text> */}
                   </Text>
                   <Text style={style1.descText}>
                     {rank.data.slice(-1)[0].body_date}

@@ -207,7 +207,8 @@ export default function KameraScreen({ navigation }) {
               width: windowWidth,
 
               top: 16,
-            }}>
+            }}
+          >
             {/* 전후면 전환 버튼*/}
             <IconButton
               icon={"sync"}
@@ -232,7 +233,8 @@ export default function KameraScreen({ navigation }) {
             type={type}
             ref={cameraRef}
             flashMode={flash}
-            ratio={ratio}></Camera>
+            ratio={ratio}
+          ></Camera>
 
           {/* 사진 찍는 버튼과 갤러리 버튼 */}
           <View
@@ -242,7 +244,8 @@ export default function KameraScreen({ navigation }) {
               justifyContent: "space-between",
               alignItems: "center",
               marginTop: (windowHeight - windowWidth) / 4,
-            }}>
+            }}
+          >
             {/* 갤러리에서 사진 가져오는 버튼 */}
             <IconButton
               icon={"image"}
@@ -279,7 +282,8 @@ export default function KameraScreen({ navigation }) {
               justifyContent: "space-around",
               alignItems: "center",
               marginTop: 32,
-            }}>
+            }}
+          >
             {/* 사진 다시 찍는 버튼 */}
             {/* <IconButton
               icon={"camera-reverse-outline"}
@@ -293,7 +297,8 @@ export default function KameraScreen({ navigation }) {
                 width: "100%",
                 flexDirection: "row",
                 justifyContent: "space-around",
-              }}>
+              }}
+            >
               <Button style={{ width: "45%" }} onPress={() => setImage(null)}>
                 다시 찍기
               </Button>
@@ -303,7 +308,8 @@ export default function KameraScreen({ navigation }) {
                   const data = await req_image(image, "predict");
                   console.log(data);
                   navigation.navigate("Predict", { data: data.result });
-                }}>
+                }}
+              >
                 기구 분류
               </Button>
             </View>
@@ -328,14 +334,16 @@ export default function KameraScreen({ navigation }) {
                 width: "100%",
                 flexDirection: "row",
                 justifyContent: "space-around",
-              }}>
+              }}
+            >
               <Button
                 style={{ width: "45%" }}
                 onPress={async () => {
                   const data = await req_image(image, "after");
                   console.log(data);
                   navigation.navigate("BodyHistory", { data: data.result });
-                }}>
+                }}
+              >
                 After 사진 추가
               </Button>
 
@@ -344,15 +352,8 @@ export default function KameraScreen({ navigation }) {
                   flexDirection: "row",
                   justifyContent: "space-around",
                   width: "45%",
-                }}>
-                <TextInput
-                  style={style1.input}
-                  onChangeText={setHeight}
-                  value={height}
-                  placeholder="키 입력(cm)"
-                  keyboardType="numeric"
-                  placeholderTextColor={"#888888"}
-                />
+                }}
+              >
                 <TextInput
                   style={style1.input}
                   onChangeText={setWeight}

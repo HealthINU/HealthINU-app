@@ -32,7 +32,8 @@ function RankScreen({ navigation }) {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-          }}>
+          }}
+        >
           <ActivityIndicator size="large" color={Colors.gray2} />
         </View>
       ) : (
@@ -42,7 +43,8 @@ function RankScreen({ navigation }) {
               marginTop: 16,
               marginHorizontal: 16,
               flex: 1,
-            }}>
+            }}
+          >
             <FlatList
               data={rank.data}
               renderItem={({ item, index }) => (
@@ -55,14 +57,16 @@ function RankScreen({ navigation }) {
                     padding: 16,
                     width: "100%",
                     borderRadius: 16,
-                  }}>
+                  }}
+                >
                   <View
                     style={{
                       flexDirection: "row",
                       width: "50%",
                       alignItems: "center",
                       paddingLeft: 16,
-                    }}>
+                    }}
+                  >
                     {/* 순위 표시 */}
                     <Text style={{ ...styles.text, paddingRight: 32 }}>
                       {index + 1}
@@ -73,14 +77,17 @@ function RankScreen({ navigation }) {
                         {item.user_name.substring(0, 10)}
                       </Text>
                       {/* 유저 레벨 */}
-                      <Text style={styles.grayText}>lv. {item.user_level}</Text>
+                      <Text style={styles.grayText}>
+                        Level. {item.user_level}
+                      </Text>
                     </View>
                   </View>
                   <View
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
-                    }}>
+                    }}
+                  >
                     {/* 유저 경험치 */}
                     <Text style={styles.text}>{item.user_exp}</Text>
                     <Text style={styles.grayText}> pts.</Text>
