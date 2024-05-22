@@ -26,6 +26,7 @@ function MainScreen({ navigation }) {
   const windowWidth = Dimensions.get("window").width;
 
   useEffect(() => {}, [authCtx.info.user]);
+  console.log(user_info);
 
   return (
     <View style={{ ...styles.container }}>

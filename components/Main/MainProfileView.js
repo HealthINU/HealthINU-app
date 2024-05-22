@@ -3,10 +3,17 @@ import { View, Text } from "react-native";
 
 //  키, 몸무게, BMI 보여주는 컴포넌트
 export default function MainProfileView({ user_info }) {
-  const BMI = (
+  const height =
+    user_info?.user_height !== null ? user_info.user_height : "설정전";
+  console.log(height);
+  const weight =
+    user_info?.user_weight !== null ? user_info.user_weight : "설정전";
+
+  let BMI = (
     user_info?.user_weight /
     (user_info?.user_height / 100) ** 2
   ).toFixed(2);
+  BMI = isNaN(BMI) ? "설정전" : BMI;
 
   return (
     <View

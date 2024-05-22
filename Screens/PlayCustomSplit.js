@@ -53,16 +53,17 @@ function PlayCustomSplit({ navigation }) {
     };
     fetchData();
   }, [isMark]);
-  
+
   //console.log(exerciseItems);
   // 운동리스트에서 북마크된 운동들만 보여주는 함수
   async function showOnlyBookmarked() {
-    setIsMark(!isMark); // isMark 상태를 반전시킵니다.
+    setIsMark((isMark) => !isMark); // isMark 상태를 반전시킵니다.
+    console.log(isMark);
     const data = await apiFunction(
       authCtx.token,
       "POST",
       "/info/division_exercise",
-      { isMark: isMark }
+      { isMark: !isMark }
     );
     setExerciseItems(data.data.data);
   }
@@ -80,13 +81,24 @@ function PlayCustomSplit({ navigation }) {
         </View>
       ) : (
         <>
-
-          <View style={{ justifyContent: 'center', alignItems: "center", flexDirection: "row" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
             <Text style={{ ...styles.titletext, fontSize: 25 }}>
               맞춤형 분할운동
             </Text>
           </View>
-          <View style={{ flexDirection: 'row-reverse', alignItems: "center", paddingHorizontal:30 }}>
+          <View
+            style={{
+              flexDirection: "row-reverse",
+              alignItems: "center",
+              paddingHorizontal: 30,
+            }}
+          >
             <IconButton
               icon={"heart-sharp"}
               color={Colors.white1}
@@ -99,9 +111,6 @@ function PlayCustomSplit({ navigation }) {
             <FlatList
               data={exerciseItems}
               renderItem={(itemData) => {
-                console.log('체크');
-                console.log(isMark);
-                console.log(itemData);
                 // return (
                 //   <View>
                 //     <RecordComponent
@@ -111,7 +120,7 @@ function PlayCustomSplit({ navigation }) {
                 //       category={!isMark ? itemData.item.equipment_category : itemData.item.Equipment.equipment_category}
                 //       equipment_num={!isMark ? itemData.item.equipment_num : itemData.item.Equipment.equipment_num}
                 //       onPress={() => {
-                //         handleItemClick(!isMark ? itemData.item : itemData.item.Equipment); 
+                //         handleItemClick(!isMark ? itemData.item : itemData.item.Equipment);
                 //       }}
                 //       navigation={navigation}
                 //     />
@@ -126,7 +135,7 @@ function PlayCustomSplit({ navigation }) {
                       category={itemData.item.equipment_category}
                       equipment_num={itemData.item.equipment_num}
                       onPress={() => {
-                        handleItemClick(itemData.item); 
+                        handleItemClick(itemData.item);
                       }}
                       navigation={navigation}
                     />

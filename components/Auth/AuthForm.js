@@ -89,7 +89,7 @@ export default function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           label="Password"
           onUpdateValue={updateInputValueHandler.bind(this, "password")}
           value={enteredPassword}
-          keyboardType="email-address"
+          keyboardType="password"
           secure
         />
         {/*비밀번호 확인, 이름, 성별 */}
@@ -102,7 +102,7 @@ export default function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
                 "confirmPassword"
               )}
               value={enteredConfirmPassword}
-              keyboardType="email-address"
+              keyboardType="password"
               secure
             />
 

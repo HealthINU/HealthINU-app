@@ -41,4 +41,19 @@ export const exercise_list = {
     name: "숄더 프레스",
     jpg: require("../../assets/exercise_picture/shoulder_press_machine.jpg"),
   },
+  chinning_dipping_machine: {
+    key: "chinning_dipping",
+    name: "치닝 디핑",
+    jpg: require("../../assets/exercise_picture/chinning_dipping_machine.jpg"),
+  },
+  seated_row_machine: {
+    key: "seated_row",
+    name: "시티드 로우",
+    jpg: require("../../assets/exercise_picture/seated_row_machine.jpg"),
+  },
+  garbage: {
+    key: "garbage",
+    name: "인식되는 운동이 없습니다",
+    jpg: require("../../assets/exercise_picture/garbage.jpg"),
+  },
 };

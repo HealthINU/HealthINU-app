@@ -41,41 +41,34 @@ function ExerciseSearch({ navigation, route }) {
   const [equip_num, setEquip_num] = useState(null);
 
   // 카테고리 버튼용 변수
-  const categories = ['가슴', '등', '어깨', '하체'];
-  
-  
+  const categories = ["가슴", "등", "어깨", "하체"];
+
   //북마크 저장 변수
   const [bookmarks, setBookmarks] = useState(own);
   // 현재 선택된 아이템의 북마크 상태를 관리하는 상태 변수
-  const [currentBookmarkStatus, setCurrentBookmarkStatus] = useState("heart-outline");
+  const [currentBookmarkStatus, setCurrentBookmarkStatus] =
+    useState("heart-outline");
   // 현재 선택된 운동 아이템 상태 변수
   const [currentItemSelected, setCurrentItemSelected] = useState(null);
   const bookmarkHandler = () => {
     heartButtonPressHandler(currentItemSelected);
   };
 
-
-
-  // 카테고리만 보여주기 상태 추가
-  const [showOnlyCategories, setShowOnlyCategories] = useState(false);
+  // 카테고리 이름 상태 변수
+  const [categoryName, setCategoryName] = useState(null);
   // 카테고리 토글 함수
-  const toggleShowOnlyCategories = () => {
-    setShowOnlyCategories((current) => !current);
+  // 카테고리 설정
+  const togglecategoryName = (buttonName) => {
+    if (categoryName === buttonName) setCategoryName(null);
+    else setCategoryName(buttonName);
   };
+  console.log(categoryName);
   // 카테고리 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
-  const filteredCategories = showOnlyCategories
-    ? exerciseItems.filter((item) =>
-      bookmarks.some(
-        //(categories) => categories.Equipment.equipment_category === item.equipment_category
-        (bookmarks) => bookmarks.Equipment.equipment_category === '가슴'
-      )
-    )
+  const filteredCategories = categoryName
+    ? exerciseItems.filter((item) => item.equipment_category === categoryName)
     : exerciseItems;
-    //console.log(filteredCategories.Equipment.equipment_category);
+  //console.log(filteredCategories.Equipment.equipment_category);
 
-
-
-    
   // 북마크된 아이템만 보기 상태를 추가
   const [showOnlyBookmarked, setShowOnlyBookmarked] = useState(false);
   // 북마크 표시 토글 함수
@@ -84,13 +77,13 @@ function ExerciseSearch({ navigation, route }) {
   };
   // 북마크된 아이템만 보이게 하는 로직을 추가한 FlatList의 data prop
   const filteredExerciseItems = showOnlyBookmarked
-    ? exerciseItems.filter((item) =>
-      bookmarks.some(
-        (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
+    ? filteredCategories.filter((item) =>
+        bookmarks.some(
+          (bookmark) => bookmark.Equipment.equipment_num === item.equipment_num
+        )
       )
-    )
-    : exerciseItems;
-    
+    : filteredCategories;
+
   //모달 열기 함수
   function startAddFoalHandler(detail) {
     setSelectedExercise1(detail.equipment_description1);
@@ -191,16 +184,28 @@ function ExerciseSearch({ navigation, route }) {
     const bookmarked = isItemBookmarked(currentItemSelected);
     setCurrentBookmarkStatus(bookmarked ? "heart-sharp" : "heart-outline");
   }, [bookmarks]);
-  
+
   return (
     <View style={{ ...styles.listContainer, height: "auto" }}>
-      <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: 'center' }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {categories.map((button, index) => (
-          <Button 
-          key={index} 
-          children={button} 
-          style={{ width: '20%' , marginHorizontal:3, backgroundColor: Colors.gray2 }} 
-          onPress={toggleShowOnlyCategories}
+          <Button
+            key={index}
+            children={button}
+            style={{
+              width: "20%",
+              marginHorizontal: 3,
+              backgroundColor: Colors.gray2,
+            }}
+            onPress={() => {
+              togglecategoryName(button);
+            }}
           />
         ))}
         <IconButton

@@ -1,5 +1,5 @@
 //  카메라 모듈 라이브러리
-import { Camera, CameraType } from "expo-camera";
+import { Camera, CameraType } from "expo-camera/legacy";
 import { useState, useEffect, useRef, useContext } from "react";
 import {
   Image,
@@ -13,6 +13,8 @@ import * as FileSystem from "expo-file-system";
 
 import IconButton from "../components/ui/IconButton";
 import { Colors } from "../constant/Color";
+
+import { Platform } from "react-native";
 
 //  기기 크기 가져오기 위한 라이브러리
 import { Dimensions } from "react-native";

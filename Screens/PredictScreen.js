@@ -17,7 +17,7 @@ export default function PredictScreen({ navigation, route }) {
 
   //  가장 확률 높은 운동 이름
   const top_exercise = result[0]["name"];
-
+  const isGarbage = top_exercise === "garbage";
   // 이동할 이름
   const title = exercise_list[top_exercise]["name"];
   //console.log("top_exercise : " + title);
@@ -28,10 +28,23 @@ export default function PredictScreen({ navigation, route }) {
 
   return (
     <View style={{ ...styles.container, justifyContent: "center" }}>
-      <Text style={styles.titletext}>이게 맞나요?</Text>
-      <Text style={{ ...styles.titletext, color: "#00ff00" }}>
-        {exercise_list[top_exercise]["name"]}
-      </Text>
+      {!isGarbage ? <Text style={styles.titletext}>이게 맞나요?</Text> : null}
+      {!isGarbage ? (
+        <Text style={{ ...styles.titletext, color: "#00ff00" }}>
+          {exercise_list[top_exercise]["name"]}
+        </Text>
+      ) : (
+        <Text
+          style={{
+            ...styles.titletext,
+            color: "#00ff00",
+            fontSize: 30,
+            marginBottom: 16,
+          }}
+        >
+          {exercise_list[top_exercise]["name"]}
+        </Text>
+      )}
 
       <Image
         source={exercise_list[top_exercise]["jpg"]}
@@ -42,23 +55,28 @@ export default function PredictScreen({ navigation, route }) {
           flexDirection: "row",
           justifyContent: "space-around",
           width: "100%",
-        }}>
+        }}
+      >
         {/* 카메라 페이지로 이동하는 버튼*/}
         <Button
           buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
           titleStyle={styles.generalFont}
-          onPress={() => navigation.navigate("Kamera")}>
+          onPress={() => navigation.navigate("Kamera")}
+        >
           Retake?
         </Button>
 
         {/*해당 운동이 맞을 시*/}
-        <Button
-          buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
-          titleStyle={styles.generalFont}
-          title={top_exercise}
-          onPress={() => moveExerciseSearch(title)}>
-          Yes
-        </Button>
+        {isGarbage ? null : (
+          <Button
+            buttonStyle={{ ...styles.generalButton, marginTop: 16 }}
+            titleStyle={styles.generalFont}
+            title={top_exercise}
+            onPress={() => moveExerciseSearch(title)}
+          >
+            Yes
+          </Button>
+        )}
       </View>
     </View>
   );

@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import styles from "../styles/styles";
 import { useEffect, useContext, useState } from "react";
@@ -37,6 +38,7 @@ function BodyHistory({ navigation }) {
   const authCtx = useContext(AuthContext);
   const [rank, setRank] = useState(null);
   const [beforeNum, setBeforeNum] = useState(null);
+  const records = authCtx.info.record;
 
   //  화면이 focus 되어있는지 확인
   const isFocused = useIsFocused();
@@ -57,6 +59,28 @@ function BodyHistory({ navigation }) {
     };
     fetchData();
   }, [isFocused]);
+
+  const handleDayPress = (date) => {
+    let description = "운동 정보가 없습니다.";
+    const selectedRecords = records.data.filter((record) => {
+      return record.record_date === date;
+    });
+    if (selectedRecords.length > 0) {
+      description = selectedRecords
+        .map((record) => {
+          return (
+            record.Equipment.equipment_name +
+            " " +
+            record.record_weight +
+            "kg " +
+            record.record_count +
+            "회"
+          );
+        })
+        .join("\n");
+    }
+    Alert.alert(date.dateString, description);
+  };
 
   return (
     <View style={styles.container}>
@@ -213,7 +237,11 @@ function BodyHistory({ navigation }) {
                       일전
                     </Text>
                   </Text>
-                  <Button onPress={() => navigation.navigate("ChangeProfile")}>
+                  <Button
+                    onPress={() => {
+                      handleDayPress(rank.data[beforeNum]?.body_date);
+                    }}
+                  >
                     기록 보기
                   </Button>
                 </>

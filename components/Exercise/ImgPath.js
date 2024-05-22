@@ -8,4 +8,7 @@ export const Images = {
   leg_press_machine: require("../../assets/exercise_picture/leg_press_machine.jpg"),
   pec_deck_fly_machine: require("../../assets/exercise_picture/pec_deck_fly_machine.jpg"),
   shoulder_press_machine: require("../../assets/exercise_picture/shoulder_press_machine.jpg"),
+  chinning_dipping_machine: require("../../assets/exercise_picture/chinning_dipping_machine.jpg"),
+  seated_row_machine: require("../../assets/exercise_picture/seated_row_machine.jpg"),
+  garbage: require("../../assets/exercise_picture/garbage.jpg"),
 };
